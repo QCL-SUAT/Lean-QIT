@@ -1,0 +1,16 @@
+name = "QIT"
+defaultTargets = ["QIT"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "master-2026-08-21"
+
+# `backward.isDefEq.respectTransparency` defaults to `true` as of v4.34, meaning
+# implicit-argument defeq checks are no longer bumped to `.default` transparency.
+# This library was written against v4.30, where `Matrix` and structure-literal
+# applications relied on that bump throughout `simp`/`rw`/`exact`; restore the
+# old behaviour for the port.
+[[lean_lib]]
+name = "QIT"
+moreLeanArgs = ["-DautoImplicit=false", "-Dbackward.isDefEq.respectTransparency=false"]
