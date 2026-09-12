@@ -424,7 +424,7 @@ theorem conditionalSandwichedRenyiUpSourceCandidate_coherentMeasurement_sub_log2
       (measureSubsystemState X.toPOVM rho).conditionalSandwichedRenyiUpSourceCandidate
         sigma.marginalB (sigma.marginalB_posDef_of_posDef hsigma)
         alpha halpha_pos halpha_one := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
   let coherent := hY.coherentMeasurementState rho
@@ -541,10 +541,10 @@ theorem conditionalSandwichedRenyiUpSource_coherentMeasurement_sub_log2_le
     alpha hpos halpha_one
   let T := measured.conditionalSandwichedRenyiUpSourceValueSet
     alpha hpos halpha_one
-  letI : Nonempty (Prod y b) := by
+  let : Nonempty (Prod y b) := by
     rcases coherent.nonempty with ⟨_, side⟩
     exact ⟨side⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, side⟩
     exact ⟨side⟩
   have hS : S.Nonempty := by
@@ -582,7 +582,7 @@ theorem conditionalEntropy_coherentMeasurement_sub_log2_le
     (hY.coherentMeasurementState rho).conditionalEntropy -
         log2 (X.rankOneTraceOverlap Y) <=
       (measureSubsystemState X.toPOVM rho).conditionalEntropy := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨input, _side⟩
     exact ⟨input⟩
   let coherent := hY.coherentMeasurementState rho
@@ -675,7 +675,7 @@ theorem conditionalMaxEntropy_coherentMeasurement_sub_log2_le
   let measured := measureSubsystemState X.toPOVM rho
   let S := coherent.conditionalSandwichedRenyiUpSourceValueSet
     (1 / 2 : Real) (by norm_num) (by norm_num)
-  letI : Nonempty (Prod y b) := by
+  let : Nonempty (Prod y b) := by
     rcases coherent.nonempty with ⟨_, side⟩
     exact ⟨side⟩
   have hS : S.Nonempty := by
@@ -715,7 +715,7 @@ theorem conditionalMinEntropyFeasible_coherentMeasurement_sub_log2
     State.ConditionalMinEntropyFeasible (a := x)
       (measureSubsystemState X.toPOVM rho) sigma.marginalB
       (lam - log2 (X.rankOneTraceOverlap Y)) := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
   let coherent := hY.coherentMeasurementState rho
@@ -796,7 +796,7 @@ theorem conditionalMinEntropy_coherentMeasurement_sub_log2_le
   let measured := measureSubsystemState X.toPOVM rho
   let S := coherent.conditionalMinEntropyFeasibleExponentValueSet (a := y)
   let T := measured.conditionalMinEntropyFeasibleExponentValueSet (a := x)
-  letI : Nonempty (Prod y b) := by
+  let : Nonempty (Prod y b) := by
     rcases coherent.nonempty with ⟨_, side⟩
     exact ⟨side⟩
   have hS : S.Nonempty :=

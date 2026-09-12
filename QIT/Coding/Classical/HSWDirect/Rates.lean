@@ -31,7 +31,7 @@ theorem nonneg {M : Type u} [Fintype M] [Nonempty M] (n : ℕ) :
       exact div_nonneg (Real.log_nonneg hcard_one)
         (le_of_lt (Real.log_pos one_lt_two))
     unfold hswMessageRate
-    rw [if_neg hn]
+    rw [ite_eq_right hn]
     exact div_nonneg hlog_nonneg (Nat.cast_nonneg n)
 
 theorem block_pad_eq
@@ -48,7 +48,7 @@ theorem block_pad_eq
   have hk_pos : (0 : ℝ) < k := by exact_mod_cast hk
   have hsum_pos_real : (0 : ℝ) < t * k + r := by exact_mod_cast hsum_pos
   unfold hswMessageRate
-  rw [if_neg hsum_ne, if_neg ht_ne]
+  rw [ite_eq_right hsum_ne, ite_eq_right ht_ne]
   rw [Nat.cast_add, Nat.cast_mul]
   field_simp [ne_of_gt ht_pos, ne_of_gt hk_pos, ne_of_gt hsum_pos_real]
 
@@ -80,7 +80,7 @@ theorem rpow_two_mul_rate_eq_card
   have hcard_pos : (0 : ℝ) < Fintype.card M := by
     exact_mod_cast Fintype.card_pos_iff.mpr inferInstance
   unfold hswMessageRate
-  rw [if_neg hn_ne]
+  rw [ite_eq_right hn_ne]
   have hmul :
       (n : ℝ) * (log2 (Fintype.card M : ℝ) / (n : ℝ)) =
         log2 (Fintype.card M : ℝ) := by

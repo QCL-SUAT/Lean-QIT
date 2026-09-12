@@ -69,7 +69,7 @@ theorem sourceAssocReindex_matrix (rho : SubnormalizedState (Prod (Prod k a) b))
         intro hi
         apply hx
         simp [hi]
-      rw [if_neg]
+      rw [ite_eq_right]
       intro hi
       exact hne (by simpa [Equiv.prodAssoc] using hi)
     · simp
@@ -78,7 +78,7 @@ theorem sourceAssocReindex_matrix (rho : SubnormalizedState (Prod (Prod k a) b))
       intro hj
       apply hx
       simp [hj]
-    rw [if_neg]
+    rw [ite_eq_right]
     intro hj
     exact hne (by simpa [Equiv.prodAssoc] using hj)
   · simp

@@ -219,7 +219,7 @@ theorem measurementMap_conditionalSandwichedRenyiUpSource_monotonicity
     rho.conditionalSandwichedRenyiUpSource alpha (by linarith) halpha1 <=
       (measureSubsystemState M rho).conditionalSandwichedRenyiUpSource
         alpha (by linarith) halpha1 := by
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨z⟩
     exact ⟨z.2⟩
   unfold conditionalSandwichedRenyiUpSource
@@ -281,7 +281,7 @@ theorem measurementMap_conditionalMinEntropy_monotonicity
     (M : POVM c a) (hMUnit : measurementMapDoesNotEnlargeUnit M) :
     rho.conditionalMinEntropy <=
       (measureSubsystemState M rho).conditionalMinEntropy := by
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨z⟩
     exact ⟨z.2⟩
   rw [conditionalMinEntropy_eq, conditionalMinEntropy_eq]

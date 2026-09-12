@@ -185,14 +185,12 @@ theorem rectangular_kraus_lieb_trace_concave
         (CFC.rpow Y0 (1 - p)).transpose := by
     have h := cMatrix_rpow_transpose_nonneg (A := Y0) hY0 h1p_nonneg
     simp only [pNN] at h ⊢
-    push_cast at h ⊢
     exact h
   have hY1powT :
       CFC.rpow Y1.transpose (1 - (pNN : ℝ)) =
         (CFC.rpow Y1 (1 - p)).transpose := by
     have h := cMatrix_rpow_transpose_nonneg (A := Y1) hY1 h1p_nonneg
     simp only [pNN] at h ⊢
-    push_cast at h ⊢
     exact h
   have hYmix : (lambda • Y0 + (1 - lambda) • Y1).PosSemidef :=
     Matrix.PosSemidef.add
@@ -211,7 +209,6 @@ theorem rectangular_kraus_lieb_trace_concave
     have h := cMatrix_rpow_transpose_nonneg
         (A := lambda • Y0 + (1 - lambda) • Y1) hYmix h1p_nonneg
     simp only [pNN] at h ⊢
-    push_cast at h ⊢
     exact h
   have htrace0 :=
     rectangular_kraus_trace_tensor_trace_transpose_re K

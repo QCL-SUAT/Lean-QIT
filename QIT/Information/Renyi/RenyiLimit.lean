@@ -317,7 +317,7 @@ theorem relativeEntropySummandReal_p_commonSupportTilted_of_p_ne_zero
     positivity
   rw [relativeEntropySummandReal]
   simp only [pDistribution]
-  rw [if_neg hx]
+  rw [ite_eq_right hx]
   rw [ht]
   congr 1
   rw [Real.log_div hp.ne' hdenom_pos.ne']
@@ -531,10 +531,9 @@ theorem nussbaumSzkolaModel_p_supportedBy_q_of_matrix_support
                 simp
       have hentry := congrFun (congrFun hmatrix x) y
       have h := hentry
-      simp only [Drho, T, Matrix.mul_apply, Matrix.diagonal, Matrix.diagonal_apply,
+      simp only [Drho, T, Matrix.mul_apply, Matrix.diagonal, 
         Matrix.of_apply, stateSpectralWeight] at h ⊢
-      simp [Finset.sum_ite_eq', Finset.mem_univ, ite_mul, zero_mul] at h ⊢
-      push_cast at h ⊢
+      simp [Finset.mem_univ, ite_mul, zero_mul] at h ⊢
       exact h
     have hprod_zero :
         (((stateSpectralWeight rho x : ℝ) : ℂ) * T x y) = 0 := by

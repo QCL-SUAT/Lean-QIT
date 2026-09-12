@@ -577,7 +577,7 @@ private theorem afw_scaledLog_hasDerivAt {ε : ℝ} (hεpos : 0 < ε) :
     have honepos : 0 < 1 + ε := by linarith
     have harg : HasDerivAt (fun t : ℝ => 1 + t) 1 ε := by
       convert (hasDerivAt_const (x := ε) (c := (1 : ℝ))).add (hasDerivAt_id ε) using 1
-        <;> first | rfl | (funext t; rw [Pi.add_apply, id_eq]) | norm_num
+        <;> first | rfl | norm_num
     have hlog2 : HasDerivAt (fun t : ℝ => log2 (1 + t)) ((1 + ε)⁻¹ / Real.log 2) ε := by
       unfold log2
       simpa [Function.comp_def, one_mul] using

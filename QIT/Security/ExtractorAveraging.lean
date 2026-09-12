@@ -135,7 +135,7 @@ theorem twoUniversal_pairCollisionAverage_le (hH : H.TwoUniversal)
   · subst z'
     rw [collisionProbability_self]
     simp
-  · rw [if_neg hzz]
+  · rw [ite_eq_right hzz]
     exact mul_le_mul_right (collisionProbability_le_of_twoUniversal H hH hzz) (K z z')
 
 end HashFamily
@@ -254,7 +254,7 @@ omit [Fintype S] [DecidableEq S] [Nonempty S] in
 theorem finFullFunctionHashFamily_collisionUniform
     {Z : Type uZ} [Fintype Z] [DecidableEq Z] {ell : Nat} (hell : 0 < ell) :
     (FinFullFunctionHashFamily (Z := Z) ell hell).CollisionUniform := by
-  letI : Nonempty (Fin ell) := ⟨⟨0, hell⟩⟩
+  let : Nonempty (Fin ell) := ⟨⟨0, hell⟩⟩
   exact fullFunctionHashFamily_collisionUniform (Z := Z) (S := Fin ell)
 
 omit [Fintype S] [DecidableEq S] [Nonempty S] in

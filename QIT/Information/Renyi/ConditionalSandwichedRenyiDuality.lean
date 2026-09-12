@@ -790,8 +790,7 @@ theorem partialTraceB_rankOne_upwardRenyiDualityACWeightedAmplitude_eq_reference
     rw [hW]
     let pnn : NNReal := ⟨p, hp_nonneg⟩
     have h := CFC.sqrt_rpow_nnreal (a := X) (x := pnn)
-    simp only [S, pnn] at h ⊢
-    push_cast at h ⊢
+    simp only [ pnn] at h ⊢
     exact h
   have hmarg :
       partialTraceB (a := Prod a c) (b := b)
@@ -979,7 +978,7 @@ theorem upwardRenyiDualityHighBracket_iSup_EReal_eq
         (psi.upwardRenyiDualityHighCMatrix_posSemidef sigma.matrix
           (upwardRenyiDualityParameter alpha))
         ⟨alpha, lt_trans zero_lt_one halpha⟩ : EReal) := by
-  letI : Nonempty (State c) := ⟨State.maximallyMixed c⟩
+  let : Nonempty (State c) := ⟨State.maximallyMixed c⟩
   let f : State c -> Real := fun tau =>
     State.abcSidePowerTraceRe (a := a) psi.state.matrix
       sigma.matrix tau.matrix (upwardRenyiDualityParameter alpha)
@@ -1125,8 +1124,8 @@ theorem upwardRenyiDuality_commonSchattenExtrema_eq
       ⟨beta, lt_trans (by norm_num) hbeta_half⟩
   let sigma0 : S :=
     ⟨State.maximallyMixed b, State.maximallyMixed_posDef⟩
-  letI : Nonempty S := ⟨sigma0⟩
-  letI : Nonempty (State c) := ⟨State.maximallyMixed c⟩
+  let : Nonempty S := ⟨sigma0⟩
+  let : Nonempty (State c) := ⟨State.maximallyMixed c⟩
   have hhigh_bdd : BddBelow (Set.range high) := by
     refine ⟨0, ?_⟩
     rintro x ⟨sigma, rfl⟩
@@ -1355,8 +1354,8 @@ theorem upwardRenyiDualityLowNorm_fullRank_sSup_eq_all
     ⟨State.maximallyMixed b, State.maximallyMixed_posDef⟩
   let tau0 : T :=
     ⟨State.maximallyMixed c, State.maximallyMixed_posDef⟩
-  letI : Nonempty T := ⟨tau0⟩
-  letI : Nonempty (State c) := ⟨tau0.1⟩
+  let : Nonempty T := ⟨tau0⟩
+  let : Nonempty (State c) := ⟨tau0.1⟩
   have hall_bdd : BddAbove (Set.range all) := by
     let high0 : Real := psdSchattenPNorm
       (psi.upwardRenyiDualityHighCMatrix sigma0.1.matrix
@@ -1555,7 +1554,7 @@ theorem conditionalSandwichedRenyiUpSource_marginalAB_eq_commonLog
   let candidate : S -> Real := fun sigma =>
     psi.state.marginalAB.conditionalSandwichedRenyiUpSourceCandidate
       sigma.1 sigma.2 alpha (lt_trans zero_lt_one halpha) (ne_of_gt halpha)
-  letI : Nonempty S :=
+  let : Nonempty S :=
     ⟨⟨State.maximallyMixed b, State.maximallyMixed_posDef⟩⟩
   have hp : 0 < upwardRenyiDualityParameter alpha :=
     upwardRenyiDualityParameter_pos halpha
@@ -1626,7 +1625,7 @@ theorem conditionalSandwichedRenyiUpSource_marginalAC_eq_commonLog
   let candidate : T -> Real := fun tau =>
     psi.state.marginalAC.conditionalSandwichedRenyiUpSourceCandidate
       tau.1 tau.2 beta (lt_trans (by norm_num) hbeta_half) (ne_of_lt hbeta_one)
-  letI : Nonempty T :=
+  let : Nonempty T :=
     ⟨⟨State.maximallyMixed c, State.maximallyMixed_posDef⟩⟩
   have hp : 0 < upwardRenyiDualityParameter alpha :=
     upwardRenyiDualityParameter_pos halpha

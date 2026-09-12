@@ -69,7 +69,7 @@ def basisState (x : ι) : State ι where
   matrix := Matrix.single x x (1 : ℂ)
   pos := posSemidef_single x
   trace_eq_one := by
-    rw [trace_single_one, if_pos rfl]
+    rw [trace_single_one, ite_eq_left rfl]
 
 @[simp]
 theorem basisState_matrix (x : ι) :

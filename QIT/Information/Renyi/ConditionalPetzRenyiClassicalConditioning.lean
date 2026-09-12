@@ -364,7 +364,7 @@ theorem conditionalPetzRenyiUp_classicalConditioning_eq_closed_of_lt_one
     rcases ρ.conditionalPetzRenyiUpValueSet_nonempty α hα_pos hα_ne_one with
       ⟨_, ⟨σ, hσ, _⟩⟩
     exact ⟨⟨σ, hσ⟩⟩
-  letI := hI
+  let := hI
   have hf_bdd : BddAbove (Set.range f) := by
     exact petz_up_fullReference_range_bddAbove E α hα_pos hα_lt_one hα_ne_one
   have hf_range : Set.range f =
@@ -423,11 +423,11 @@ theorem conditionalPetzRenyiUp_classicalConditioning_eq_closed_of_one_lt
     rcases ρ.conditionalPetzRenyiUpValueSet_nonempty α hα_pos hα_ne_one with
       ⟨_, ⟨σ, hσ, _⟩⟩
     exact ⟨⟨σ, hσ⟩⟩
-  letI := hI
+  let := hI
   have hf_bdd : BddAbove (Set.range f) := by
     exact petz_up_fullReference_range_bddAbove_of_one_lt E α hα_pos
       hα_gt_one hα_ne_one
-  letI := Classical.decEq I
+  let := Classical.decEq I
   have hf_range : Set.range f =
       ρ.conditionalPetzRenyiUpValueSet α hα_pos hα_ne_one := by
     ext x

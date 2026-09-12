@@ -120,7 +120,7 @@ private theorem relativeEntropySummandReal_productMarginalNussbaumSzkolaModel
       exact Real.log_div hlam_pos.ne' hmu_pos.ne'
     rw [relativeEntropySummandReal]
     simp only [ClassicalBinaryModel.pDistribution, ClassicalBinaryModel.qDistribution]
-    rw [if_neg (by simpa [M] using hp)]
+    rw [ite_eq_right (by simpa [M] using hp)]
     simp [productMarginalNussbaumSzkolaModel, NNReal.coe_mul, hlog]
 
 
@@ -292,7 +292,6 @@ theorem productMarginalNussbaumSzkolaModel_petzChernoffCoefficient_eq
           star (Urho : CMatrix (Prod a b)) := by
     have h := cMatrix_rpow_eq_eigenbasis_diagonal rhoAB.pos s
     simp only [Urho, stateSpectralWeight] at h ⊢
-    push_cast at h ⊢
     exact h
   have hw_nonneg :
       ∀ y : Prod a b, 0 ≤ ((productMarginalSpectralWeight rhoAB y : NNReal) : ℝ) := by
@@ -690,7 +689,7 @@ theorem barPetzRenyiMutualInformationPSD_eq_coe_finite
       (N.barPetzRenyiMutualInformationPSDFinite
         alpha.1 alpha.2.1 (ne_of_lt alpha.2.2) : EReal) := by
   classical
-  letI : Nonempty (PureVector (Prod a a)) := ⟨PureVector.basisPureVector⟩
+  let : Nonempty (PureVector (Prod a a)) := ⟨PureVector.basisPureVector⟩
   let f : PureVector (Prod a a) → ℝ := fun psi =>
     N.inputBarPetzRenyiMutualInformationPSDFinite
       psi alpha.1 alpha.2.1 (ne_of_lt alpha.2.2)
@@ -698,7 +697,7 @@ theorem barPetzRenyiMutualInformationPSD_eq_coe_finite
       N.barPetzRenyiMutualInformationPSDFiniteValueSet
           alpha.1 alpha.2.1 (ne_of_lt alpha.2.2) = Set.range f := by
     ext value
-    simp only [barPetzRenyiMutualInformationPSDFiniteValueSet, Set.mem_setOf_eq,
+    simp only [barPetzRenyiMutualInformationPSDFiniteValueSet, Set.mem_ofPred_eq,
       Set.mem_range, f]
     constructor <;> rintro ⟨psi, rfl⟩ <;> exact ⟨psi, rfl⟩
   have hcanonicalSet :
@@ -706,7 +705,7 @@ theorem barPetzRenyiMutualInformationPSD_eq_coe_finite
           alpha.1 alpha.2.1 alpha.2.2 =
         Set.range fun psi => (f psi : EReal) := by
     ext value
-    simp only [barPetzRenyiMutualInformationPSDValueSet, Set.mem_setOf_eq,
+    simp only [barPetzRenyiMutualInformationPSDValueSet, Set.mem_ofPred_eq,
       Set.mem_range]
     constructor
     · rintro ⟨psi, rfl⟩

@@ -468,7 +468,7 @@ theorem sum_jointPositiveBranchProbability_smul_finalNormalizedBranch_state_matr
     L.jointPositivePhysicalIndex psi
   have hf : Function.Injective f :=
     L.jointPositivePhysicalIndex_injective psi
-  letI : Fintype {q : L.jointBranchIndex // q ∈ Set.range f} :=
+  let : Fintype {q : L.jointBranchIndex // q ∈ Set.range f} :=
     Subtype.fintype fun q => q ∈ Set.range f
   have hRangeProbability :
       (∑ q : {q : L.jointBranchIndex // q ∈ Set.range f},

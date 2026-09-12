@@ -149,7 +149,7 @@ theorem traceNorm_continuous_forTopology :
   have htrace : Continuous (fun M : CMatrix a => (CFC.sqrt (star M * M)).trace) :=
     Continuous.matrix_trace hsqrt
   exact (Complex.continuous_re.comp htrace).congr
-    (fun M => by simp [traceNorm, psdSqrt, Function.comp_def, Matrix.star_eq_conjTranspose])
+    (fun M => by simp [traceNorm, psdSqrt,  Matrix.star_eq_conjTranspose])
 
 theorem continuous_psdSqrt_matrix :
     Continuous fun ρ : SubnormalizedState a => psdSqrt ρ.matrix := by
@@ -160,7 +160,7 @@ theorem continuous_psdSqrt_matrix :
     intro ρ
     exact Matrix.nonneg_iff_posSemidef.mpr ρ.pos
   exact (hsqrtOn.comp_continuous continuous_matrix hnonneg).congr
-    (fun ρ => by simp [psdSqrt, Function.comp_def])
+    (fun ρ => by simp [psdSqrt ])
 
 /-- For fixed left input, generalized fidelity is continuous in the right
 subnormalized state. -/

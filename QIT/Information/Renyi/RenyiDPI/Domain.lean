@@ -620,7 +620,7 @@ theorem cMatrix_contraction_mul
     have heq : Matrix.conjTranspose B * B - Matrix.conjTranspose (A * B) * (A * B) =
         Matrix.conjTranspose B * (1 - Matrix.conjTranspose A * A) * B := by
       simp only [Matrix.conjTranspose_mul, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one,
-        Matrix.one_mul, Matrix.mul_assoc]
+         Matrix.mul_assoc]
     rw [heq]
     exact hconj
   exact hle.trans hB
@@ -1112,7 +1112,7 @@ theorem nnreal_classical_renyi_power_sum_pos
   classical
   have hnonempty : Nonempty ι := by
     by_contra h
-    haveI : IsEmpty ι := not_nonempty_iff.mp h
+    have : IsEmpty ι := not_nonempty_iff.mp h
     have hzero : (∑ i, p i) = 0 := by simp
     rw [hzero] at hp_sum
     exact zero_ne_one hp_sum

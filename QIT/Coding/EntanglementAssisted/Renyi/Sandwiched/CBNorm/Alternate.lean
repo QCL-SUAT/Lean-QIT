@@ -236,7 +236,7 @@ theorem cbOneToAlphaPureRankOneValue_le_cbOneToAlphaNorm
     halpha Z
 
 private def krausStinespringReferenceVectorWithRef
-    {r : Type w} {κ : Type x} [Fintype a]
+    {r : Type w} {κ : Type x}
     (K : κ → Matrix b a ℂ) (psi : Prod r a → ℂ) :
     Prod (Prod r b) κ → ℂ :=
   fun rbk => ∑ x : a, K rbk.2 rbk.1.2 x * psi (rbk.1.1, x)

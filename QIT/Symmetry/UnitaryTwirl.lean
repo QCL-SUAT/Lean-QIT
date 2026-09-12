@@ -289,8 +289,8 @@ theorem permutationMatrix_mul_unitaryTensorPowerMatrix
             simp
             intro hby
             exact False.elim
-              (hb ((Equiv.apply_eq_iff_eq_symm_apply
-                (permEquiv (a := a) n σ)).mp hby))
+              (hb ((Equiv.eq_symm_apply
+                (permEquiv (a := a) n σ)).mpr hby))
           · intro hnot
             exact False.elim (hnot (Finset.mem_univ _))
 
@@ -599,7 +599,7 @@ theorem diagonalPhaseUnitary_tensorPower_mulVec_profileUnitVector
   rw [Finset.sum_eq_single x]
   · rw [unitaryTensorPowerMatrix_diagonalPhase_apply]
     by_cases hx : x ∈ tensorPowerProfileClass (a := a) p
-    · rw [if_pos rfl]
+    · rw [ite_eq_left rfl]
       rw [tensorWordPhase_eq_profilePhaseCharacter_of_mem_class (a := a) phase p hx]
       ring
     · simp [tensorPowerProfileUnitVector, hx]
@@ -1183,7 +1183,7 @@ theorem twoLevelRotationMatrix_mem_unitaryGroup (i j : a) (θ : ℝ) :
   unfold twoLevelRotationMatrix
   by_cases hij : i = j
   · simp [hij]
-  rw [if_neg hij, Matrix.mem_unitaryGroup_iff]
+  rw [ite_eq_right hij, Matrix.mem_unitaryGroup_iff]
   ext x y
   simp only [Matrix.mul_apply, Matrix.of_apply]
   simpa [Matrix.one_apply] using
@@ -3160,7 +3160,7 @@ theorem unitaryInvariant_profileClassComponent_mulVec {n : ℕ}
   classical
   ext x
   by_cases hxp : x ∈ tensorPowerProfileClass (a := a) p
-  · simp only [profileClassComponent, hxp, if_true]
+  · simp only [profileClassComponent, hxp, ite_true]
     simp only [Matrix.mulVec, dotProduct]
     refine Finset.sum_congr rfl ?_
     intro y _
@@ -3464,7 +3464,7 @@ theorem unitaryInvariant_mul_symmetricProjectionMatrix_eq_trace_smul [Nonempty a
     unitaryInvariant_mul_symmetricProjectionMatrix_eq_smul (a := a) B hinv
   have hPtrace_ne : P.trace ≠ 0 := by
     have hcard : (Fintype.card (TensorPowerProfile a n) : ℂ) ≠ 0 := by
-      letI : Nonempty (TensorPowerProfile a n) :=
+      let : Nonempty (TensorPowerProfile a n) :=
         ⟨constantTensorPowerProfile (a := a) (Classical.arbitrary a) n⟩
       exact_mod_cast (Fintype.card_ne_zero : Fintype.card (TensorPowerProfile a n) ≠ 0)
     simpa [P, symmetricProjectionMatrix_trace_eq_profile_card (a := a) n] using hcard
@@ -4522,7 +4522,7 @@ theorem rennerSchur_scaled_twirl_mul_symmetricProjectionMatrix_eq [Nonempty a]
     simpa [P] using htrace
   have hPtrace_ne : P.trace ≠ 0 := by
     have hcard : (Fintype.card (TensorPowerProfile a n) : ℂ) ≠ 0 := by
-      letI : Nonempty (TensorPowerProfile a n) :=
+      let : Nonempty (TensorPowerProfile a n) :=
         ⟨constantTensorPowerProfile (a := a) (Classical.arbitrary a) n⟩
       exact_mod_cast (Fintype.card_ne_zero : Fintype.card (TensorPowerProfile a n) ≠ 0)
     simpa [P, symmetricProjectionMatrix_trace_eq_profile_card (a := a) n] using hcard

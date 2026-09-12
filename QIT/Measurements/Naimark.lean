@@ -155,7 +155,7 @@ theorem naimarkProjector_sum_eq_one (M : POVM y a) :
   by_cases hij : i = j
   · subst j
     rw [Matrix.sum_apply]
-    simp only [naimarkProjector, Matrix.diagonal_apply, if_true, Matrix.one_apply]
+    simp only [naimarkProjector, Matrix.diagonal_apply, ite_true, Matrix.one_apply]
     rw [Finset.sum_eq_single i.2]
     · simp
     · intro other _ hother

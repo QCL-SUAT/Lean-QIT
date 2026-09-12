@@ -268,7 +268,7 @@ private theorem alphaCoshMajorant_rpowModel_concaveOn_Ici_three_of_shape
           ((Real.hasDerivAt_rpow_const (x := x) (p := -γ - 1) (Or.inl hxne)).const_mul (-γ))
         using 1 <;> first
           | rfl
-          | (simp only [f'', Pi.sub_apply, Pi.add_apply, id_eq]; ring)
+          | (simp only [f''   ]; ring)
     exact hder.hasDerivWithinAt
   refine concaveOn_of_hasDerivWithinAt2_nonpos (convex_Ici (3 : ℝ)) hcont hf' hf'' ?_
   intro x hx
@@ -739,7 +739,7 @@ private theorem posSemidef_eigenvalue_mul_sum_eq_support_sum
       (f := g)]
     congr 1
     ext i
-    simp [d, g]
+    simp [d ]
   have hfilter :
       (∑ i ∈ (Finset.univ : Finset n) with 0 < d i, g i) =
         ∑ i, g i := by
@@ -1050,7 +1050,7 @@ theorem conditionalEntropyRelative_to_conditionalEntropy
 theorem marginalB_posDef_of_posDef
     (ρ : State (Prod a b)) (hρ : ρ.matrix.PosDef) :
     ρ.marginalB.matrix.PosDef := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases ρ.nonempty with ⟨x⟩
     exact ⟨x.1⟩
   simpa [State.marginalB_matrix] using
@@ -1072,15 +1072,12 @@ theorem relativeEntropy_nonneg_of_posDef
     convert hlim using 1
     rw [relativeEntropyPosDefFinite, vonNeumann_eq_neg_trace_mul_psdLog_div_log_two ρ hρ]
     ring_nf
-  haveI : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
+  have : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
     relativeEntropyHighAlphaRightToOne_neBot
   exact ge_of_tendsto hlimRel (Filter.Eventually.of_forall fun alpha => by
     have hnonneg :=
       sandwichedRenyi_nonneg_of_one_lt ρ σ hρ hσ alpha.1 alpha.2
-    convert hnonneg using 1 <;> first
-      | rfl
-      | simp [sandwichedRenyiPSDReferenceHighAlphaFinite,
-          sandwichedRenyi_eq_log2_psdTracePower_inner])
+    convert hnonneg using 1 <;> rfl)
 
 /-- Fixed-reference conditional entropy is bounded above by the canonical
 conditional von Neumann entropy.
@@ -1636,7 +1633,7 @@ theorem conditionalPetzRenyiTraceTerm_half_eq_support_inv_sqrt_sum
         (f := g)]
       congr 1
       ext j
-      simp [d, g]
+      simp [d ]
     have hfilter :
         (∑ j ∈ (Finset.univ : Finset (Prod a b)) with 0 < d j, g j) =
           ∑ j, g j := by
@@ -2461,7 +2458,7 @@ private theorem cMatrix_mul_inv_mul_self_le_smul_of_posSemidef_le_posDef
   have hblock :
       (Matrix.fromBlocks A A A C : CMatrix (Sum n n)).PosSemidef :=
     cMatrix_fromBlocks_self_le_posSemidef hA hCminusA
-  letI : Invertible C := hC.isUnit.invertible
+  let : Invertible C := hC.isUnit.invertible
   have hblock' :
       (Matrix.fromBlocks A A A.conjTranspose C : CMatrix (Sum n n)).PosSemidef := by
     simpa [hA.isHermitian.eq] using hblock
@@ -2474,7 +2471,7 @@ private theorem cMatrix_mul_inv_mul_self_le_smul_of_posSemidef_le_posDef
     simpa [hA.isHermitian.eq] using hschur
   have hcne : (c : ℂ) ≠ 0 := by
     exact_mod_cast hc.ne'
-  letI : Invertible (c : ℂ) := invertibleOfNonzero hcne
+  let : Invertible (c : ℂ) := invertibleOfNonzero hcne
   have hσdet : IsUnit σ.det := (Matrix.isUnit_iff_isUnit_det σ).mp hσ.isUnit
   have hCinv : C⁻¹ = ((c : ℂ)⁻¹) • σ⁻¹ := by
     calc
@@ -3270,7 +3267,7 @@ theorem conditionalPetzRenyiTraceTerm_pos_of_posDef
     (σ : State b) (hσ : σ.matrix.PosDef) (α : ℝ) :
     0 < ρ.conditionalPetzRenyiTraceTerm σ α := by
   dsimp [conditionalPetzRenyiTraceTerm]
-  haveI : Nonempty (Prod a b) := ρ.nonempty
+  have : Nonempty (Prod a b) := ρ.nonempty
   exact trace_mul_posDef_re_pos
     (ρ.rpowMatrix_posDef_of_posDef hρ α)
     (cMatrix_rpow_posDef_of_posDef
@@ -3548,7 +3545,7 @@ theorem tensorPowerBipartite_conditionalPetzRenyiTraceTerm_succ_fullReference
           Matrix.one_apply, hij]
         exact congrFun (congrFun hτB_matrix i.2) j.2
       · simp [identityTensorStateMatrix, Matrix.kronecker, Matrix.kroneckerMap_apply,
-          Matrix.one_apply, hij]
+           hij]
     dsimp [conditionalPetzRenyiTraceTerm]
     rw [hτ_matrix', hτB_ref, ← hτ_matrix_def]
   have hprod :=
@@ -5006,8 +5003,6 @@ theorem conditionalPetzRenyiEntropyCandidateFullReference_alpha_bound
           (lt_trans zero_lt_one hα_gt) ((ne_of_lt hα_gt).symm) =
         -(1 / β) * log2 (ρ.conditionalPetzRenyiTraceTerm σ α) := by
     dsimp [conditionalPetzRenyiEntropyCandidateFullReference]
-    change (1 / (1 - α)) * log2 (ρ.conditionalPetzRenyiTraceTerm σ α) =
-      -(1 / β) * log2 (ρ.conditionalPetzRenyiTraceTerm σ α)
     have hone : 1 - α = -β := by
       dsimp [β]
       ring

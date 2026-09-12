@@ -592,9 +592,9 @@ private theorem tensorPowerProfile_tail_factorial_prod_mul {n : ℕ}
       ∏ y : a, Nat.factorial (p.1 y) := by
   classical
   have hzmem : z ∈ (Finset.univ : Finset a) := Finset.mem_univ z
-  rw [Finset.prod_eq_prod_diff_singleton_mul (s := (Finset.univ : Finset a)) hzmem
+  rw [Finset.prod_eq_prod_sdiff_singleton_mul (s := (Finset.univ : Finset a)) hzmem
       (f := fun y => Nat.factorial (p.1 y))]
-  rw [Finset.prod_eq_prod_diff_singleton_mul (s := (Finset.univ : Finset a)) hzmem
+  rw [Finset.prod_eq_prod_sdiff_singleton_mul (s := (Finset.univ : Finset a)) hzmem
       (f := fun y =>
         Nat.factorial ((TensorPowerProfile.tailAfterHead (a := a) p z hz).1 y))]
   have htail_z :
@@ -1561,7 +1561,7 @@ theorem tensorPowerProfileUnitVector_inner {n : ℕ}
   · subst q
     have htrace := tensorPowerProfileUnitVector_trace_rankOne_eq_one (a := a) p
     rw [Matrix.trace] at htrace
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     simpa [rankOneMatrix_apply, mul_comm] using htrace
   · have hzero :
       ∀ x : TensorPower a n,
@@ -1577,7 +1577,7 @@ theorem tensorPowerProfileUnitVector_inner {n : ℕ}
             ← (mem_tensorPowerProfileClass (a := a) q x).mp hxq]
         simp [tensorPowerProfileUnitVector, hxp, hxq]
       · simp [tensorPowerProfileUnitVector, hxp]
-    rw [if_neg hpq]
+    rw [ite_eq_right hpq]
     exact Finset.sum_eq_zero (fun x _ => hzero x)
 
 private theorem symmetricProjectionMatrix_eq_inv_profileClass_card_of_same_profile
@@ -2238,7 +2238,7 @@ private theorem twoCopyTensorWord_delta_delta_sum (x y : TensorPower a 2) :
   classical
   by_cases hxy : x = y
   · subst y
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     let ix := tensorPowerEquiv (a := a) 2 x 0
     let jx := tensorPowerEquiv (a := a) 2 x 1
     rw [Finset.sum_eq_single ix]
@@ -2264,7 +2264,7 @@ private theorem twoCopyTensorWord_delta_delta_sum (x y : TensorPower a 2) :
       simp [hword]
     · intro hnot
       exact False.elim (hnot (Finset.mem_univ ix))
-  · rw [if_neg hxy]
+  · rw [ite_eq_right hxy]
     apply Finset.sum_eq_zero
     intro i _
     apply Finset.sum_eq_zero
@@ -2505,9 +2505,9 @@ private theorem rankOne_antisymmetricPairVector_ordered_sum_apply
   by_cases hxy : x = y
   · subst x
     by_cases hswap : y = permEquiv (a := a) 2 twoCopySwapPerm y
-    · simp only [if_pos hswap]
+    · simp only [ite_eq_left hswap]
       norm_num
-    · simp only [if_neg hswap]
+    · simp only [ite_eq_right hswap]
       norm_num
   · by_cases hswap : x = permEquiv (a := a) 2 twoCopySwapPerm y <;>
       simp [hxy, hswap]
@@ -2517,10 +2517,10 @@ private theorem rankOne_antisymmetricPairVector_ordered_sum_apply
       rw [hswap, hself]
     have hifself :
         (if permEquiv (a := a) 2 twoCopySwapPerm y = y then (2 : ℂ) else 0) = 0 :=
-      if_neg hself
+      ite_eq_right hself
     have hifself_one :
         (if permEquiv (a := a) 2 twoCopySwapPerm y = y then (1 : ℂ) else 0) = 0 :=
-      if_neg hself
+      ite_eq_right hself
     rw [hifself, hifself_one]
     norm_num
 
@@ -2551,14 +2551,14 @@ theorem antisymmetricProjectionMatrix_two_eq_quarter_sum_rankOne_antisymmetricPa
   · subst x
     by_cases hself : y = permEquiv (a := a) 2 twoCopySwapPerm y
     · have hself' : permEquiv (a := a) 2 twoCopySwapPerm y = y := hself.symm
-      rw [if_pos rfl, if_pos hself, if_pos hself']
-      simp only [if_true]
+      rw [ite_eq_left rfl, ite_eq_left hself, ite_eq_left hself']
+      simp only [ite_true]
       ring_nf
     · have hself' : ¬ permEquiv (a := a) 2 twoCopySwapPerm y = y := by
         intro hself'
         exact hself hself'.symm
-      rw [if_pos rfl, if_neg hself, if_neg hself']
-      simp only [if_true]
+      rw [ite_eq_left rfl, ite_eq_right hself, ite_eq_right hself']
+      simp only [ite_true]
       ring_nf
   · by_cases hswap : x = permEquiv (a := a) 2 twoCopySwapPerm y
     · have hleft : permEquiv (a := a) 2 twoCopySwapPerm x = y := hswap_iff.mpr hswap
@@ -2569,8 +2569,8 @@ theorem antisymmetricProjectionMatrix_two_eq_quarter_sum_rankOne_antisymmetricPa
       have hself' : ¬ y = permEquiv (a := a) 2 twoCopySwapPerm y := by
         intro hself'
         exact hself hself'.symm
-      have hifxy : (if x = y then (2 : ℂ) else 0) = 0 := if_neg hxy
-      rw [if_neg hxy, if_pos hleft, if_pos hswap, hifxy]
+      have hifxy : (if x = y then (2 : ℂ) else 0) = 0 := ite_eq_right hxy
+      rw [ite_eq_right hxy, ite_eq_left hleft, ite_eq_left hswap, hifxy]
       ring_nf
     · have hleft : ¬ permEquiv (a := a) 2 twoCopySwapPerm x = y := by
         intro hleft
@@ -2789,8 +2789,6 @@ theorem permutationTwirling_matrix_apply {n : ℕ} (ρ : State (TensorPower a n)
     ∑ σ : Equiv.Perm (Fin n),
       ρ.matrix (permEquiv (a := a) n σ x) (permEquiv (a := a) n σ y)
   refine Finset.sum_congr rfl fun σ _ => ?_
-  change ((permutationChannel (a := a) n σ).map ρ.matrix) x y =
-    ρ.matrix (permEquiv (a := a) n σ x) (permEquiv (a := a) n σ y)
   exact permutationChannel_map_apply (a := a) n σ ρ.matrix x y
 
 theorem permutationTwirling_isPermutationInvariant {n : ℕ}

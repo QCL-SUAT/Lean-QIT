@@ -1992,8 +1992,8 @@ theorem physicalProtocol_traceNormError_le_rounded :
   let W := B.compressedSourceWitness
   let H := B.oneShotBound
   let sourceIndex := Classical.choice W.unpaddedSource.state.nonempty
-  letI : Nonempty atyp := ⟨sourceIndex.1.1⟩
-  letI : Nonempty btyp := ⟨sourceIndex.1.2⟩
+  let : Nonempty atyp := ⟨sourceIndex.1.1⟩
+  let : Nonempty btyp := ⟨sourceIndex.1.2⟩
   change (W.toFQSWBlockProtocol H).traceNormError ≤
     adhwFQSWIidRoundedPostCompressionTraceErrorBound ε n δ
   calc
@@ -2065,8 +2065,8 @@ theorem physicalProtocol_traceNormError_le :
   let W := B.compressedSourceWitness
   let H := B.oneShotBound
   let sourceIndex := Classical.choice W.unpaddedSource.state.nonempty
-  letI : Nonempty atyp := ⟨sourceIndex.1.1⟩
-  letI : Nonempty btyp := ⟨sourceIndex.1.2⟩
+  let : Nonempty atyp := ⟨sourceIndex.1.1⟩
+  let : Nonempty btyp := ⟨sourceIndex.1.2⟩
   change (W.toFQSWBlockProtocol H).traceNormError ≤
     adhwFQSWIidPostCompressionTraceErrorBound ε n δrate
   calc

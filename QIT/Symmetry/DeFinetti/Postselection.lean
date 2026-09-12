@@ -1837,7 +1837,7 @@ theorem postSelection_inputReferenceAction_le_profile_count
         (MatrixMap.channelDifference Φ Ψ).ancillaNormalizedTraceAction
           (ckrPostSelectionPurifiedReferenceState (a := a) n) := by
   classical
-  letI : Nonempty (QIT.TensorPower a n) := QIT.TensorPower.nonempty (a := a) n
+  let : Nonempty (QIT.TensorPower a n) := QIT.TensorPower.nonempty (a := a) n
   exact postSelection_labelExtensionAction_le_profile_count
     (a := a) (n := n) (b := b)
     (r := QIT.TensorPower a n) Φ Ψ hcov ω

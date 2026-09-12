@@ -204,6 +204,7 @@ theorem hsw_finiteBlock_converse_rate
     field_simp [show (n : ℝ) ≠ 0 by exact_mod_cast (ne_of_gt hn)]
   simpa [hlog] using hsw_finiteBlock_converse_log_card N n M C hFano hCQ hC hε0 hε1
 
+set_option linter.checkUnivs false in
 /-- Every positive block Holevo rate is bounded by the regularized Holevo
 supremum. -/
 theorem blockHolevoRate_le_regularizedHolevoInformation [Nonempty a] [Nonempty b]
@@ -213,6 +214,7 @@ theorem blockHolevoRate_le_regularizedHolevoInformation [Nonempty a] [Nonempty b
   rw [Channel.regularizedHolevoInformation]
   exact le_csSup N.regularizedHolevoRateValues_bddAbove ⟨n, hn, rfl⟩
 
+set_option linter.checkUnivs false in
 /-- The output-dimension bound for every positive block Holevo rate. -/
 theorem blockHolevoRate_le_log_card [Nonempty a] [Nonempty b]
     {n : ℕ} (hn : 0 < n) :
@@ -222,7 +224,7 @@ theorem blockHolevoRate_le_log_card [Nonempty a] [Nonempty b]
   have hbound :
       (Channel.blockHolevoInformation.{uIn, uOut, max uEnsemble uMessage} N) n ≤
         log2 (Fintype.card (QIT.TensorPower b n)) := by
-    haveI : Nonempty (QIT.TensorPower a n) := hswConverse_tensorPower_nonempty a n
+    have : Nonempty (QIT.TensorPower a n) := hswConverse_tensorPower_nonempty a n
     unfold Channel.blockHolevoInformation Channel.holevoInformation
     exact csSup_le
       (N.tensorPower n).holevoInformationValues_nonempty
@@ -243,6 +245,7 @@ private theorem log2_card_nonneg (α : Type uAux) [Fintype α] [Nonempty α] :
   unfold log2
   exact div_nonneg (Real.log_nonneg hcard_one) (le_of_lt (Real.log_pos one_lt_two))
 
+set_option linter.checkUnivs false in
 /-- Supremum squeeze for the regularized Holevo information.
 
 If every positive slack below `R` is witnessed by some positive block Holevo
@@ -282,9 +285,9 @@ theorem le_regularizedHolevoInformation_of_forall_code_blockRate_bound
     uIn, uOut, uEnsemble, uMessage} N ?_
   intro η hη
   obtain ⟨n, M, hMF, hMD, hMne, C, hn, hR, hC⟩ := hcode (η / 2) (by linarith)
-  letI : Fintype M := hMF
-  letI : DecidableEq M := hMD
-  letI : Nonempty M := hMne
+  let : Fintype M := hMF
+  let : DecidableEq M := hMD
+  let : Nonempty M := hMne
   refine ⟨n, hn, ?_⟩
   have hblock :
       R - η / 2 ≤ (Channel.blockHolevoInformation.{uIn, uOut, max uEnsemble uMessage} N) n / (n : ℝ) + η / 2 :=
@@ -473,9 +476,9 @@ theorem hsw_regularizedHolevoInformation_converse
     dsimp [n]
     exact (Nat.le_max_right Nerr Nach).trans (Nat.le_max_right 1 (max Nerr Nach))
   obtain ⟨M, hMF, hMD, hMne, C, hrate, herr⟩ := hNach n hn_ge_Nach
-  letI : Fintype M := hMF
-  letI : DecidableEq M := hMD
-  letI : Nonempty M := hMne
+  let : Fintype M := hMF
+  let : DecidableEq M := hMD
+  let : Nonempty M := hMne
   have hsmall_entropy :
       2 * (binaryEntropy ε / (n : ℝ)) ≤ η / 2 := by
     simpa [mul_div_assoc] using hNerr n hn_ge_Nerr

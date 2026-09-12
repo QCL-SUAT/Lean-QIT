@@ -344,12 +344,12 @@ theorem coordinateYPinchedFullRankPath_posDef
       (fullRankApproxMaximallyMixedStatePath
         (coordinateYPinchedState σ) δ)).cqState.reindex
           (Equiv.prodComm Y B)).matrix.PosDef := by
-  letI : Nonempty Y := by
+  let : Nonempty Y := by
     rcases σ.nonempty with ⟨⟨b, y⟩⟩
     exact ⟨y⟩
   rw [coordinateYPinchedEnsemble_cqState_reindex]
   rw [fullRankApproxMaximallyMixedStatePath, fullRankApproxStatePath,
-    dif_pos hδ]
+    dite_eq_left hδ]
   rw [coordinateYPinchedState_regularized_maximallyMixed_fixed]
   exact fullRankApproxState_posDef_of_noise
     (coordinateYPinchedState σ) (State.maximallyMixed (B × Y))
@@ -617,7 +617,7 @@ theorem sandwiched_reference_cq_prob_pos
     (hF : (F.cqState.reindex (Equiv.prodComm Y B)).matrix.PosDef)
     (y : Y) :
     0 < F.probs y := by
-  letI : Nonempty B := (F.states y).nonempty
+  let : Nonempty B := (F.states y).nonempty
   have hblock := sandwiched_reference_cq_block_posDef F hF y
   have htrace := Matrix.PosDef.trace_pos hblock
   have htrace_re : 0 < (((F.probs y : ℂ) • (F.states y).matrix).trace).re := by
@@ -634,7 +634,7 @@ theorem sandwiched_reference_cq_state_posDef
     (hF : (F.cqState.reindex (Equiv.prodComm Y B)).matrix.PosDef)
     (y : Y) :
     (F.states y).matrix.PosDef := by
-  letI : Nonempty B := (F.states y).nonempty
+  let : Nonempty B := (F.states y).nonempty
   have hqNN : 0 < F.probs y := sandwiched_reference_cq_prob_pos F hF y
   have hq : 0 < (F.probs y : ℝ) := by exact_mod_cast hqNN
   have hblock := sandwiched_reference_cq_block_posDef F hF y

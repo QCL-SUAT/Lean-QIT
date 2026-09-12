@@ -98,7 +98,7 @@ theorem mixedInputOutput_mutualInformation_le_information
     (ρ : State (Prod r a)) :
     mutualInformation (((Channel.idChannel r).prod N).applyState ρ) ≤
       N.entanglementAssistedInformation := by
-  haveI : Nonempty r := by
+  have : Nonempty r := by
     rcases ρ.nonempty with ⟨ra⟩
     exact ⟨ra.1⟩
   let ψ : PureVector (Prod (Prod (Prod r a) r) a) :=
@@ -361,7 +361,7 @@ theorem entanglementAssistedInformation_tensorPower_eq_mul
             exact entanglementAssistedInformation_unit
         _ = ((0 : ℕ) : ℝ) * N.entanglementAssistedInformation := by norm_num
   | succ n ih =>
-      haveI : Nonempty (QIT.TensorPower a n) :=
+      have : Nonempty (QIT.TensorPower a n) :=
         tensorPower_nonempty_of_nonempty (α := a) n
       rw [Channel.tensorPower_succ]
       calc

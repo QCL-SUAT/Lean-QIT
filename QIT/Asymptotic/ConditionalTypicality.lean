@@ -674,7 +674,7 @@ theorem conditionallyAtypicalSpectralWeight_mul_sq_le_logDeviationSecondMoment
     have h_lhs : (if ¬ conditionallyTypicalEigenvalue states δ μ then μ else 0)
         * ((n : ℝ) * δ) ^ 2 = 0 := by
       have hnn : ¬ (¬ conditionallyTypicalEigenvalue states δ μ) := fun h => h htyp
-      rw [if_neg hnn, zero_mul]
+      rw [ite_eq_right hnn, zero_mul]
     rw [h_lhs]
     exact h_rhs_nonneg
   · by_cases hμ_pos : 0 < μ
@@ -692,14 +692,14 @@ theorem conditionallyAtypicalSpectralWeight_mul_sq_le_logDeviationSecondMoment
       have hmul := mul_le_mul_of_nonneg_left hsq hμ_nonneg
       have h_lhs : (if ¬ conditionallyTypicalEigenvalue states δ μ then μ else 0)
           * ((n : ℝ) * δ) ^ 2 = μ * ((n : ℝ) * δ) ^ 2 := by
-        rw [if_pos htyp]
+        rw [ite_eq_left htyp]
       rw [h_lhs]
       exact hmul
     · -- μ = 0: both sides 0 (μ * anything = 0)
       have hμ_zero : μ = 0 := le_antisymm (not_lt.mp hμ_pos) hμ_nonneg
       have h_lhs : (if ¬ conditionallyTypicalEigenvalue states δ μ then μ else 0)
           * ((n : ℝ) * δ) ^ 2 = 0 := by
-        rw [if_pos htyp, hμ_zero, zero_mul]
+        rw [ite_eq_left htyp, hμ_zero, zero_mul]
       have h_rhs : μ * d ^ 2 = 0 := by rw [hμ_zero, zero_mul]
       rw [h_lhs, h_rhs]
 
@@ -800,8 +800,8 @@ theorem conditionallyTypicalSubspaceProjector_dim_le {n : ℕ}
         intro i _
         by_cases hi :
           conditionallyTypicalEigenvalue states δ (τ.pos.isHermitian.eigenvalues i)
-        · rw [if_pos hi]; exact hkey i hi
-        · rw [if_neg hi]
+        · rw [ite_eq_left hi]; exact hkey i hi
+        · rw [ite_eq_right hi]
           exact mul_nonneg (τ.pos.eigenvalues_nonneg i) hbase_pos.le
     _ = Real.rpow 2 (S + (n : ℝ) * δ) *
           ∑ i : TensorPower a n, τ.pos.isHermitian.eigenvalues i := by
@@ -1202,12 +1202,12 @@ theorem averageState_typicalProjector_projectedAvgState_le
   -- by `typicalEigenvalue_le_eigenvalueUpperBound`; rejected entries are 0.
   intro i
   by_cases hi : σbar.typicalEigenvalue n δ (hτ.eigenvalues i)
-  · simp only [hi, if_true]
+  · simp only [hi, ite_true]
     -- `eigenvalues_i ≤ c = 2^{-n(S(σ̄) − δ)}`, equivalently `0 ≤ c − eigenvalues_i`.
     have hle := σbar.typicalEigenvalue_le_eigenvalueUpperBound n δ
       (hτ.eigenvalues i) hi
     exact_mod_cast (sub_nonneg.mpr hle)
-  · simp only [hi, if_false]
+  · simp only [hi, ite_false]
     exact le_refl _
 
 end
@@ -3069,7 +3069,6 @@ the projected-average estimate `h4` are explicit inputs, so no spectral/strong
 projector identification is smuggled in.  In the full HSW direct route these
 inputs are supplied by the conditionally-typical projector estimates and the
 pruned-distribution pack-4 bound. -/
-@[expose]
 noncomputable def hswPackingHypothesesDiagonal_of_pinchedStrongTypical
     {α : Type u} {β : Type v} {𝒳 : Type*}
     [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
@@ -3174,7 +3173,6 @@ instantiate against `E.states x`. The hypothesis `hσbar` identifies the
 instantiates against `E.averageState`. The `h1` argument is the open
 cross-capture hypothesis, passed through unchanged.
 [Wilde2011Qst, qit-notes.tex:33634-33808] -/
-@[expose]
 noncomputable def hswPackingHypothesesSpectral_of_estimates
     {a : Type u} {ι : Type u} {𝒳 : Type*} {n : ℕ}
     [Fintype a] [DecidableEq a] [Fintype ι] [DecidableEq ι]

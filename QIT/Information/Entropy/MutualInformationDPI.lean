@@ -192,7 +192,7 @@ theorem psdSupportLog_embedding_eq_cfc_logZero
       (p := fun x => 0 < d x) (f := g)]
     congr 1
     ext x
-    simp [g, d]
+    simp [ d]
   rw [hleft]
   rw [Finset.sum_filter]
   refine Finset.sum_congr rfl ?_
@@ -554,8 +554,6 @@ theorem marginalB_applyState_prod
           (fun y y' => ∑ i : a, ρ.matrix (i, y) (i, y')) =
             ∑ i : a, S i := by
         ext y y'
-        change (∑ i : a, ρ.matrix (i, y) (i, y')) =
-          (∑ i : a, S i) y y'
         simp only [Matrix.sum_apply]
         rfl
       change (∑ i : a,

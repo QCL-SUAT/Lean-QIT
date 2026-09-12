@@ -387,7 +387,7 @@ private theorem pure_prod_zero_reindex_state_eq_tensorPower_reindex
   apply State.ext
   ext x y
   simp [PureVector.prod_amp, tensorPowerAddZeroEquiv]
-  haveI : Subsingleton (TensorPower a 0) := ⟨fun p q => by cases p; cases q; rfl⟩
+  have : Subsingleton (TensorPower a 0) := ⟨fun p q => by cases p; cases q; rfl⟩
   have hx : ((tensorPowerTakeDropEquiv a m 0) x).1 = x :=
     tensorPowerTakeDropEquiv_zero_fst (a := a) m x
   have hy : ((tensorPowerTakeDropEquiv a m 0) y).1 = y :=
@@ -596,11 +596,11 @@ theorem rennerMIIDProjectorId_zero_eq_rankOneTensorPower
   have happ := congrFun (congrArg WithLp.ofLp
     (RennerMIIDSubspace_zero_starProjection_apply (a := a) m ν x)) i
   simp [rennerMIIDProjectorId, rennerMIIDProjectorFor, Matrix.toEuclideanLin,
-    rankOneMatrix_apply, Matrix.mulVec, dotProduct, PiLp.inner_apply,
-    Finset.mul_sum, mul_comm, mul_left_comm]
+    rankOneMatrix_apply, Matrix.mulVec, dotProduct, 
+     mul_comm ]
   refine happ.trans ?_
-  simp [rankOneMatrix_apply, Matrix.toEuclideanLin, Matrix.mulVec, dotProduct,
-    PiLp.inner_apply, WithLp.ofLp_toLp, RCLike.inner_apply,
+  simp [   
+    PiLp.inner_apply,  RCLike.inner_apply,
     Finset.mul_sum, mul_comm, mul_left_comm]
 
 /-- A state supported in the Renner m-IID span is fixed by the corresponding

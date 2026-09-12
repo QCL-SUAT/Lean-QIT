@@ -53,7 +53,7 @@ theorem ext {rho sigma : State a} (h : rho.matrix = sigma.matrix) : rho = sigma 
 theorem nonempty (rho : State a) : Nonempty a := by
   classical
   by_contra h
-  haveI : IsEmpty a := not_nonempty_iff.mp h
+  have : IsEmpty a := not_nonempty_iff.mp h
   have htrace := rho.trace_eq_one
   simp [Matrix.trace] at htrace
 

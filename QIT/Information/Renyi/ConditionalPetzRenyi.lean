@@ -502,7 +502,7 @@ theorem cMatrix_rpow_submatrix_equiv_nonneg
   have hM_nonneg : 0 ≤ M := Matrix.nonneg_iff_posSemidef.mpr hM
   rw [CFC.rpow_eq_cfc_real (a := M.submatrix e e) (y := s) hsub_nonneg]
   rw [CFC.rpow_eq_cfc_real (a := M) (y := s) hM_nonneg]
-  simpa [conditionalPetzRenyiCMatrixReindexStarAlgEquiv, Matrix.reindexAlgEquiv_apply] using
+  simpa [conditionalPetzRenyiCMatrixReindexStarAlgEquiv, Matrix.coe_reindexAlgEquiv] using
     (StarAlgHomClass.map_cfc
       (conditionalPetzRenyiCMatrixReindexStarAlgEquiv e)
       (fun x : ℝ => x ^ s) M
@@ -662,14 +662,14 @@ theorem conditionalPetzRenyiEntropyCandidate_prod_kroneckerReference
       hρ₁ hσ₁ hρ₂ hσ₂ α
   have hxpos : 0 < conditionalPetzRenyiTraceTerm ρ₁ σ₁ α := by
     dsimp [conditionalPetzRenyiTraceTerm]
-    haveI : Nonempty (Prod a b) := ρ₁.nonempty
+    have : Nonempty (Prod a b) := ρ₁.nonempty
     exact trace_mul_posDef_re_pos
       (ρ₁.rpowMatrix_posDef_of_posDef hρ₁ α)
       (cMatrix_rpow_posDef_of_posDef
         (identityTensorStateMatrix_posDef_of_posDef (a := a) σ₁ hσ₁) (1 - α))
   have hypos : 0 < conditionalPetzRenyiTraceTerm ρ₂ σ₂ α := by
     dsimp [conditionalPetzRenyiTraceTerm]
-    haveI : Nonempty (Prod c d) := ρ₂.nonempty
+    have : Nonempty (Prod c d) := ρ₂.nonempty
     exact trace_mul_posDef_re_pos
       (ρ₂.rpowMatrix_posDef_of_posDef hρ₂ α)
       (cMatrix_rpow_posDef_of_posDef
@@ -857,14 +857,14 @@ theorem conditionalPetzRenyiEntropyCandidate_prod_grouped_of_rpow_reindex
       hρ₁ hσ₁ hρ₂ hσ₂ α hρpow hrefpow
   have hxpos : 0 < conditionalPetzRenyiTraceTerm ρ₁ σ₁ α := by
     dsimp [conditionalPetzRenyiTraceTerm]
-    haveI : Nonempty (Prod a b) := ρ₁.nonempty
+    have : Nonempty (Prod a b) := ρ₁.nonempty
     exact trace_mul_posDef_re_pos
       (ρ₁.rpowMatrix_posDef_of_posDef hρ₁ α)
       (cMatrix_rpow_posDef_of_posDef
         (identityTensorStateMatrix_posDef_of_posDef (a := a) σ₁ hσ₁) (1 - α))
   have hypos : 0 < conditionalPetzRenyiTraceTerm ρ₂ σ₂ α := by
     dsimp [conditionalPetzRenyiTraceTerm]
-    haveI : Nonempty (Prod c d) := ρ₂.nonempty
+    have : Nonempty (Prod c d) := ρ₂.nonempty
     exact trace_mul_posDef_re_pos
       (ρ₂.rpowMatrix_posDef_of_posDef hρ₂ α)
       (cMatrix_rpow_posDef_of_posDef

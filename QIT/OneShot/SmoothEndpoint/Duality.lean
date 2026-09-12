@@ -40,8 +40,8 @@ change its unsmoothed conditional min-entropy. -/
 theorem toSubnormalized_conditionalMinEntropy_eq
     (ρ : State (Prod a b)) :
     ρ.toSubnormalized.conditionalMinEntropy = (ρ.conditionalMinEntropy : EReal) := by
-  letI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
-  letI : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
+  let : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  let : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
   have hstate :
       SubnormalizedState.ofStateScale ρ 1 (by norm_num) (by norm_num) =
         ρ.toSubnormalized := by
@@ -60,8 +60,8 @@ theorem toSubnormalized_conditionalMinEntropyFinite_eq
     (ρ : State (Prod a b)) :
     ρ.toSubnormalized.conditionalMinEntropyFinite ρ.toSubnormalized_matrix_ne_zero =
       ρ.conditionalMinEntropy := by
-  letI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
-  letI : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
+  let : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  let : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
   have hstate :
       SubnormalizedState.ofStateScale ρ 1 (by norm_num) (by norm_num) =
         ρ.toSubnormalized := by
@@ -85,8 +85,8 @@ change its unsmoothed conditional max-entropy. -/
 theorem toSubnormalized_conditionalMaxEntropy_eq
     (ρ : State (Prod a b)) :
     ρ.toSubnormalized.conditionalMaxEntropy = (ρ.conditionalMaxEntropy : EReal) := by
-  letI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
-  letI : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
+  let : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  let : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
   have hstate :
       SubnormalizedState.ofStateScale ρ 1 (by norm_num) (by norm_num) =
         ρ.toSubnormalized := by
@@ -105,8 +105,8 @@ theorem toSubnormalized_conditionalMaxEntropyFinite_eq
     (ρ : State (Prod a b)) :
     ρ.toSubnormalized.conditionalMaxEntropyFinite ρ.toSubnormalized_matrix_ne_zero =
       ρ.conditionalMaxEntropy := by
-  letI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
-  letI : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
+  let : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  let : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
   have hstate :
       SubnormalizedState.ofStateScale ρ 1 (by norm_num) (by norm_num) =
         ρ.toSubnormalized := by
@@ -1840,7 +1840,7 @@ theorem SmoothConditionalMinEntropyCandidate_bddAbove
       let ⟨_, hτ⟩ := hlam
       conditionalMinEntropyFeasible_le_log2_card_left (a := a) hτ
   · rw [Set.not_nonempty_iff_eq_empty.mp hne, Real.sSup_empty]
-    haveI : Nonempty a := ⟨(Classical.choice ρ'.nonempty).1⟩
+    have : Nonempty a := ⟨(Classical.choice ρ'.nonempty).1⟩
     have hcard_one : 1 ≤ (Fintype.card a : ℝ) := by
       exact_mod_cast (Nat.succ_le_of_lt (Fintype.card_pos_iff.mpr inferInstance))
     exact div_nonneg (Real.log_nonneg hcard_one)

@@ -19,7 +19,8 @@ public import QIT.States.Geometry.PurifiedDistance
 public import QIT.States.Subnormalized
 public import QIT.States.TraceNorm.PositivePart
 public import QIT.States.Purification.Conditioning
-public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Algebra.Order.AbsoluteValue.Basic
+import Mathlib.Data.Rat.Floor
 
 /-!
 # Smooth min/max entropy
@@ -2912,7 +2913,7 @@ theorem smoothConditionalMaxEntropyRaw_eq_neg_smoothConditionalMinEntropyRaw_of_
     {h : ℝ | SmoothConditionalMinEntropyCandidateRaw (a := a) ρAC ε h}
   have hset : maxSet = -minSet := by
     ext h
-    simp only [maxSet, minSet, Set.mem_setOf_eq, Set.mem_neg]
+    simp only [maxSet, minSet, Set.mem_ofPred_eq, Set.mem_neg]
     exact hdual h
   calc
     ρAB.smoothConditionalMaxEntropyRaw ε = sInf maxSet := rfl
@@ -3239,7 +3240,7 @@ theorem smoothConditionalMaxEntropyNormalizedCandidates_eq_neg_smoothConditional
   let minSet : Set ℝ := {h : ℝ | SmoothConditionalMinEntropyCandidate (a := a) ρAC ε h}
   have hset : maxSet = -minSet := by
     ext h
-    simp only [maxSet, minSet, Set.mem_setOf_eq, Set.mem_neg]
+    simp only [maxSet, minSet, Set.mem_ofPred_eq, Set.mem_neg]
     exact hdual h
   calc
     ρAB.smoothConditionalMaxEntropyNormalizedCandidates ε = sInf maxSet := rfl

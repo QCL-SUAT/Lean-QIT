@@ -55,8 +55,8 @@ theorem sandwichedRenyiMutualInformationE_prod_le_fullRankProductCB_sInf
           ℝ) : EReal) := by
   let S1 := {sigma : State b1 // sigma.matrix.PosDef}
   let S2 := {sigma : State b2 // sigma.matrix.PosDef}
-  haveI : Nonempty S1 := ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
-  haveI : Nonempty S2 := ⟨⟨State.maximallyMixed b2, State.maximallyMixed_posDef⟩⟩
+  have : Nonempty S1 := ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
+  have : Nonempty S2 := ⟨⟨State.maximallyMixed b2, State.maximallyMixed_posDef⟩⟩
   let f : S1 × S2 → ℝ := fun p =>
     sandwichedRenyiCBNormExpression (N1.prod N2) (p.1.1.prod p.2.1)
       (SchattenOrder.ofOneLt halpha)
@@ -97,8 +97,8 @@ theorem sandwichedRenyiMutualInformationE_prod_le_fullRankProductCB_sInf_EReal
           (SchattenOrder.ofOneLt halpha) : ℝ) : EReal)) := by
   let S1 := {sigma : State b1 // sigma.matrix.PosDef}
   let S2 := {sigma : State b2 // sigma.matrix.PosDef}
-  haveI : Nonempty S1 := ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
-  haveI : Nonempty S2 := ⟨⟨State.maximallyMixed b2, State.maximallyMixed_posDef⟩⟩
+  have : Nonempty S1 := ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
+  have : Nonempty S2 := ⟨⟨State.maximallyMixed b2, State.maximallyMixed_posDef⟩⟩
   let f : Prod S1 S2 → ℝ := fun p =>
     sandwichedRenyiCBNormExpression (N1.prod N2) (p.1.1.prod p.2.1)
       (SchattenOrder.ofOneLt halpha)
@@ -334,8 +334,8 @@ theorem sandwichedRenyiMutualInformationE_prod_ge_add_of_state_product_ge
     N1.sandwichedRenyiMutualInformationE alpha +
         N2.sandwichedRenyiMutualInformationE alpha ≤
       (N1.prod N2).sandwichedRenyiMutualInformationE alpha := by
-  haveI : Nonempty (PureVector (Prod a1 a1)) := ⟨PureVector.basisPureVector⟩
-  haveI : Nonempty (PureVector (Prod a2 a2)) := ⟨PureVector.basisPureVector⟩
+  have : Nonempty (PureVector (Prod a1 a1)) := ⟨PureVector.basisPureVector⟩
+  have : Nonempty (PureVector (Prod a2 a2)) := ⟨PureVector.basisPureVector⟩
   rw [N1.sandwichedRenyiMutualInformationE_eq_sSup,
     N2.sandwichedRenyiMutualInformationE_eq_sSup]
   refine EReal.add_le_of_forall_lt ?_
@@ -619,8 +619,8 @@ theorem sandwichedRenyiCBAlternateExpression_fullRankProduct_sInf_eq_add
             (SchattenOrder.ofOneLt halpha))) := by
   let S1 := {sigma : State b1 // sigma.matrix.PosDef}
   let S2 := {sigma : State b2 // sigma.matrix.PosDef}
-  haveI : Nonempty S1 := ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
-  haveI : Nonempty S2 := ⟨⟨State.maximallyMixed b2, State.maximallyMixed_posDef⟩⟩
+  have : Nonempty S1 := ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
+  have : Nonempty S2 := ⟨⟨State.maximallyMixed b2, State.maximallyMixed_posDef⟩⟩
   let f : S1 → ℝ := fun sigma1 =>
     alpha / (alpha - 1) *
       log2 (MatrixMap.cbOneToAlphaAlternateExpression
@@ -724,8 +724,8 @@ theorem sandwichedRenyiCBNormExpression_fullRankProduct_sInf_eq_add
         sandwichedRenyiCBNormExpression N2 sigma2.1 (SchattenOrder.ofOneLt halpha)) := by
   let S1 := {sigma : State b1 // sigma.matrix.PosDef}
   let S2 := {sigma : State b2 // sigma.matrix.PosDef}
-  haveI : Nonempty S1 := ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
-  haveI : Nonempty S2 := ⟨⟨State.maximallyMixed b2, State.maximallyMixed_posDef⟩⟩
+  have : Nonempty S1 := ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
+  have : Nonempty S2 := ⟨⟨State.maximallyMixed b2, State.maximallyMixed_posDef⟩⟩
   let f : S1 → ℝ := fun sigma1 => sandwichedRenyiCBNormExpression N1 sigma1.1 (SchattenOrder.ofOneLt halpha)
   let g : S2 → ℝ := fun sigma2 => sandwichedRenyiCBNormExpression N2 sigma2.1 (SchattenOrder.ofOneLt halpha)
   have hpoint :

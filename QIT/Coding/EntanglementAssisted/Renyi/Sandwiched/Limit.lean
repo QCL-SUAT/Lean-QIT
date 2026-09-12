@@ -390,13 +390,13 @@ theorem weighted_alphaObjective_deriv_nonneg
   have hγderiv : HasDerivAt (fun α : ℝ => (1 - α) / α) (-1 / α ^ 2) α := by
     have hnum : HasDerivAt (fun α : ℝ => 1 - α) (-1) α := by
       convert (hasDerivAt_const (x := α) (c := (1 : ℝ))).sub (hasDerivAt_id α) using 1 <;>
-        (try rfl) <;> (try (funext x; simp only [Pi.sub_apply, id_eq])) <;> (try norm_num) <;> (try ring_nf)
+        (try rfl); (try norm_num)
     have hdiv := hnum.div (hasDerivAt_id α) (ne_of_gt hα_pos)
     convert hdiv using 1 <;>
       first | rfl | (simp only [id_eq]; ring)
   have hcomp : HasDerivAt (fun α : ℝ => F ((1 - α) / α)) (F' * (-1 / α ^ 2)) α := by
     convert hF.comp α hγderiv using 1 <;>
-      first | rfl | (funext x; simp [Function.comp_def])
+      rfl
   have hD :
       HasDerivAt
         (fun α : ℝ => -(F ((1 - α) / α) / Real.log 2))
@@ -524,7 +524,7 @@ theorem le_of_tendsto_relativeEntropyHighAlphaRightToOne_of_monotone
     (hlower : lower ≤ limit) :
     ∀ alpha : {alpha : Real // 1 < alpha}, lower ≤ f alpha := by
   intro alpha
-  haveI : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
+  have : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
     relativeEntropyHighAlphaRightToOne_neBot
   have hconst :
       Tendsto (fun _ : {alpha : Real // 1 < alpha} => f alpha)
@@ -707,7 +707,7 @@ theorem sandwichedRenyiMutualInformationE_eventually_lower_of_eventually_candida
       (mutualInformation rhoAB : EReal) ≤
         rhoAB.sandwichedRenyiMutualInformationE alpha.1 := by
   classical
-  haveI : Nonempty b := by
+  have : Nonempty b := by
     rcases rhoAB.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   filter_upwards [hcandidate] with alpha halpha
@@ -1521,7 +1521,7 @@ theorem relativeEntropyPSDReferenceE_prod_leftReference_iInf_eq_mutualInformatio
           (rhoAB.marginalA.prod sigmaB).pos) =
       (mutualInformation rhoAB : EReal) := by
   classical
-  haveI : Nonempty b := by
+  have : Nonempty b := by
     rcases rhoAB.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   refine le_antisymm ?_ ?_
@@ -1622,7 +1622,7 @@ theorem sandwichedRenyiMutualInformationCandidateE_iInf_eq_relativeEntropyPSDRef
             (rhoAB.marginalA.prod sigmaB).pos)) :=
     rhoAB.sandwichedRenyiMutualInformationCandidateE_tendsto_relativeEntropyPSDReferenceE
       sigmaB
-  haveI : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
+  have : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
     relativeEntropyHighAlphaRightToOne_neBot
   exact tendsto_nhds_unique hlimInf hlimMI
 
@@ -1648,7 +1648,7 @@ theorem sandwichedRenyiMutualInformationE_iInf_eq_mutualInformation
         rhoAB.sandwichedRenyiMutualInformationE alpha.1) =
       (mutualInformation rhoAB : EReal) := by
   classical
-  haveI : Nonempty b := by
+  have : Nonempty b := by
     rcases rhoAB.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   -- Bridge C step 1: free `iInf_comm` over the independent index sets.
@@ -1938,7 +1938,7 @@ private theorem sandwichedRenyiMutualInformationE_mono_of_supportCompress_mono_a
       alpha.1 ≤ beta.1 →
         rhoAB.sandwichedRenyiMutualInformationE alpha.1 ≤
           rhoAB.sandwichedRenyiMutualInformationE beta.1 := by
-  haveI : Nonempty b := by
+  have : Nonempty b := by
     rcases rhoAB.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   refine rhoAB.sandwichedRenyiMutualInformationE_mono_of_candidate_mono ?_
@@ -1968,10 +1968,10 @@ theorem sandwichedRenyiMutualInformationE_iInf_eq_mutualInformation_of_chainRule
     (⨅ alpha : {alpha : Real // 1 < alpha},
         rhoAB.sandwichedRenyiMutualInformationE alpha.1) =
       (mutualInformation rhoAB : EReal) := by
-  haveI : Nonempty b := by
+  have : Nonempty b := by
     rcases rhoAB.nonempty with ⟨x⟩
     exact ⟨x.2⟩
-  haveI : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
+  have : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
     relativeEntropyHighAlphaRightToOne_neBot
   have hstateMono :
       ∀ alpha beta : {alpha : Real // 1 < alpha},
@@ -2089,7 +2089,7 @@ theorem sandwichedRenyiMutualInformationE_iInf_eq_mutualInformation_of_tendsto_a
     (⨅ alpha : {alpha : Real // 1 < alpha},
         rhoAB.sandwichedRenyiMutualInformationE alpha.1) =
       (mutualInformation rhoAB : EReal) := by
-  haveI : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
+  have : Filter.NeBot relativeEntropyHighAlphaRightToOne :=
     relativeEntropyHighAlphaRightToOne_neBot
   have hlimInf :
       Tendsto
@@ -2297,7 +2297,7 @@ theorem sandwichedRenyiMutualInformationE_mono_of_candidate_mono
           N.sandwichedRenyiMutualInformationE beta.1 := by
   refine N.sandwichedRenyiMutualInformationE_mono_of_input_mono ?_
   intro psi alpha beta hab
-  haveI : Nonempty b := by
+  have : Nonempty b := by
     rcases (N.hypothesisTestingOutputState psi).nonempty with ⟨x⟩
     exact ⟨x.2⟩
   simpa [Channel.inputSandwichedRenyiMutualInformationE] using
@@ -2557,7 +2557,7 @@ theorem sandwichedRenyiMutualInformationE_iInf_iSup_eq_iSup_iInf_of_mosonyi_hiai
       (⨆ psi : PureVector (Prod a a),
         ⨅ alpha : {alpha : Real // 1 < alpha},
           (N.hypothesisTestingOutputState psi).sandwichedRenyiMutualInformationE alpha.1) := by
-  haveI : Nonempty (PureVector (Prod a a)) := ⟨PureVector.basisPureVector⟩
+  have : Nonempty (PureVector (Prod a a)) := ⟨PureVector.basisPureVector⟩
   let X : Set (PureVector (Prod a a)) := Set.univ
   let Y : Set {alpha : Real // 1 < alpha} := Set.univ
   let F : PureVector (Prod a a) → {alpha : Real // 1 < alpha} → EReal :=
@@ -2632,7 +2632,7 @@ theorem sandwichedRenyiMutualInformationE_iInf_iSup_eq_iSup_iInf_of_candidate_hu
       N.inputSandwichedRenyiMutualInformationE_upperSemicontinuousOn_of_candidate
         alpha (husc alpha)
   · intro psi alpha beta hab
-    haveI : Nonempty b := by
+    have : Nonempty b := by
       rcases (N.hypothesisTestingOutputState psi).nonempty with ⟨x⟩
       exact ⟨x.2⟩
     exact
@@ -3145,7 +3145,7 @@ theorem sandwichedRenyiMutualInformationE_tendsto_information_of_optimized_husc_
     N.sandwichedRenyiMutualInformationE_tendsto_information_of_optimized_mosonyi_hiai
       husc ?_ ?_
   · intro psi alpha beta hab
-    haveI : Nonempty b := by
+    have : Nonempty b := by
       rcases (N.hypothesisTestingOutputState psi).nonempty with ⟨w⟩
       exact ⟨w.2⟩
     refine

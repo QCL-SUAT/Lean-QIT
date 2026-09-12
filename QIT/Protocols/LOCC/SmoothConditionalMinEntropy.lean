@@ -81,7 +81,7 @@ def classicalCopyProjector (I : Type u) [Fintype I] [DecidableEq I] :
 namespace ProjectiveMeasurementLift
 
 open scoped ComplexOrder MatrixOrder
-open Matrix
+open QIT.Matrix
 
 local postfix:1024 "†" => Matrix.conjTranspose
 
@@ -387,7 +387,7 @@ theorem alignPhase_mul (z : Complex) :
   by_cases hz : z = 0
   · simp [alignPhase, hz]
   · have hn : ‖z‖ ≠ 0 := norm_ne_zero_iff.mpr hz
-    rw [alignPhase, if_neg hz]
+    rw [alignPhase, ite_eq_right hz]
     calc
       star z / (‖z‖ : Complex) * z =
           (star z * z) / (‖z‖ : Complex) := by ring
@@ -687,7 +687,7 @@ end ProjectiveMeasurementLift
 namespace SubnormalizedState
 
 open scoped ComplexOrder MatrixOrder
-open Matrix ProjectiveMeasurementLift
+open QIT.Matrix ProjectiveMeasurementLift
 
 local postfix:1024 "†" => Matrix.conjTranspose
 
@@ -705,9 +705,9 @@ theorem exists_projectiveMeasurementPreimage_of_purifiedBall
       rho.toSubnormalized.purifiedBall epsilon tau /\
         tau.sourceCoordinatePinch = sigma := by
   classical
-  letI : Nonempty (Prod I B) := rho.nonempty
-  letI : Nonempty I := ⟨rho.nonempty.some.1⟩
-  letI : Nonempty B := ⟨rho.nonempty.some.2⟩
+  let : Nonempty (Prod I B) := rho.nonempty
+  let : Nonempty I := ⟨rho.nonempty.some.1⟩
+  let : Nonempty B := ⟨rho.nonempty.some.2⟩
   let psi : PureVector (Prod (Prod I B) (Prod I B)) := rho.canonicalPurification
   let X : Matrix (Prod I B) (Prod I B) Complex := psi.amplitudeMatrix
   let A : I → CMatrix B := fun i => Classical.block rho.matrix i i
@@ -1328,8 +1328,8 @@ theorem coherentProjectiveSourceReferenceState_block
       star (if r' = s then M.refinedKraus i a'' x else 0) =
         if r' = s then star (M.refinedKraus i a'' x) else 0 := by
     by_cases h : r' = s
-    · rw [if_pos h, if_pos h]
-    · rw [if_neg h, if_neg h]
+    · rw [ite_eq_left h, ite_eq_left h]
+    · rw [ite_eq_right h, ite_eq_right h]
       exact map_zero (starRingEnd Complex)
   simp only [ReferenceIsometry.targetBlock, refinedStinespringIsometry_matrix_apply,
     Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.kronecker,

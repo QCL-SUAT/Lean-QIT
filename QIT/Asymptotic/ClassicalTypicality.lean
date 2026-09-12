@@ -490,11 +490,11 @@ theorem conditionalProductMass_expect_two_coordinates [Fintype β] [DecidableEq 
           have hsum : ∑ z : β, (K.prob (xseq l) z : ℝ) = 1 := by
             exact_mod_cast K.sum_eq_one (xseq l)
           simp [F, hli, hlj, hsum]
-        rw [Finset.prod_eq_mul_prod_diff_singleton_of_mem (Finset.mem_univ i)]
+        rw [Finset.prod_eq_mul_prod_sdiff_singleton_of_mem (Finset.mem_univ i)]
         rw [Finset.sdiff_singleton_eq_erase]
         have hjmem : j ∈ Finset.univ.erase i := by
           simp [hij.symm]
-        rw [Finset.prod_eq_mul_prod_diff_singleton_of_mem hjmem]
+        rw [Finset.prod_eq_mul_prod_sdiff_singleton_of_mem hjmem]
         rw [Finset.sdiff_singleton_eq_erase]
         rw [Finset.prod_eq_one hFrest]
         rw [hFi, hFj]

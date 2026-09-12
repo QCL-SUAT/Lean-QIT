@@ -161,7 +161,7 @@ private theorem classicalPinch_matrix_apply
         exact Prod.ext (hcoord.1.trans h.1).symm (hcoord.2.trans h.2).symm
       simp [hnot]
     · simp
-  · rw [if_neg hcoord]
+  · rw [ite_eq_right hcoord]
     apply Finset.sum_eq_zero
     intro k _
     by_cases hj : j.1.2 = k.1 ∧ j.2.1 = k.2
@@ -222,7 +222,7 @@ private theorem classicalCoordinateMeasure_map_apply (X : CMatrix y) (i j : y) :
   simp only [Matrix.sum_apply, Matrix.smul_apply, POVM.coordinate_effects]
   by_cases hij : i = j
   · subst j
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     rw [Finset.sum_eq_single i]
     · rw [Matrix.trace_mul_single]
       simp
@@ -230,7 +230,7 @@ private theorem classicalCoordinateMeasure_map_apply (X : CMatrix y) (i j : y) :
       simp [hki]
     · intro hi
       simp at hi
-  · rw [if_neg hij]
+  · rw [ite_eq_right hij]
     refine Finset.sum_eq_zero fun k _ => ?_
     have hnot : ¬ (k = i ∧ k = j) := by
       intro h
@@ -266,7 +266,7 @@ private theorem classicalPinching_map_apply
         exact Prod.ext (hcoord.1.trans h.1).symm (hcoord.2.trans h.2).symm
       simp [hnot]
     · simp
-  · rw [if_neg hcoord]
+  · rw [ite_eq_right hcoord]
     apply Finset.sum_eq_zero
     intro k _
     by_cases hj : j.1.2 = k.1 ∧ j.2.1 = k.2
@@ -318,7 +318,7 @@ private theorem nonempty_of_trace_pos
     (M : CMatrix c) (hM : 0 < M.trace.re) : Nonempty c := by
   classical
   by_contra hne
-  haveI : IsEmpty c := not_nonempty_iff.mp hne
+  have : IsEmpty c := not_nonempty_iff.mp hne
   simp at hM
 
 private theorem classicalPinch_trace_re
@@ -355,10 +355,10 @@ private theorem conditionalMinEntropyRaw_le_classicalPinch_of_trace_pos
     rho.conditionalMinEntropyRaw ≤ (classicalPinch rho).conditionalMinEntropyRaw := by
   have hfull : Nonempty ((a × x) × (y × b)) :=
     nonempty_of_trace_pos rho.matrix hρ
-  letI : Nonempty (a × x) := by
+  let : Nonempty (a × x) := by
     rcases hfull with ⟨i⟩
     exact ⟨i.1⟩
-  letI : Nonempty (y × b) := by
+  let : Nonempty (y × b) := by
     rcases hfull with ⟨i⟩
     exact ⟨i.2⟩
   have hpinched : 0 < (classicalPinch rho).matrix.trace.re := by
@@ -398,10 +398,10 @@ private theorem conditionalMaxEntropyRaw_le_classicalPinch_of_trace_pos
     exact hρ
   have hfull : Nonempty ((a × x) × (y × b)) :=
     nonempty_of_trace_pos rho.matrix hρ
-  letI : Nonempty (a × x) := by
+  let : Nonempty (a × x) := by
     rcases hfull with ⟨i⟩
     exact ⟨i.1⟩
-  letI : Nonempty (y × b) := by
+  let : Nonempty (y × b) := by
     rcases hfull with ⟨i⟩
     exact ⟨i.2⟩
   have hne := rho.conditionalMaxEntropyPositiveExponentValueSet_nonempty_of_trace_pos
@@ -589,10 +589,10 @@ theorem smoothConditionalMinEntropy_exists_classical_optimizer
     Real.sqrt_pos.mp (lt_of_le_of_lt hε0 hε)
   have hfull : Nonempty ((a × x) × (y × b)) :=
     nonempty_of_trace_pos rho.matrix hρ
-  letI : Nonempty (a × x) := by
+  let : Nonempty (a × x) := by
     rcases hfull with ⟨i⟩
     exact ⟨i.1⟩
-  letI : Nonempty (y × b) := by
+  let : Nonempty (y × b) := by
     rcases hfull with ⟨i⟩
     exact ⟨i.2⟩
   rcases smoothConditionalMinEntropy_exists_optimizer
@@ -770,7 +770,7 @@ private theorem classicalCoherentMap_traceNonincreasing
     simpa only [Matrix.mul_one] using hnonneg
   exact sub_nonneg.mp hnonneg'
 
-private def classicalCoherentMapTraceNonincreasingCP
+private theorem classicalCoherentMapTraceNonincreasingCP
     {c : Type*} [Fintype c] [DecidableEq c]
     {y' : Type*} [Fintype y'] [DecidableEq y'] :
     MatrixMap.TraceNonincreasingCP
@@ -823,7 +823,7 @@ private theorem classicalCoherentMap_apply
         exact (hcoord.2.2.trans h.2).symm
       simp [hnot]
     · simp
-  · rw [if_neg hcoord]
+  · rw [ite_eq_right hcoord]
     apply Finset.sum_eq_zero
     intro k _
     by_cases hj : j.1.2 = j.2.2.1 ∧ j.2.2.2 = k
@@ -977,7 +977,7 @@ private theorem sourceCoherentMap_traceNonincreasing
     simpa only [Matrix.mul_one] using hnonneg
   exact sub_nonneg.mp hnonneg'
 
-private def sourceCoherentMapTraceNonincreasingCP
+private theorem sourceCoherentMapTraceNonincreasingCP
     {c : Type*} [Fintype c] [DecidableEq c]
     {y' : Type*} [Fintype y'] [DecidableEq y'] :
     MatrixMap.TraceNonincreasingCP
@@ -1032,7 +1032,7 @@ private theorem sourceCoherentMap_apply
         exact Prod.ext hi1.symm hiy.symm
       simp [hnot]
     · simp
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     apply Finset.sum_eq_zero
     intro pk _
     by_cases hk : i.1.2 = pk.1 ∧ i.2.2.1 = pk.1 ∧ i.2.2.2 = pk.2 ∧
@@ -1518,9 +1518,9 @@ private theorem coherentMaxPure_amp_X
   by_cases hi : i.1.2 = k.2.1 ∧ k.2.2 = i.2.1
   · by_cases hj : j.1.2 = k.2.1 ∧ k.2.2 = j.2.1
     · exact (hij (hi.1.trans hj.1.symm)).elim
-    · rw [if_pos hi, if_neg hj]
+    · rw [ite_eq_left hi, ite_eq_right hj]
       simp
-  · rw [if_neg hi]
+  · rw [ite_eq_right hi]
 
 private theorem coherentMaxPure_amp_Y
     {c : Type*} [Fintype c] [DecidableEq c]
@@ -1543,9 +1543,9 @@ private theorem coherentMaxPure_amp_Y
   by_cases hi : i.1.2 = k.2.1 ∧ k.2.2 = i.2.1
   · by_cases hj : j.1.2 = k.2.1 ∧ k.2.2 = j.2.1
     · exact (hij (hi.2.symm.trans hj.2)).elim
-    · rw [if_pos hi, if_neg hj]
+    · rw [ite_eq_left hi, ite_eq_right hj]
       simp
-  · rw [if_neg hi]
+  · rw [ite_eq_right hi]
 
 private theorem coherentMaxPure_acMarginal
     {c : Type*} [Fintype c] [DecidableEq c]
@@ -1768,17 +1768,17 @@ private theorem classicalCoherentMap_fixed
     · by_cases hy : i.2.2.2 = j.2.2.2
       · simp [hcopyi, hcopyj, hy]
       · have hz := hclassical i j (Or.inr (Or.inr hy))
-        rw [if_neg]
+        rw [ite_eq_right]
         · exact hz.symm
         · intro hall
           exact hy hall.2.2
     · have hz := hclassical i j (Or.inr (Or.inl hcopyj))
-      rw [if_neg]
+      rw [ite_eq_right]
       · exact hz.symm
       · intro hall
         exact hcopyj hall.2.1
   · have hz := hclassical i j (Or.inl hcopyi)
-    rw [if_neg]
+    rw [ite_eq_right]
     · exact hz.symm
     · intro hall
       exact hcopyi hall.1
@@ -1992,12 +1992,12 @@ private theorem classicalCoherentMap_reference_residual
   simp only [Matrix.one_apply, Matrix.kroneckerMap_apply]
   by_cases houter : i.1 = j.1
   · have houterx : i.1.2 = j.1.2 := congrArg Prod.snd houter
-    simp only [if_pos houter, one_mul]
+    simp only [ite_eq_left houter, one_mul]
     by_cases htx : i.2.2.1 = j.2.2.1
     · by_cases hy : i.2.2.2 = j.2.2.2
       · have hcoord : i.2.2.1 = j.2.2.1 ∧
             i.2.2.2 = j.2.2.2 := ⟨htx, hy⟩
-        rw [if_pos hcoord]
+        rw [ite_eq_left hcoord]
         have hcoh :
             (i.1.2 = i.2.2.1 ∧ j.1.2 = j.2.2.1 ∧
               i.2.2.2 = j.2.2.2) ↔ i.1.2 = i.2.2.1 := by
@@ -2006,7 +2006,7 @@ private theorem classicalCoherentMap_reference_residual
           · intro h
             exact ⟨h, houterx.symm.trans h |>.trans htx, hy⟩
         by_cases hcopy : i.1.2 = i.2.2.1
-        · rw [if_pos (hcoh.mpr hcopy)]
+        · rw [ite_eq_left (hcoh.mpr hcopy)]
           rw [sub_self]
           symm
           apply Finset.sum_eq_zero
@@ -2021,8 +2021,8 @@ private theorem classicalCoherentMap_reference_residual
               j.2.2.2 = k) := by
             intro h
             exact hqp (h.2.1.symm.trans (hcopy.symm.trans h.1))
-          rw [if_neg hzero]
-        · rw [if_neg (fun h => hcopy (hcoh.mp h))]
+          rw [ite_eq_right hzero]
+        · rw [ite_eq_right (fun h => hcopy (hcoh.mp h))]
           rw [Finset.sum_eq_single i.1.2]
           · rw [Finset.sum_eq_single i.2.2.1]
             · rw [Finset.sum_eq_single i.2.2.2]
@@ -2035,7 +2035,7 @@ private theorem classicalCoherentMap_reference_residual
                     j.2.2.2 = k) := by
                   intro h
                   exact hki h.2.2.1.symm
-                rw [if_neg hzero]
+                rw [ite_eq_right hzero]
               · intro hnot
                 exact (hnot (Finset.mem_univ _)).elim
             · intro q hq hqi
@@ -2051,7 +2051,7 @@ private theorem classicalCoherentMap_reference_residual
             i.2.2.2 = j.2.2.2) := fun h => hy h.2
         have hcoh : ¬ (i.1.2 = i.2.2.1 ∧ j.1.2 = j.2.2.1 ∧
             i.2.2.2 = j.2.2.2) := fun h => hy h.2.2
-        rw [if_neg hcoord, if_neg hcoh]
+        rw [ite_eq_right hcoord, ite_eq_right hcoh]
         simp only [sub_zero]
         symm
         apply Finset.sum_eq_zero
@@ -2066,14 +2066,14 @@ private theorem classicalCoherentMap_reference_residual
           intro h
           rcases h with ⟨_, _, hik, _, _, hjk⟩
           exact hy (hik.trans hjk.symm)
-        rw [if_neg hzero]
+        rw [ite_eq_right hzero]
     · have hcoord : ¬ (i.2.2.1 = j.2.2.1 ∧
           i.2.2.2 = j.2.2.2) := fun h => htx h.1
       have hcoh : ¬ (i.1.2 = i.2.2.1 ∧ j.1.2 = j.2.2.1 ∧
           i.2.2.2 = j.2.2.2) := by
         intro h
         exact htx (h.1.symm.trans (houterx.trans h.2.1))
-      rw [if_neg hcoord, if_neg hcoh]
+      rw [ite_eq_right hcoord, ite_eq_right hcoh]
       simp only [sub_zero]
       symm
       apply Finset.sum_eq_zero
@@ -2088,7 +2088,7 @@ private theorem classicalCoherentMap_reference_residual
         intro h
         rcases h with ⟨_, hitx, _, _, hjtx, _⟩
         exact htx (hitx.trans hjtx.symm)
-      rw [if_neg hzero]
+      rw [ite_eq_right hzero]
   · simp [houter]
 
 private theorem classicalCoherentMap_reference_le
@@ -2991,7 +2991,7 @@ private theorem canonicalXYMaxPurification_purifies
   by_cases hi : i.2.2.2 = yy
   · by_cases hj : j.2.2.2 = yy
     · subst yy
-      rw [if_pos hj]
+      rw [ite_eq_left hj]
       simp
     · have hcopyj : j.2.2 ≠ (j.1.2, yy) := by
         intro h
@@ -4417,7 +4417,7 @@ private theorem maxLiftedCanonicalPurification_center_fast
           exact (hz hvz.symm).elim
         · simp [hEq]
       · simp
-    · rw [if_neg huv]
+    · rw [ite_eq_right huv]
       apply Finset.sum_eq_zero
       intro z _
       by_cases hz : (u, (Sum.inl v : Sum (y × bPlus)
@@ -4508,7 +4508,7 @@ private theorem maxLiftedCanonicalPurification_center_fast
                 congr 1
                 funext xx
                 exact hcollapse q xx
-              simp only [eq_self, if_true]
+              simp only [eq_self, ite_true]
               change
                 (∑ q : a, ∑ xx : bPlus, ∑ u : x, ∑ v : y,
                   (if ix = u ∧ v = iy then
@@ -4608,7 +4608,7 @@ private theorem maxLiftedCanonicalPurification_center_fast
                 rw [Finset.sum_eq_zero]
                 intro v _
                 by_cases ho : iy = u ∧ jvY = u ∧ jvB = v
-                · rw [if_pos ho]
+                · rw [ite_eq_left ho]
                   rw [Finset.sum_eq_zero]
                   intro u' _
                   rw [Finset.sum_eq_zero]
@@ -4634,7 +4634,7 @@ private theorem maxLiftedCanonicalPurification_center_fast
                 rw [Finset.sum_eq_zero]
                 intro v _
                 by_cases ho : jy = u ∧ u = jv.1 ∧ v = jv.2
-                · rw [if_pos ho]
+                · rw [ite_eq_left ho]
                   rw [Finset.sum_eq_zero]
                   intro u' _
                   rw [Finset.sum_eq_zero]
@@ -4656,7 +4656,7 @@ private theorem maxLiftedCanonicalPurification_center_fast
                 rw [Finset.sum_eq_zero]
                 intro v' _
                 by_cases houter : jx = u' ∧ jy = v'
-                · rw [if_pos houter]
+                · rw [ite_eq_left houter]
                   by_cases hinner : jx = u' ∧ iy = v'
                   · exact (hiy (hinner.2.trans houter.2.symm)).elim
                   · simp [hinner]
@@ -4678,7 +4678,7 @@ private theorem maxLiftedCanonicalPurification_center_fast
               rw [Finset.sum_eq_zero]
               intro v _
               by_cases ho : jy = u ∧ u = jv.1 ∧ v = jv.2
-              · rw [if_pos ho]
+              · rw [ite_eq_left ho]
                 rw [Finset.sum_eq_zero]
                 intro u' _
                 rw [Finset.sum_eq_zero]
@@ -4700,7 +4700,7 @@ private theorem maxLiftedCanonicalPurification_center_fast
               rw [Finset.sum_eq_zero]
               intro v' _
               by_cases houter : jx = u' ∧ jy = v'
-              · rw [if_pos houter]
+              · rw [ite_eq_left houter]
                 by_cases hinner : ix = u' ∧ iy = v'
                 · exact (hix (hinner.1.trans houter.1.symm)).elim
                 · simp [hinner]
@@ -4735,7 +4735,7 @@ private theorem maxLiftedCanonicalPurification_center_fast
         rw [Finset.sum_eq_zero]
         intro v _
         by_cases houter : jy = u ∧ j0 = u ∧ u = jv.1 ∧ v = jv.2
-        · rw [if_pos houter]
+        · rw [ite_eq_left houter]
           rw [Finset.sum_eq_zero]
           intro u' _
           rw [Finset.sum_eq_zero]
@@ -5059,10 +5059,10 @@ private theorem exists_classical_max_candidate_on_enlarged_conditioning
     Real.sqrt_pos.mp (lt_of_le_of_lt hε0 hε)
   have hfull : Nonempty ((a × x) × (y × b)) :=
     nonempty_of_trace_pos rho.matrix htrace
-  letI : Nonempty x := by
+  let : Nonempty x := by
     rcases hfull with ⟨i⟩
     exact ⟨i.1.2⟩
-  letI : Nonempty y := by
+  let : Nonempty y := by
     rcases hfull with ⟨i⟩
     exact ⟨i.2.1⟩
   obtain ⟨psi, t, ht, ht1, hrep, hcoherent, hpsiCenterNorm⟩ :=
@@ -6365,24 +6365,24 @@ theorem smoothConditionalMaxEntropy_exists_classical_optimizer
     Real.sqrt_pos.mp (lt_of_le_of_lt hε0 hε)
   have hfull : Nonempty ((a × x) × (y × b)) :=
     nonempty_of_trace_pos rho.matrix hρ
-  letI : Nonempty (a × x) := by
+  let : Nonempty (a × x) := by
     rcases hfull with ⟨i⟩
     exact ⟨i.1⟩
-  letI : Nonempty (y × b) := by
+  let : Nonempty (y × b) := by
     rcases hfull with ⟨i⟩
     exact ⟨i.2⟩
   let V : ReferenceIsometry (y × b)
       (y × maxReferenceType (a := a) (x := x) (y := y) (bPlus := b)) :=
     maxConditioningEmbedding (a := a) (x := x) (y := y) (bPlus := b)
   let rhoPlus := rho.conditioningIsometryApply V
-  letI : Nonempty y := by
+  let : Nonempty y := by
     rcases hfull with ⟨i⟩
     exact ⟨i.2.1⟩
   let y0 : y := Classical.choice (inferInstance : Nonempty y)
   let b0 : b := Classical.choice (inferInstance : Nonempty b)
-  letI : Nonempty (maxReferenceType (a := a) (x := x) (y := y) (bPlus := b)) :=
+  let : Nonempty (maxReferenceType (a := a) (x := x) (y := y) (bPlus := b)) :=
     ⟨(y0, Sum.inl (y0, b0))⟩
-  letI : Nonempty (y × maxReferenceType
+  let : Nonempty (y × maxReferenceType
       (a := a) (x := x) (y := y) (bPlus := b)) := inferInstance
   have hV : ∀ q p, q.1 ≠ p.1 → V.matrix q p = 0 := by
     intro q p hqp

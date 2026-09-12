@@ -803,7 +803,7 @@ theorem squaredFidelity_le_applyState_squaredFidelity
     PureVector.overlapSq_le_squaredFidelity_of_purifies hΨoutpur hΘoutpur
   have hoverlap_pres : Ψout.overlapSq Θout = Ψ.overlapSq Θ := by
     simpa [Ψout, Θout, V] using V.overlapSq_applyPureVectorRight Ψ Θ
-  haveI : Nonempty (a × b) :=
+  have : Nonempty (a × b) :=
     ⟨(Classical.choice ρ.nonempty, Classical.choice (Φ.applyState ρ).nonempty)⟩
   have htrace_env : τρ.squaredFidelity τσ ≤
       τρ.marginalA.squaredFidelity τσ.marginalA :=

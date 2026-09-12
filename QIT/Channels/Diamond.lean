@@ -2022,7 +2022,7 @@ theorem diamondTraceDistance_le_of_inputReferenceBound [Nonempty a]
         ((Ψ.prod (idChannel a)).applyState ω) ≤ ε) :
     diamondTraceDistance Φ Ψ ≤ ε := by
   unfold diamondTraceDistance
-  haveI : Nonempty (State (Prod a a)) :=
+  have : Nonempty (State (Prod a a)) :=
     ⟨Classical.basisState (Classical.choice (inferInstance : Nonempty (Prod a a)))⟩
   exact csSup_le (Set.range_nonempty _) fun y hy => by
     rcases hy with ⟨ω, rfl⟩
@@ -2117,8 +2117,6 @@ theorem marginalA_applyState_prod_id {a : Type u} {b : Type v} {c : Type w}
       (fun x x' => ∑ j : b, ρ.matrix (x, j) (x', j)) =
         ∑ j : b, S j := by
     ext x x'
-    change (∑ j : b, ρ.matrix (x, j) (x', j)) =
-      (∑ j : b, S j) x x'
     simp only [Matrix.sum_apply]
     rfl
   change (∑ j : b,

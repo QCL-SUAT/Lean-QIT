@@ -64,7 +64,7 @@ def finiteAEPFullRankRegularization
       (Matrix.PosSemidef.smul ρ.pos hleft)
       (Matrix.PosSemidef.smul Matrix.PosSemidef.one hright)
   trace_eq_one := by
-    letI : Nonempty (Prod a b) := ρ.nonempty
+    let : Nonempty (Prod a b) := ρ.nonempty
     have hcardR : (Fintype.card (Prod a b) : ℝ) ≠ 0 := by
       exact_mod_cast (Nat.cast_ne_zero.mpr (Fintype.card_ne_zero : Fintype.card (Prod a b) ≠ 0))
     have hscalar :
@@ -151,7 +151,7 @@ theorem finiteAEPFullRankRegularization_posDef
     (ρ : State (Prod a b)) {η : ℝ} (hη0 : 0 ≤ η) (hη1 : η ≤ 1)
     (hηpos : 0 < η) :
     (ρ.finiteAEPFullRankRegularization η hη0 hη1).matrix.PosDef := by
-  letI : Nonempty (Prod a b) := ρ.nonempty
+  let : Nonempty (Prod a b) := ρ.nonempty
   unfold finiteAEPFullRankRegularization finiteAEPFullRankRegularizationMatrix
   have hleft : (0 : ℂ) ≤ (((1 - η : ℝ) : ℂ)) := by
     exact_mod_cast sub_nonneg.mpr hη1
@@ -177,9 +177,9 @@ private theorem finiteAEPFullRankRegularization_whiteNoise_marginalB_scalar
     ((η / (Fintype.card (Prod a b) : ℝ) : ℝ) *
         (Fintype.card a : ℝ)) =
       η / (Fintype.card b : ℝ) := by
-  letI : Nonempty (Prod a b) := ρ.nonempty
-  letI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
-  letI : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
+  let : Nonempty (Prod a b) := ρ.nonempty
+  let : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  let : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
   have ha : (Fintype.card a : ℝ) ≠ 0 := by
     exact_mod_cast (Nat.cast_ne_zero.mpr (Fintype.card_ne_zero : Fintype.card a ≠ 0))
   have hb : (Fintype.card b : ℝ) ≠ 0 := by
@@ -219,7 +219,7 @@ theorem finiteAEPFullRankRegularization_marginalB_posDef
     (ρ : State (Prod a b)) {η : ℝ} (hη0 : 0 ≤ η) (hη1 : η ≤ 1)
     (hηpos : 0 < η) :
     (ρ.finiteAEPFullRankRegularization η hη0 hη1).marginalB.matrix.PosDef := by
-  letI : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
+  let : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
   rw [finiteAEPFullRankRegularization_marginalB_matrix]
   have hleft : (0 : ℂ) ≤ (((1 - η : ℝ) : ℂ)) := by
     exact_mod_cast sub_nonneg.mpr hη1
@@ -285,7 +285,7 @@ theorem finiteAEPFullRankRegularization_marginalB_matrix_tendsto_zero
   refine Filter.Tendsto.congr' ?_
     (finiteAEPFullRankRegularization_marginalB_matrix_path_tendsto_zero ρ)
   filter_upwards [self_mem_nhdsWithin] with η hη
-  rw [dif_pos hη]
+  rw [dite_eq_left hη]
   exact
     (finiteAEPFullRankRegularization_marginalB_matrix
       (a := a) (b := b) ρ η hη.1.le hη.2.le).symm
@@ -315,7 +315,7 @@ theorem finiteAEPFullRankRegularization_tendsto_zero
     (if hη' : η ∈ Set.Ioo (0 : ℝ) 1 then
       ρ.finiteAEPFullRankRegularization η hη'.1.le hη'.2.le
     else ρ).matrix
-  rw [dif_pos hη]
+  rw [dite_eq_left hη]
   rfl
 
 /-- Conditional entropy is continuous along the full-rank white-noise
@@ -1411,7 +1411,7 @@ theorem tensorPowerBipartite_conditionalPetzRenyiEntropyCandidate_succ
         Matrix.one_apply, hij]
       exact congrFun (congrFun hτB_matrix i.2) j.2
     · simp [identityTensorStateMatrix, Matrix.kronecker, Matrix.kroneckerMap_apply,
-        Matrix.one_apply, hij]
+         hij]
   dsimp [conditionalPetzRenyiEntropyCandidate, conditionalPetzRenyiTraceTerm]
   rw [hτ_matrix', hτB_ref]
 
@@ -1484,7 +1484,7 @@ theorem tensorPowerBipartite_conditionalPetzRenyiEntropyCandidateFullReference_s
           Matrix.one_apply, hij]
         exact congrFun (congrFun hτB_matrix i.2) j.2
       · simp [identityTensorStateMatrix, Matrix.kronecker, Matrix.kroneckerMap_apply,
-          Matrix.one_apply, hij]
+           hij]
     dsimp [conditionalPetzRenyiEntropyCandidateFullReference, conditionalPetzRenyiTraceTerm]
     rw [hτ_matrix', hτB_ref, hτ_matrix_def]
   have hprod :=
@@ -2819,13 +2819,13 @@ theorem tensorPowerSubnormalizedSmoothConditionalMinEntropyRaw_conditioningSuppo
   let ρc := ρ.conditioningSupportCompressedState
   let V : ReferenceIsometry (psdSupportIndex ρ.marginalB.matrix ρ.marginalB.pos) b :=
     psdSupportReferenceIsometry ρ.marginalB.matrix ρ.marginalB.pos
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
-  haveI : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
-  haveI : Nonempty (psdSupportIndex ρ.marginalB.matrix ρ.marginalB.pos) :=
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty b := ⟨(Classical.choice ρ.nonempty).2⟩
+  have : Nonempty (psdSupportIndex ρ.marginalB.matrix ρ.marginalB.pos) :=
     ⟨(Classical.choice ρc.nonempty).2⟩
-  haveI : Nonempty (TensorPower a n) := tensorPower_nonempty_of_nonempty n
-  haveI : Nonempty (TensorPower b n) := tensorPower_nonempty_of_nonempty n
-  haveI :
+  have : Nonempty (TensorPower a n) := tensorPower_nonempty_of_nonempty n
+  have : Nonempty (TensorPower b n) := tensorPower_nonempty_of_nonempty n
+  have :
       Nonempty (TensorPower (psdSupportIndex ρ.marginalB.matrix ρ.marginalB.pos) n) :=
     tensorPower_nonempty_of_nonempty n
   have hε_sqrt :
@@ -3010,10 +3010,10 @@ limit. -/
 theorem fullyQuantumAsymptoticEquipartitionProperty_twoStage
     (ρ : State (Prod a b)) :
     QIT.asymptoticAEPTwoStage_statement ρ := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases ρ.nonempty with ⟨x⟩
     exact ⟨x.1⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases ρ.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   exact ρ.asymptoticAEPTwoStage_statement_of_traceEta_continuity_and_duality

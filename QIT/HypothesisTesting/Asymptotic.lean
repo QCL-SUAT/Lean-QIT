@@ -449,7 +449,6 @@ private theorem half_nussbaumSzkolaModel_equalPriorError_le_projection_error
       rw [hentry_sum xy] at h
       have h' := h
       simp only [nussbaumSzkolaOverlap] at h' ⊢
-      push_cast at h' ⊢
       exact h'
     exact half_min_weight_normSq_add_le_weighted_normSq
       (by positivity) (by positivity)

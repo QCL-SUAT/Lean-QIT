@@ -1010,8 +1010,6 @@ theorem marginalB_applyState_id_prod_local
       (fun x x' => ∑ i : a, ρ.matrix (i, x) (i, x')) =
         ∑ i : a, S i := by
     ext x x'
-    change (∑ i : a, ρ.matrix (i, x) (i, x')) =
-      (∑ i : a, S i) x x'
     simp only [Matrix.sum_apply]
     rfl
   change (∑ i : a,

@@ -213,7 +213,7 @@ theorem traceNorm_sq_le_finrank_range_mul_hilbertSchmidt (M : CMatrix a) :
   simpa [Finsupp.sum, hcard] using hcs
 
 /-- Hilbert--Schmidt square used in the Step 4 variance computation. -/
-def hilbertSchmidtSq [Fintype a] [DecidableEq a] (M : CMatrix a) : ℝ :=
+def hilbertSchmidtSq (M : CMatrix a) : ℝ :=
   ((star M * M).trace).re
 
 omit [Fintype a] [DecidableEq a] in

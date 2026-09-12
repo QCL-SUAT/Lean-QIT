@@ -672,7 +672,7 @@ theorem relativeEntropySummandReal_commonSupportTilted_p_of_mem
     positivity
   have hrne_nn : (M.commonSupportTiltedDistribution s hZ).prob x ≠ 0 := by
     exact_mod_cast hrpos.ne'
-  rw [relativeEntropySummandReal, if_neg hrne_nn]
+  rw [relativeEntropySummandReal, ite_eq_right hrne_nn]
   rw [hr]
   congr 1
   simp [pDistribution]
@@ -722,7 +722,7 @@ theorem relativeEntropySummandReal_commonSupportTilted_q_of_mem
     positivity
   have hrne_nn : (M.commonSupportTiltedDistribution s hZ).prob x ≠ 0 := by
     exact_mod_cast hrpos.ne'
-  rw [relativeEntropySummandReal, if_neg hrne_nn]
+  rw [relativeEntropySummandReal, ite_eq_right hrne_nn]
   rw [hr]
   congr 1
   simp [qDistribution]
@@ -752,7 +752,7 @@ theorem relativeEntropySummandReal_commonSupportTilted_p_of_not_mem
     commonSupportTiltedDistribution_prob_toReal_of_not_mem (M := M) (s := s) hZ hx
   have hrnn : (M.commonSupportTiltedDistribution s hZ).prob x = 0 := by
     exact_mod_cast hr
-  rw [relativeEntropySummandReal, if_pos hrnn]
+  rw [relativeEntropySummandReal, ite_eq_left hrnn]
 
 /-- Outside the common support, the `q` KL summand of the common-support tilted
 distribution is zero. -/
@@ -767,7 +767,7 @@ theorem relativeEntropySummandReal_commonSupportTilted_q_of_not_mem
     commonSupportTiltedDistribution_prob_toReal_of_not_mem (M := M) (s := s) hZ hx
   have hrnn : (M.commonSupportTiltedDistribution s hZ).prob x = 0 := by
     exact_mod_cast hr
-  rw [relativeEntropySummandReal, if_pos hrnn]
+  rw [relativeEntropySummandReal, ite_eq_left hrnn]
 
 /-- Common-support sum algebra for the tilted KL against `p`. -/
 theorem commonSupportTilted_relativeEntropy_p_sum_algebra
@@ -865,7 +865,7 @@ theorem relativeEntropyReal_commonSupportTilted_p
     intro x _hxmem
     by_cases hx : M.p x ≠ 0 ∧ M.q x ≠ 0
     · simp [hx]
-    · rw [if_neg hx]
+    · rw [ite_eq_right hx]
       rw [relativeEntropySummandReal_commonSupportTilted_p_of_not_mem (M := M) (s := s) hZ hx]
   rw [hrestrict]
   rw [← Finset.sum_filter
@@ -925,7 +925,7 @@ theorem relativeEntropyReal_commonSupportTilted_q
     intro x _hxmem
     by_cases hx : M.p x ≠ 0 ∧ M.q x ≠ 0
     · simp [hx]
-    · rw [if_neg hx]
+    · rw [ite_eq_right hx]
       rw [relativeEntropySummandReal_commonSupportTilted_q_of_not_mem (M := M) (s := s) hZ hx]
   rw [hrestrict]
   rw [← Finset.sum_filter

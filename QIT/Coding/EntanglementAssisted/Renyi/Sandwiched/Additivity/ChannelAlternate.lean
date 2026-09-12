@@ -799,8 +799,8 @@ theorem cbOneToAlphaNorm_eq_sSup_stateOriginalValueSet_of_one_lt
     rintro y ⟨tau, rfl⟩
     exact cbOneToAlphaOriginalValue_le_cbOneToAlphaNorm_of_one_lt
       Phi hPhi halpha (CBOneToAlphaOriginalDomain.ofState tau)
-  haveI : Nonempty (State a1) := ⟨State.maximallyMixed a1⟩
-  haveI : Nonempty (CBOneToAlphaOriginalDomain a1) :=
+  have : Nonempty (State a1) := ⟨State.maximallyMixed a1⟩
+  have : Nonempty (CBOneToAlphaOriginalDomain a1) :=
     ⟨CBOneToAlphaOriginalDomain.ofState (State.maximallyMixed a1)⟩
   refine le_antisymm ?_ ?_
   · unfold cbOneToAlphaNorm cbOneToAlphaOriginalValueSet
@@ -1819,7 +1819,7 @@ theorem sandwichedRenyiMutualInformationE_le_fullRankCB_sInf_of_input_le
       ((sInf (Set.range fun sigma : {sigma : State b1 // sigma.matrix.PosDef} =>
         sandwichedRenyiCBNormExpression N sigma.1 alpha) : ℝ) : EReal) := by
   let S := {sigma : State b1 // sigma.matrix.PosDef}
-  haveI : Nonempty S := ⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩
+  have : Nonempty S := ⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩
   let f : S → ℝ := fun sigma =>
     sandwichedRenyiCBNormExpression N sigma.1 alpha
   have hInf :
@@ -3364,7 +3364,7 @@ theorem sandwichedRenyiCBNormExpression_eq_sSup_stateOriginalValue_log
     MatrixMap.cbOneToAlphaOriginalValue Phi hPhi
       (MatrixMap.CBOneToAlphaOriginalDomain.ofState tau)
       (SchattenOrder.ofOneLt halpha)
-  haveI : Nonempty (State a1) := ⟨State.maximallyMixed a1⟩
+  have : Nonempty (State a1) := ⟨State.maximallyMixed a1⟩
   have hnorm :
       MatrixMap.cbOneToAlphaNorm Phi hPhi (SchattenOrder.ofOneLt halpha) =
         sSup (Set.range v) := by
@@ -3778,7 +3778,7 @@ theorem inputSandwichedRenyiMutualInformationE_eq_coe_fullRankCandidateReal_sInf
         State.sandwichedRenyiMutualInformationCandidateRealPosDef
           (N.hypothesisTestingOutputState psi) sigma.1 hOut hOutA sigma.2
           alpha halpha) : ℝ) : EReal) := by
-  haveI : Nonempty {sigma : State b1 // sigma.matrix.PosDef} :=
+  have : Nonempty {sigma : State b1 // sigma.matrix.PosDef} :=
     ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
   let rho : State (Prod a1 b1) := N.hypothesisTestingOutputState psi
   have hraw :
@@ -4099,7 +4099,7 @@ theorem sandwichedChannelAlternateSionExchange_of_reference_quasiconvexOn
         QuasiconvexOn ℝ (State.fullRankDensityMatrixSet b1)
           (sandwichedChannelOriginalValueLogReferenceDensity N tau (SchattenOrder.ofOneLt halpha))) :
     N.sandwichedChannelAlternateSionExchange alpha halpha := by
-  haveI : Nonempty (State a1) := ⟨State.maximallyMixed a1⟩
+  have : Nonempty (State a1) := ⟨State.maximallyMixed a1⟩
   let stateLog : {sigma : State b1 // sigma.matrix.PosDef} → State a1 → ℝ :=
     fun sigma tau =>
       alpha / (alpha - 1) *
@@ -4412,7 +4412,7 @@ theorem sandwichedRenyiCBNormExpression_fullRank_bddBelow_of_input_output_posDef
     {alpha : ℝ} (halpha : 1 < alpha) :
     BddBelow (Set.range fun sigma : {sigma : State b1 // sigma.matrix.PosDef} =>
       sandwichedRenyiCBNormExpression N sigma.1 (SchattenOrder.ofOneLt halpha)) := by
-  haveI : Nonempty {sigma : State b1 // sigma.matrix.PosDef} :=
+  have : Nonempty {sigma : State b1 // sigma.matrix.PosDef} :=
     ⟨⟨State.maximallyMixed b1, State.maximallyMixed_posDef⟩⟩
   let lower : ℝ :=
     sInf (Set.range fun sigma : {sigma : State b1 // sigma.matrix.PosDef} =>

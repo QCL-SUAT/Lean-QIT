@@ -166,7 +166,7 @@ def petzRenyiCoefficient (rho sigma : State a) (s : ℝ) : ℝ≥0 :=
 theorem petzRenyiCoefficient_pos_of_posDef (rho sigma : State a)
     (hρ : rho.matrix.PosDef) (hσ : sigma.matrix.PosDef) (s : ℝ) :
     0 < rho.petzRenyiCoefficient sigma s := by
-  haveI : Nonempty a := rho.nonempty
+  have : Nonempty a := rho.nonempty
   dsimp [petzRenyiCoefficient]
   exact trace_mul_posDef_re_pos
     (rho.rpowMatrix_posDef_of_posDef hρ s)

@@ -442,7 +442,7 @@ theorem fqswSumInrRetractionKraus_adjoint_one
             star_zero, zero_mul, Finset.sum_const_zero, zero_add, Sum.inl.injEq]
           by_cases hxy : x = y
           · subst y
-            rw [if_pos rfl, Finset.sum_eq_single x]
+            rw [ite_eq_left rfl, Finset.sum_eq_single x]
             · rw [Finset.sum_eq_single i0]
               · simp
               · intro z _ hz
@@ -451,7 +451,7 @@ theorem fqswSumInrRetractionKraus_adjoint_one
             · intro k _ hk
               simp [hk]
             · simp
-          · rw [if_neg hxy]
+          · rw [ite_eq_right hxy]
             apply Finset.sum_eq_zero
             intro k _
             by_cases hkx : k = x
@@ -792,10 +792,10 @@ theorem paddingRetraction_comp_isometry
     P.paddingRetraction.comp (fqswChannelOfReferenceIsometry P.isometry) =
       Channel.idChannel atyp := by
   classical
-  letI : Finite P.paddingComplement :=
+  let : Finite P.paddingComplement :=
     Finite.of_injective Subtype.val Subtype.val_injective
-  letI : Fintype P.paddingComplement := Fintype.ofFinite P.paddingComplement
-  letI : DecidableEq P.paddingComplement := Classical.decEq P.paddingComplement
+  let : Fintype P.paddingComplement := Fintype.ofFinite P.paddingComplement
+  let : DecidableEq P.paddingComplement := Classical.decEq P.paddingComplement
   rw [paddingRetraction, fqswChannel_comp_assoc,
     ADHWFQSWPaddedAtypEmbedding.reindex_comp_isometry_eq_sumInrChannel P]
   exact fqswSumInrRetractionChannel_comp_inclusion (Nonempty.some inferInstance)
@@ -1214,7 +1214,7 @@ theorem communicationRate_le (R : ADHWFQSWIidRateChoice ψ n δ q e)
     FQSWBlockProtocol.communicationRate C ≤
       ψ.fqswCommunicationRate + (9 / 4 : ℝ) * δ := by
   unfold FQSWBlockProtocol.communicationRate
-  rw [if_neg (Nat.ne_of_gt hn)]
+  rw [ite_eq_right (Nat.ne_of_gt hn)]
   exact R.communicationLogRate_le hn
 
 omit [DecidableEq q] [DecidableEq e] [Nonempty e] in
@@ -1233,7 +1233,7 @@ theorem ebitYieldRate_ge (R : ADHWFQSWIidRateChoice ψ n δ q e)
     (C : FQSWBlockProtocol ψ n q e et) (hn : 0 < n) :
     ψ.fqswEbitYieldRate - 3 * δ ≤ FQSWBlockProtocol.ebitYieldRate C := by
   unfold FQSWBlockProtocol.ebitYieldRate
-  rw [if_neg (Nat.ne_of_gt hn)]
+  rw [ite_eq_right (Nat.ne_of_gt hn)]
   exact R.ebitYieldLogRate_ge hn
 
 end ADHWFQSWIidRateChoice
@@ -1272,8 +1272,8 @@ theorem exists_adhwFQSWIidRateChoice_registers
   set upper := adhwFQSWIidRoundedCommunicationLogUpperTarget ψ n δ
   set qSize : ℕ := Nat.ceil ((2 : ℝ) ^ lower)
   let q : Type x := ULift.{x} (Fin qSize)
-  haveI : Fintype q := inferInstance
-  haveI : DecidableEq q := inferInstance
+  have : Fintype q := inferInstance
+  have : DecidableEq q := inferInstance
   have hqcard : Fintype.card q = qSize := by
     simpa [q] using
       (Fintype.card_congr (Equiv.ulift : ULift.{x} (Fin qSize) ≃ Fin qSize))
@@ -1281,18 +1281,18 @@ theorem exists_adhwFQSWIidRateChoice_registers
     Real.rpow_pos_of_pos (by norm_num : (0 : ℝ) < 2) lower
   have hqSize_pos : 0 < qSize := by
     exact Nat.ceil_pos.mpr hpow_lower_pos
-  haveI : Nonempty q := ⟨ULift.up ⟨0, hqSize_pos⟩⟩
+  have : Nonempty q := ⟨ULift.up ⟨0, hqSize_pos⟩⟩
   set eLower := adhwFQSWIidEbitYieldLogLower ψ n δ
   set eSize : ℕ := max 1 (Nat.ceil ((2 : ℝ) ^ eLower))
   let e : Type y := ULift.{y} (Fin eSize)
-  haveI : Fintype e := inferInstance
-  haveI : DecidableEq e := inferInstance
+  have : Fintype e := inferInstance
+  have : DecidableEq e := inferInstance
   have hecard : Fintype.card e = eSize := by
     simpa [e] using
       (Fintype.card_congr (Equiv.ulift : ULift.{y} (Fin eSize) ≃ Fin eSize))
   have heSize_pos : 0 < eSize := by
     exact lt_of_lt_of_le Nat.zero_lt_one (Nat.le_max_left _ _)
-  haveI : Nonempty e := ⟨ULift.up ⟨0, heSize_pos⟩⟩
+  have : Nonempty e := ⟨ULift.up ⟨0, heSize_pos⟩⟩
   have hcommLower :
       (2 : ℝ) ^ adhwFQSWIidCommunicationLogTarget ψ n δ ≤
         (Fintype.card q : ℝ) := by
@@ -1418,8 +1418,8 @@ theorem exists_adhwFQSWIidBalancedRateChoice_registers
   set upper := adhwFQSWIidRoundedCommunicationLogUpperTarget ψ n δ
   set qSize : ℕ := Nat.ceil ((2 : ℝ) ^ lower)
   let q : Type x := ULift.{x} (Fin qSize)
-  haveI : Fintype q := inferInstance
-  haveI : DecidableEq q := inferInstance
+  have : Fintype q := inferInstance
+  have : DecidableEq q := inferInstance
   have hqcard : Fintype.card q = qSize := by
     simpa [q] using
       (Fintype.card_congr (Equiv.ulift : ULift.{x} (Fin qSize) ≃ Fin qSize))
@@ -1427,13 +1427,13 @@ theorem exists_adhwFQSWIidBalancedRateChoice_registers
     Real.rpow_pos_of_pos (by norm_num : (0 : ℝ) < 2) lower
   have hqSize_pos : 0 < qSize := by
     exact Nat.ceil_pos.mpr hpow_lower_pos
-  haveI : Nonempty q := ⟨ULift.up ⟨0, hqSize_pos⟩⟩
+  have : Nonempty q := ⟨ULift.up ⟨0, hqSize_pos⟩⟩
   set eLower := (n : ℝ) * (ψ.fqswEbitYieldRate - δ)
   set eUpper := (n : ℝ) * ψ.fqswEbitYieldRate
   set eSize : ℕ := Nat.ceil ((2 : ℝ) ^ eLower)
   let e : Type y := ULift.{y} (Fin eSize)
-  haveI : Fintype e := inferInstance
-  haveI : DecidableEq e := inferInstance
+  have : Fintype e := inferInstance
+  have : DecidableEq e := inferInstance
   have hecard : Fintype.card e = eSize := by
     simpa [e] using
       (Fintype.card_congr (Equiv.ulift : ULift.{y} (Fin eSize) ≃ Fin eSize))
@@ -1441,7 +1441,7 @@ theorem exists_adhwFQSWIidBalancedRateChoice_registers
     Real.rpow_pos_of_pos (by norm_num : (0 : ℝ) < 2) eLower
   have heSize_pos : 0 < eSize := by
     exact Nat.ceil_pos.mpr hpow_eLower_pos
-  haveI : Nonempty e := ⟨ULift.up ⟨0, heSize_pos⟩⟩
+  have : Nonempty e := ⟨ULift.up ⟨0, heSize_pos⟩⟩
   have hcommLower :
       (2 : ℝ) ^ adhwFQSWIidCommunicationLogTarget ψ n δ ≤
         (Fintype.card q : ℝ) := by

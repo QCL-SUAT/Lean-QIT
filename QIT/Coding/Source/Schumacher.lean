@@ -319,8 +319,8 @@ theorem schumacher_direct_achievable_of_typicalCompressionWitness
   refine ⟨N, ?_⟩
   intro n hn
   obtain ⟨W, hWfin, hWdec, ⟨witness⟩⟩ := hN n hn
-  letI : Fintype W := hWfin
-  letI : DecidableEq W := hWdec
+  let : Fintype W := hWfin
+  let : DecidableEq W := hWdec
   exact ⟨W, inferInstance, inferInstance, witness.code, witness.rate_le,
     witness.jointError_le⟩
 

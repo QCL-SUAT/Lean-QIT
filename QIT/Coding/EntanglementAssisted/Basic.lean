@@ -139,7 +139,7 @@ theorem exists_entanglementAssistedInformation_maximizer [Nonempty a] :
         N.entanglementAssistedMutualInformation ψ := by
   let f : PureVector (Prod a a) → ℝ :=
     fun ψ => N.entanglementAssistedMutualInformation ψ
-  haveI : Nonempty (PureVector (Prod a a)) :=
+  have : Nonempty (PureVector (Prod a a)) :=
     ⟨PureVector.basisPureVector⟩
   have hne : (Set.univ : Set (PureVector (Prod a a))).Nonempty :=
     Set.univ_nonempty
@@ -166,7 +166,7 @@ theorem entanglementAssistedMutualInformation_le_information [Nonempty a]
       N.entanglementAssistedInformation := by
   let f : PureVector (Prod a a) → ℝ :=
     fun ψ => N.entanglementAssistedMutualInformation ψ
-  haveI : Nonempty (PureVector (Prod a a)) :=
+  have : Nonempty (PureVector (Prod a a)) :=
     ⟨PureVector.basisPureVector⟩
   have hne : (Set.univ : Set (PureVector (Prod a a))).Nonempty :=
     Set.univ_nonempty
@@ -559,13 +559,13 @@ theorem entanglementAssisted_direct_achievable_of_directCodingWitness
   intro n hn
   obtain ⟨M, hMfin, hMdec, hMnonempty,
     EA, hEAfin, hEAdec, EB, hEBfin, hEBdec, ⟨witness⟩⟩ := hN0 n hn
-  letI : Fintype M := hMfin
-  letI : DecidableEq M := hMdec
-  letI : Nonempty M := hMnonempty
-  letI : Fintype EA := hEAfin
-  letI : DecidableEq EA := hEAdec
-  letI : Fintype EB := hEBfin
-  letI : DecidableEq EB := hEBdec
+  let : Fintype M := hMfin
+  let : DecidableEq M := hMdec
+  let : Nonempty M := hMnonempty
+  let : Fintype EA := hEAfin
+  let : DecidableEq EA := hEAdec
+  let : Fintype EB := hEBfin
+  let : DecidableEq EB := hEBdec
   exact ⟨M, inferInstance, inferInstance, inferInstance,
     EA, inferInstance, inferInstance, EB, inferInstance, inferInstance,
     witness.code, witness.rate_ge, witness.maxError_le⟩
@@ -595,13 +595,13 @@ theorem entanglementAssisted_information_isUpperBound_of_sourceConverseWitness
   obtain ⟨M, hMfin, hMdec, hMnonempty,
     EA, hEAfin, hEAdec, EB, hEBfin, hEBdec, C, hrate_ge, herror⟩ :=
     hNach n hnAch
-  letI : Fintype M := hMfin
-  letI : DecidableEq M := hMdec
-  letI : Nonempty M := hMnonempty
-  letI : Fintype EA := hEAfin
-  letI : DecidableEq EA := hEAdec
-  letI : Fintype EB := hEBfin
-  letI : DecidableEq EB := hEBdec
+  let : Fintype M := hMfin
+  let : DecidableEq M := hMdec
+  let : Nonempty M := hMnonempty
+  let : Fintype EA := hEAfin
+  let : DecidableEq EA := hEAdec
+  let : Fintype EB := hEBfin
+  let : DecidableEq EB := hEBdec
   have hrate_lt :
       C.rate < N.entanglementAssistedInformation + η / 2 :=
     hNconv n hnConv M EA EB C herror
@@ -632,13 +632,13 @@ theorem achievable_le_of_strongConverseRate
   obtain ⟨M, hMfin, hMdec, hMnonempty,
     EA, hEAfin, hEAdec, EB, hEBfin, hEBdec, C, hrate_ge, herror⟩ :=
     hNach n hnAch
-  letI : Fintype M := hMfin
-  letI : DecidableEq M := hMdec
-  letI : Nonempty M := hMnonempty
-  letI : Fintype EA := hEAfin
-  letI : DecidableEq EA := hEAdec
-  letI : Fintype EB := hEBfin
-  letI : DecidableEq EB := hEBdec
+  let : Fintype M := hMfin
+  let : DecidableEq M := hMdec
+  let : Nonempty M := hMnonempty
+  let : Fintype EA := hEAfin
+  let : DecidableEq EA := hEAdec
+  let : Fintype EB := hEBfin
+  let : DecidableEq EB := hEBdec
   have hrate_lt : C.rate < S + η / 2 :=
     hNstrong n hnStrong M EA EB C herror
   have hR_lt : R - η / 2 < S + η / 2 :=

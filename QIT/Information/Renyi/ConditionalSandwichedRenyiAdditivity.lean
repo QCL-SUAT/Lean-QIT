@@ -222,8 +222,8 @@ theorem conditionalSandwichedRenyiUpFiniteOrder_of_pos_ne_one_ne_half
     (hpos : 0 < alpha) (hone : alpha ≠ 1) (hhalf : alpha ≠ (2 : Real)⁻¹) :
     rho.conditionalSandwichedRenyiUpFiniteOrder alpha =
       rho.conditionalSandwichedRenyiUpSource alpha hpos hone := by
-  rw [conditionalSandwichedRenyiUpFiniteOrder, dif_neg hone, dif_neg hhalf,
-    dif_pos hpos]
+  rw [conditionalSandwichedRenyiUpFiniteOrder, dite_eq_right hone, dite_eq_right hhalf,
+    dite_eq_left hpos]
 
 theorem conditionalSandwichedRenyiUpFiniteOrder_prod_grouped_one
     (rho : State (Prod a b)) (tau : State (Prod c d)) :
@@ -389,10 +389,10 @@ theorem conditionalSandwichedRenyiUpSourceValueSet_bddAbove_of_one_lt
     (rho : State (Prod a b)) {alpha : Real} (halpha : 1 < alpha) :
     BddAbove (rho.conditionalSandwichedRenyiUpSourceValueSet alpha
       (lt_trans zero_lt_one halpha) (ne_of_gt halpha)) := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, j⟩
     exact ⟨j⟩
   let psi : PureVector (Prod (Prod a b) (Prod a b)) :=
@@ -416,7 +416,7 @@ theorem conditionalSandwichedRenyiUpSourceValueSet_bddAbove_of_one_lt
   have hinf_pos : 0 < sInf (Set.range high) := by
     have h := psi.upwardRenyiDuality_commonSchattenExtremum_pos
       halpha hbeta_half hbeta_one hconj
-    convert h using 1 <;> first | rfl | simp [high]
+    convert h using 1 ; rfl
   refine ⟨-(1 / p) * log2 (sInf (Set.range high)), ?_⟩
   intro x hx
   rcases hx with ⟨sigma, hsigma, rfl⟩
@@ -437,7 +437,7 @@ theorem conditionalSandwichedRenyiUpSourceValueSet_bddAbove_of_one_lt
     simpa only [high] using hlog
   have hcoeff : -(1 / p) ≤ 0 :=
     neg_nonpos.mpr (one_div_nonneg.mpr hp.le)
-  convert mul_le_mul_of_nonpos_left hlog' hcoeff using 1 <;> first | rfl | simp only [p]
+  convert mul_le_mul_of_nonpos_left hlog' hcoeff using 1 <;> rfl
 
 /-- In the low-order range above one half, the source candidate family is
 bounded above by the reverse-Holder common Schatten bracket of a canonical
@@ -447,10 +447,10 @@ theorem conditionalSandwichedRenyiUpSourceValueSet_bddAbove_of_half_lt_lt_one
     (hhalf : 1 / 2 < alpha) (hone : alpha < 1) :
     BddAbove (rho.conditionalSandwichedRenyiUpSourceValueSet alpha
       (lt_trans (by norm_num) hhalf) (ne_of_lt hone)) := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, j⟩
     exact ⟨j⟩
   let r := Prod a b
@@ -504,9 +504,9 @@ theorem conditionalSandwichedRenyiUpSourceValueSet_bddAbove_of_half_lt_lt_one
       log2 (psi.upwardRenyiDualityLowNorm omega gamma
         ⟨alpha, lt_trans (by norm_num) hhalf⟩) ≤ log2 upper := by
     have h := hlog
-    convert h using 1 <;> first | rfl | simp only [low]
+    convert h using 1
   have hcoeff : 0 ≤ 1 / p := by positivity
-  convert mul_le_mul_of_nonneg_left hlog' hcoeff using 1 <;> first | rfl | simp only [p]
+  convert mul_le_mul_of_nonneg_left hlog' hcoeff using 1 <;> rfl
 
 theorem conditionalSandwichedRenyiUpSourceValueSet_nonempty
     [Nonempty b] (rho : State (Prod a b)) (alpha : Real)
@@ -538,16 +538,16 @@ theorem conditionalSandwichedRenyiUpSource_prod_grouped_ge_add
           (lt_trans (by norm_num) hhalf) hone ≤
       (rho.conditionalRenyiGroupedProduct tau).conditionalSandwichedRenyiUpSource
         alpha (lt_trans (by norm_num) hhalf) hone := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, j⟩
     exact ⟨j⟩
-  letI : Nonempty c := by
+  let : Nonempty c := by
     rcases tau.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty d := by
+  let : Nonempty d := by
     rcases tau.nonempty with ⟨_, j⟩
     exact ⟨j⟩
   let hpos : 0 < alpha := lt_trans (by norm_num) hhalf
@@ -671,16 +671,16 @@ theorem conditionalSandwichedRenyiUpSource_prod_grouped_le_add_of_one_lt
           (lt_trans zero_lt_one halpha) (ne_of_gt halpha) +
         tau.conditionalSandwichedRenyiUpSource alpha
           (lt_trans zero_lt_one halpha) (ne_of_gt halpha) := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, j⟩
     exact ⟨j⟩
-  letI : Nonempty c := by
+  let : Nonempty c := by
     rcases tau.nonempty with ⟨k, _⟩
     exact ⟨k⟩
-  letI : Nonempty d := by
+  let : Nonempty d := by
     rcases tau.nonempty with ⟨_, l⟩
     exact ⟨l⟩
   let psi := conditionalRenyiTargetFirstCanonicalPurification rho
@@ -728,16 +728,16 @@ theorem conditionalSandwichedRenyiUpSource_prod_grouped_le_add_of_half_lt_lt_one
           (lt_trans (by norm_num) hhalf) (ne_of_lt hone) +
         tau.conditionalSandwichedRenyiUpSource alpha
           (lt_trans (by norm_num) hhalf) (ne_of_lt hone) := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, j⟩
     exact ⟨j⟩
-  letI : Nonempty c := by
+  let : Nonempty c := by
     rcases tau.nonempty with ⟨k, _⟩
     exact ⟨k⟩
-  letI : Nonempty d := by
+  let : Nonempty d := by
     rcases tau.nonempty with ⟨_, l⟩
     exact ⟨l⟩
   let psi := conditionalRenyiTargetFirstCanonicalPurification rho
@@ -991,16 +991,16 @@ theorem conditionalMinEntropyScale_prod_grouped
         (a := Prod a c) =
       rho.conditionalMinEntropyScale (a := a) *
         tau.conditionalMinEntropyScale (a := c) := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, j⟩
     exact ⟨j⟩
-  letI : Nonempty c := by
+  let : Nonempty c := by
     rcases tau.nonempty with ⟨k, _⟩
     exact ⟨k⟩
-  letI : Nonempty d := by
+  let : Nonempty d := by
     rcases tau.nonempty with ⟨_, l⟩
     exact ⟨l⟩
   let rhoTau := rho.conditionalRenyiGroupedProduct tau
@@ -1014,19 +1014,19 @@ theorem conditionalMinEntropyScale_prod_grouped
     ConditionalMinEntropyDualEffectFeasible (a := c) N}
   let Dprod := {K : CMatrix (Prod (Prod a c) (Prod b d)) //
     ConditionalMinEntropyDualEffectFeasible (a := Prod a c) K}
-  letI : Nonempty Prho := by
+  let : Nonempty Prho := by
     rcases rho.conditionalMinEntropyScaleValueSet_nonempty (a := a) with
       ⟨_, T, hT, rfl⟩
     exact ⟨⟨T, hT⟩⟩
-  letI : Nonempty Ptau := by
+  let : Nonempty Ptau := by
     rcases tau.conditionalMinEntropyScaleValueSet_nonempty (a := c) with
       ⟨_, U, hU, rfl⟩
     exact ⟨⟨U, hU⟩⟩
-  letI : Nonempty Pprod := by
+  let : Nonempty Pprod := by
     rcases rhoTau.conditionalMinEntropyScaleValueSet_nonempty (a := Prod a c) with
       ⟨_, V, hV, rfl⟩
     exact ⟨⟨V, hV⟩⟩
-  letI : Nonempty Drho :=
+  let : Nonempty Drho :=
     ⟨⟨0, by
       constructor
       · exact Matrix.PosSemidef.zero
@@ -1037,7 +1037,7 @@ theorem conditionalMinEntropyScale_prod_grouped
         rw [hzero]
         simpa using
           (Matrix.PosSemidef.one : (1 : CMatrix b).PosSemidef)⟩⟩
-  letI : Nonempty Dtau :=
+  let : Nonempty Dtau :=
     ⟨⟨0, by
       constructor
       · exact Matrix.PosSemidef.zero
@@ -1048,7 +1048,7 @@ theorem conditionalMinEntropyScale_prod_grouped
         rw [hzero]
         simpa using
           (Matrix.PosSemidef.one : (1 : CMatrix d).PosSemidef)⟩⟩
-  letI : Nonempty Dprod :=
+  let : Nonempty Dprod :=
     ⟨⟨0, by
       constructor
       · exact Matrix.PosSemidef.zero
@@ -1130,16 +1130,16 @@ theorem conditionalMinEntropy_prod_grouped
     (rho : State (Prod a b)) (tau : State (Prod c d)) :
     (rho.conditionalRenyiGroupedProduct tau).conditionalMinEntropy =
       rho.conditionalMinEntropy + tau.conditionalMinEntropy := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, j⟩
     exact ⟨j⟩
-  letI : Nonempty c := by
+  let : Nonempty c := by
     rcases tau.nonempty with ⟨k, _⟩
     exact ⟨k⟩
-  letI : Nonempty d := by
+  let : Nonempty d := by
     rcases tau.nonempty with ⟨_, l⟩
     exact ⟨l⟩
   have hRhoScale : 0 < rho.conditionalMinEntropyScale (a := a) := by
@@ -1163,16 +1163,16 @@ theorem conditionalMaxEntropy_prod_grouped
     (rho : State (Prod a b)) (tau : State (Prod c d)) :
     (rho.conditionalRenyiGroupedProduct tau).conditionalMaxEntropy =
       rho.conditionalMaxEntropy + tau.conditionalMaxEntropy := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rho.nonempty with ⟨i, _⟩
     exact ⟨i⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases rho.nonempty with ⟨_, j⟩
     exact ⟨j⟩
-  letI : Nonempty c := by
+  let : Nonempty c := by
     rcases tau.nonempty with ⟨k, _⟩
     exact ⟨k⟩
-  letI : Nonempty d := by
+  let : Nonempty d := by
     rcases tau.nonempty with ⟨_, l⟩
     exact ⟨l⟩
   let psi := conditionalRenyiTargetFirstCanonicalPurification rho

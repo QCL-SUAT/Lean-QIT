@@ -1713,7 +1713,7 @@ theorem relativeEntropySummandReal_roundedProfile_tendsto
         ((r.roundedProfile (n + 1)).empiricalDistribution
           (Nat.succ_pos n)).prob x ≠ 0 := by
       exact NNReal.coe_ne_zero.mp (by simpa [f] using hn)
-    rw [relativeEntropySummandReal, if_neg hprob_ne]
+    rw [relativeEntropySummandReal, ite_eq_right hprob_ne]
 
 theorem relativeEntropyReal_roundedProfile_tendsto
     (r p : ClassicalDistribution α) (hp : r.SupportedBy p.prob) :
@@ -2784,7 +2784,7 @@ theorem normalizedNegLog_profileProductErrorLowerBound_le_distributionKLMax
 For `N = 0` this is set to `⊤`; all method-of-types applications use
 positive copy number `N = n + 1`. -/
 noncomputable def finiteTypeKLDualValue
-    (M : ClassicalBinaryModel α) [DecidableEq α] (N : Nat) : EReal :=
+    (M : ClassicalBinaryModel α) (N : Nat) : EReal :=
   if hN : 0 < N then
     ⨅ profile : TensorPowerProfile α N,
       M.distributionKLMax (profile.empiricalDistribution hN)
@@ -2936,7 +2936,7 @@ theorem finiteTypeChernoffValue_le_finiteTypeKLDualValue_add_penalties
   by_cases hprofiles : Nonempty (TensorPowerProfile α N)
   · let g : TensorPowerProfile α N → EReal := fun profile =>
       M.distributionKLMax (profile.empiricalDistribution hN)
-    haveI : Nonempty (TensorPowerProfile α N) := hprofiles
+    have : Nonempty (TensorPowerProfile α N) := hprofiles
     obtain ⟨profile, hprofile⟩ := exists_eq_ciInf_of_finite (f := g)
     have hdual :
         M.distributionKLMax (profile.empiricalDistribution hN) =
@@ -2962,7 +2962,7 @@ theorem finiteTypeChernoffValue_le_finiteTypeKLDualValue_add_penalties
             finiteAlphabetMethodOfTypesPolynomialPenalty α (N - 1) +
             equalPriorAverageLogPenalty (N - 1) := by
           rw [hdual]
-  · haveI : IsEmpty (TensorPowerProfile α N) := not_nonempty_iff.mp hprofiles
+  · have : IsEmpty (TensorPowerProfile α N) := not_nonempty_iff.mp hprofiles
     unfold finiteTypeKLDualValue finiteTypeChernoffValue
     simp [hN, finiteAlphabetMethodOfTypesPolynomialPenalty, equalPriorAverageLogPenalty]
 

@@ -487,7 +487,7 @@ private theorem isClosed_setOf_zero_le_complex_frankLieb :
     IsClosed ({z : ℂ | 0 ≤ z} : Set ℂ) := by
   have h : ({z : ℂ | 0 ≤ z} : Set ℂ) = {z | 0 ≤ z.re} ∩ {z | z.im = 0} := by
     ext z
-    simp only [Set.mem_inter_iff, Set.mem_setOf_eq]
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq]
     constructor
     · intro hz
       simp [Complex.le_def] at hz ⊢

@@ -388,7 +388,7 @@ theorem hypothesisTestingRelativeEntropyPSDE_le_of_effect_rpow_lower_bound
     unfold log2
     exact div_le_div_of_nonneg_right
       (Real.log_le_log ht_pos hbeta_ge) (le_of_lt (Real.log_pos one_lt_two))
-  rw [hypothesisTestingRelativeEntropyPSDE_eq, if_neg hbeta_pos.ne']
+  rw [hypothesisTestingRelativeEntropyPSDE_eq, ite_eq_right hbeta_pos.ne']
   change ((rho.hypothesisTestingRelativeEntropyPSD sigma epsilon : ℝ) : EReal) ≤ (C : EReal)
   norm_num
   rw [hypothesisTestingRelativeEntropyPSD_eq]

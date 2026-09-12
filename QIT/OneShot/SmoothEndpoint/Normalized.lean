@@ -2597,7 +2597,7 @@ theorem conditionalMinEntropyFeasible_le_log2_card_left
     (h : ConditionalMinEntropyFeasible (a := a) ρ σ lam) :
     lam ≤ log2 (Fintype.card a : ℝ) := by
   classical
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
   have hscale := conditionalMinEntropyFeasible_scale_lower_bound (a := a) h
   have hcard_pos : 0 < (Fintype.card a : ℝ) := by
     exact_mod_cast Fintype.card_pos_iff.mpr inferInstance
@@ -2939,7 +2939,7 @@ theorem conditionalMinEntropy_maximallyMixed_prod
     ((State.maximallyMixed a).prod σ).conditionalMinEntropy =
       log2 (Fintype.card a : ℝ) := by
   classical
-  letI : Nonempty b := σ.nonempty
+  let : Nonempty b := σ.nonempty
   have hle :
       ((State.maximallyMixed a).prod σ).conditionalMinEntropy ≤
         log2 (Fintype.card a : ℝ) :=

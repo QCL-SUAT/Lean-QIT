@@ -4560,7 +4560,7 @@ def permutationUnitary {b : Type v} [Fintype b] [DecidableEq b]
         · intro hnot
           exact False.elim (hnot (Finset.mem_univ _))
         · simp
-      · rw [if_neg hjj']
+      · rw [ite_eq_right hjj']
         refine Finset.sum_eq_zero ?_
         intro k _
         by_cases hkj : k = π.symm j
@@ -4585,7 +4585,7 @@ def permutationUnitary {b : Type v} [Fintype b] [DecidableEq b]
         · intro hnot
           exact False.elim (hnot (Finset.mem_univ _))
         · simp
-      · rw [if_neg hjj']
+      · rw [ite_eq_right hjj']
         refine Finset.sum_eq_zero ?_
         intro k _
         by_cases hkj : k = π j
@@ -4702,7 +4702,7 @@ theorem perm_orbit_average_eq_uniform {b : Type v} [Fintype b] [DecidableEq b]
         (∑ π : Equiv.Perm b, f (π j)) =
       (Fintype.card b : ℂ)⁻¹ * ∑ k : b, f k := by
   classical
-  haveI : Nonempty b := ⟨j⟩
+  have : Nonempty b := ⟨j⟩
   let cB : ℂ := Fintype.card b
   let cP : ℂ := Fintype.card (Equiv.Perm b)
   let A : ℂ := ∑ π : Equiv.Perm b, f (π j)

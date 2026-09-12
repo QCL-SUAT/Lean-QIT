@@ -2266,7 +2266,7 @@ private theorem cMatrixPetz_squarePerspective_uniform_average_le
       (Matrix.fromBlocks (X k * (Y k)⁻¹ * X k) (X k) (X k) (Y k) :
         CMatrix (Sum n n)).PosSemidef := by
     intro k
-    letI : Invertible (Y k) := (hY k).isUnit.invertible
+    let : Invertible (Y k) := (hY k).isUnit.invertible
     have hschur := Matrix.PosDef.fromBlocks₂₂
       (X k * (Y k)⁻¹ * X k) (X k) (D := Y k) (hY k)
     have hblock' := hschur.mpr (by
@@ -2285,7 +2285,7 @@ private theorem cMatrixPetz_squarePerspective_uniform_average_le
       simp [Xbar, Ybar, Matrix.sum_apply, Matrix.smul_apply, Matrix.fromBlocks_smul]
   have hschurAvg :
       ((∑ k, w • (X k * (Y k)⁻¹ * X k)) - Xbar * Ybar⁻¹ * Xbar).PosSemidef := by
-    letI : Invertible Ybar := hYbar.isUnit.invertible
+    let : Invertible Ybar := hYbar.isUnit.invertible
     have hschur := Matrix.PosDef.fromBlocks₂₂
       (∑ k, w • (X k * (Y k)⁻¹ * X k)) Xbar (D := Ybar) hYbar
     have hschur' := hschur.mp (by simpa [hXbar.eq] using hblockAvg)

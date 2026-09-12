@@ -291,10 +291,10 @@ theorem projective_trace_joint_eq (x : X) (y : Y) (outcome : A × B) :
 /-- The projectivized realization preserves every behavior probability. -/
 theorem toProjective_prob_eq (a : A) (b : B) (x : X) (y : Y) :
     R.toProjective.prob a b x y = R.prob a b x y := by
-  letI : Fintype R.toProjective.HA := R.toProjective.fintypeHA
-  letI : DecidableEq R.toProjective.HA := R.toProjective.decidableEqHA
-  letI : Fintype R.toProjective.HB := R.toProjective.fintypeHB
-  letI : DecidableEq R.toProjective.HB := R.toProjective.decidableEqHB
+  let : Fintype R.toProjective.HA := R.toProjective.fintypeHA
+  let : DecidableEq R.toProjective.HA := R.toProjective.decidableEqHA
+  let : Fintype R.toProjective.HB := R.toProjective.fintypeHB
+  let : DecidableEq R.toProjective.HB := R.toProjective.decidableEqHB
   apply NNReal.eq
   unfold ProjectiveQuantumRealization.prob QuantumRealization.prob toProjective
   rw [POVM.prob_eq_trace_re, POVM.prob_eq_trace_re]

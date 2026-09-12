@@ -113,7 +113,7 @@ theorem toPOVM_measureMap_one_eq_one_of_traceOne
       simp [houtcome]
     · intro hi
       simp at hi
-  · rw [Matrix.one_apply, if_neg hij]
+  · rw [Matrix.one_apply, ite_eq_right hij]
     refine Finset.sum_eq_zero fun outcome _ => ?_
     rw [Matrix.smul_apply, Matrix.single_apply]
     have hnot : ¬ (outcome = i ∧ outcome = j) := by
@@ -395,7 +395,7 @@ def ofHermitianEigenbasis (M : CMatrix a) (hM : M.IsHermitian) :
       by_cases hij : i = j
       · subst j
         rw [Matrix.sum_apply]
-        simp only [D, Matrix.diagonal_apply, Matrix.one_apply, if_true]
+        simp only [D, Matrix.diagonal_apply, Matrix.one_apply, ite_true]
         change (∑ outcome, if i = outcome then (1 : ℂ) else 0) = 1
         rw [Finset.sum_eq_single i]
         · simp

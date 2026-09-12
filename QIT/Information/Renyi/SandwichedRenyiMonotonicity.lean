@@ -300,12 +300,11 @@ theorem kw_weighted_alphaObjective_deriv_nonneg
     have hnum : HasDerivAt (fun alpha : Real => 1 - alpha) (-1) alpha := by
       convert
         (hasDerivAt_const (x := alpha) (c := (1 : Real))).sub (hasDerivAt_id alpha)
-        using 1 <;> first | rfl | (funext x; rw [Pi.sub_apply]) | norm_num
+        using 1 <;> first | rfl | norm_num
     have hdiv := hnum.div (hasDerivAt_id alpha) (ne_of_gt halpha_pos)
     convert hdiv using 1 <;> first
       | rfl
       | (simp only [id_eq]; ring)
-      | (field_simp [ne_of_gt halpha_pos]; ring_nf)
   have hcomp : HasDerivAt (fun alpha : Real => F ((1 - alpha) / alpha))
       (F' * (-1 / alpha ^ 2)) alpha := by
     simpa [gamma, Function.comp_def] using hF.comp alpha hgammaDeriv
@@ -355,12 +354,11 @@ theorem kw_weighted_alphaObjective_differentiableAt
     have hnum : HasDerivAt (fun alpha : Real => 1 - alpha) (-1) alpha := by
       convert
         (hasDerivAt_const (x := alpha) (c := (1 : Real))).sub (hasDerivAt_id alpha)
-        using 1 <;> first | rfl | (funext x; rw [Pi.sub_apply]) | norm_num
+        using 1 <;> first | rfl | norm_num
     have hdiv := hnum.div (hasDerivAt_id alpha) (ne_of_gt halpha_pos)
     convert hdiv using 1 <;> first
       | rfl
       | (simp only [id_eq]; ring)
-      | (field_simp [ne_of_gt halpha_pos]; ring_nf)
   have hcomp : HasDerivAt (fun alpha : Real => F ((1 - alpha) / alpha))
       (F' * (-1 / alpha ^ 2)) alpha := by
     simpa [gamma, Function.comp_def] using hF.comp alpha hgammaDeriv
@@ -984,7 +982,7 @@ theorem sandwichedRenyiMutualInformationE_mono_of_supportCompress_mono
       alpha.1 ≤ beta.1 →
         rhoAB.sandwichedRenyiMutualInformationE alpha.1 ≤
           rhoAB.sandwichedRenyiMutualInformationE beta.1 := by
-  haveI : Nonempty b := by
+  have : Nonempty b := by
     rcases rhoAB.nonempty with ⟨h⟩
     exact ⟨h.2⟩
   refine rhoAB.sandwichedRenyiMutualInformationE_mono_of_candidate_mono ?_
@@ -1313,7 +1311,7 @@ theorem psdSchattenPNorm_eq_iSup_posDef_fixedTrace_of_posDef
     field_simp
   let τstar : {τ : CMatrix a // τ.PosDef ∧ τ.trace.re = 1} :=
     ⟨psdTraceReverseHolderOptimizer M hM p, hτstar_PD, hτstar_tr⟩
-  haveI : Nonempty {τ : CMatrix a // τ.PosDef ∧ τ.trace.re = 1} := ⟨τstar⟩
+  have : Nonempty {τ : CMatrix a // τ.PosDef ∧ τ.trace.re = 1} := ⟨τstar⟩
   refine le_antisymm ?_ ?_
   · -- psdSchattenPNorm ≤ ⨆ τ, (M * CFC.rpow τ.1 (1 / q)).trace.re
     have hbdd : BddAbove (Set.range fun τ :
@@ -1392,7 +1390,7 @@ theorem sandwichedRenyiPSDReferenceHighAlphaFinite_mono_posDef_reference_posDef_
     {α β : ℝ} (hα : 1 < α) (hβ : 1 < β) (hab : α ≤ β) :
     sandwichedRenyiPSDReferenceHighAlphaFinite ρ σ hσ.posSemidef α ≤
       sandwichedRenyiPSDReferenceHighAlphaFinite ρ σ hσ.posSemidef β := by
-  haveI : Nonempty a := ρ.nonempty
+  have : Nonempty a := ρ.nonempty
   have hα_pos : 0 < α := lt_trans zero_lt_one hα
   have hβ_pos : 0 < β := lt_trans zero_lt_one hβ
   let ι := {τ : CMatrix a // τ.PosDef ∧ τ.trace.re = 1}
@@ -1554,7 +1552,7 @@ theorem sandwichedRenyiPSDReferenceHighAlphaFinite_mono_posDef_reference_posDef_
         rw [hval, hq]
       rw [hstar_val]; exact hupper
     have hc_pos : 0 < γ.1 / (γ.1 - 1) := highAlpha_conjExponent_pos hγ
-    haveI : Nonempty ι := ⟨τstar⟩
+    have : Nonempty ι := ⟨τstar⟩
     have hstar := real_mul_log2_iSup_eq_iSup_mul_log2_of_isGreatest
       hc_pos hw_pos hw_greatest
     rw [hstar]
@@ -1739,7 +1737,7 @@ theorem sandwichedRenyiPSDReferenceHighAlphaFinite_mono_posSemidef_state_posDef_
     sandwichedRenyiPSDReferenceHighAlphaFinite ρ σ hσ.posSemidef α ≤
       sandwichedRenyiPSDReferenceHighAlphaFinite ρ σ hσ.posSemidef β := by
   classical
-  haveI : Nonempty a := ρ.nonempty
+  have : Nonempty a := ρ.nonempty
   let ω : State a := maximallyMixed a
   have hω_pd : ω.matrix.PosDef := maximallyMixed_posDef (a := a)
   -- The PD approximation sequence: ε_n = 1 / (n + 2) ∈ (0, 1), ε_n → 0.

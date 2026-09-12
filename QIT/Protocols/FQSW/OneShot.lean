@@ -39,8 +39,8 @@ local instance fqswCMatrixContinuousENorm {ι : Type*} [Fintype ι] [DecidableEq
 private instance fqswUnitaryHaarMeasure_isMulRightInvariant {ι : Type u}
     [Fintype ι] [DecidableEq ι] [Nonempty ι] :
     MeasureTheory.Measure.IsMulRightInvariant (unitaryHaarMeasure (a := ι)) := by
-  haveI : SecondCountableTopology (Matrix.unitaryGroup ι ℂ) := by
-    haveI : SecondCountableTopology (Matrix ι ι ℂ) := by
+  have : SecondCountableTopology (Matrix.unitaryGroup ι ℂ) := by
+    have : SecondCountableTopology (Matrix ι ι ℂ) := by
       change SecondCountableTopology (ι → ι → ℂ)
       infer_instance
     change SecondCountableTopology
@@ -64,8 +64,8 @@ private instance fqswUnitaryHaarMeasure_isMulRightInvariant {ι : Type u}
 private instance fqswUnitaryHaarMeasure_isInvInvariant {ι : Type u}
     [Fintype ι] [DecidableEq ι] [Nonempty ι] :
     MeasureTheory.Measure.IsInvInvariant (unitaryHaarMeasure (a := ι)) := by
-  haveI : SecondCountableTopology (Matrix.unitaryGroup ι ℂ) := by
-    haveI : SecondCountableTopology (Matrix ι ι ℂ) := by
+  have : SecondCountableTopology (Matrix.unitaryGroup ι ℂ) := by
+    have : SecondCountableTopology (Matrix ι ι ℂ) := by
       change SecondCountableTopology (ι → ι → ℂ)
       infer_instance
     change SecondCountableTopology
@@ -3048,14 +3048,14 @@ theorem fqsw_A2R_square_trace_eq_twirl_inv_integrand
     · have hyx :
           ((tensorPowerProdEquiv (Prod q e) r 2) x).2 =
             ((tensorPowerProdEquiv (Prod q e) r 2) y).2 := hxy.symm
-      rw [if_pos hxy, if_pos hyx]
+      rw [ite_eq_left hxy, ite_eq_left hyx]
       simp
     · have hyx :
           ¬ ((tensorPowerProdEquiv (Prod q e) r 2) x).2 =
             ((tensorPowerProdEquiv (Prod q e) r 2) y).2 := by
           intro hyx
           exact hxy hyx.symm
-      rw [if_neg hxy, if_neg hyx]
+      rw [ite_eq_right hxy, ite_eq_right hyx]
       simp
   rw [show
       (Matrix.kronecker (U : CMatrix (Prod q e)) (1 : CMatrix r)) *
@@ -3206,10 +3206,10 @@ theorem adhwFQSWHSOneShotExact_eq_zero_of_subsingleton
   classical
   let q0 : q := Classical.choice inferInstance
   let e0 : e := Classical.choice inferInstance
-  haveI : Subsingleton q :=
+  have : Subsingleton q :=
     Function.Injective.subsingleton (f := fun x : q => (x, e0))
       (by intro x y h; exact congrArg Prod.fst h)
-  haveI : Subsingleton e :=
+  have : Subsingleton e :=
     Function.Injective.subsingleton (f := fun y : e => (q0, y))
       (by intro x y h; exact congrArg Prod.snd h)
   have hqcard : (Fintype.card q : ℝ) = 1 := by
@@ -3638,7 +3638,7 @@ theorem adhwFQSWProductDecouplingHilbertSchmidtAverage_le
   by_cases hnt : Nontrivial (Prod q e)
   · exact adhwFQSWProductDecouplingHilbertSchmidtAverage_le_of_nontrivial
       ψ split
-  · haveI : Subsingleton (Prod q e) :=
+  · have : Subsingleton (Prod q e) :=
       not_nontrivial_iff_subsingleton.mp hnt
     have hΔzero :=
       adhwFQSWARCorrelationSplitMatrix_eq_zero_of_subsingleton ψ split
@@ -3679,11 +3679,11 @@ theorem adhwFQSWMaxMixedA2HilbertSchmidtAverage_le
   by_cases hnt : Nontrivial (Prod q e)
   · exact adhwFQSWMaxMixedA2HilbertSchmidtAverage_le_of_nontrivial
       ψ split
-  · haveI : Subsingleton (Prod q e) :=
+  · have : Subsingleton (Prod q e) :=
       not_nontrivial_iff_subsingleton.mp hnt
     classical
     let q0 : q := Classical.choice inferInstance
-    haveI : Subsingleton e :=
+    have : Subsingleton e :=
       Function.Injective.subsingleton (f := fun y : e => (q0, y))
         (by intro x y h; exact congrArg Prod.snd h)
     have hfun :
@@ -4352,6 +4352,7 @@ noncomputable def toOneShotProtocol : FQSWOneShotProtocol ψ q e et :=
     (exists_fqswOneShotProtocol_traceNormError_le_of_selected_decoupling_isometry
       ψ S.aliceIsometry S.ebitPairing S.target_ref_card_le S.bob_ref_card_le S.decoupling_le)
 
+set_option linter.overlappingInstances false in
 /-- The protocol constructed from the selected decoupling isometry obeys the
 ADHW one-shot trace-norm bound. -/
 theorem toOneShotProtocol_traceNormError_le :
@@ -4505,6 +4506,7 @@ variable [Fintype q] [DecidableEq q] [Nonempty q]
 variable [Fintype e] [DecidableEq e] [Nonempty e]
 variable (H : ADHWFQSWOneShotBound ψ q e split)
 
+set_option linter.overlappingInstances false in
 /-- The assembled ADHW one-shot bound record computes the concrete one-shot
 protocol by delegating to its selected decoupling witness. -/
 noncomputable def toOneShotProtocol : FQSWOneShotProtocol ψ q e e :=

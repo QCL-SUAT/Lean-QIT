@@ -196,7 +196,7 @@ theorem finPiFinEquiv_lt_of_last_lt {m : ℕ} {n : Fin m → ℕ} {f g : ∀ i, 
   rw [Fin.lt_def, finPiFinEquiv_apply, finPiFinEquiv_apply]
   set N : ℕ → ℕ := fun j => if h : j < m then n ⟨j, h⟩ else 1 with hN_def
   set w : ℕ → ℕ := fun j => ∏ k ∈ Finset.range j, N k with hw_def
-  have hN_eq : ∀ j (h : j < m), N j = n ⟨j, h⟩ := fun j h => dif_pos h
+  have hN_eq : ∀ j (h : j < m), N j = n ⟨j, h⟩ := fun j h => dite_eq_left h
   have hN_pos : ∀ j < m, 1 ≤ N j := by
     intro j hj
     rw [hN_eq j hj]
@@ -214,20 +214,20 @@ theorem finPiFinEquiv_lt_of_last_lt {m : ℕ} {n : Fin m → ℕ} {f g : ∀ i, 
     rw [Finset.sum_fin_eq_sum_range]
     refine Finset.sum_congr rfl fun j hj => ?_
     rw [Finset.mem_range] at hj
-    rw [dif_pos hj, hF_def]
+    rw [dite_eq_left hj, hF_def]
     show (f ⟨j, hj⟩ : ℕ) * ∏ j' : Fin j, n (Fin.castLE _ j') =
       if h : j < m then (f ⟨j, h⟩ : ℕ) * w j else 0
-    rw [dif_pos hj]
+    rw [dite_eq_left hj]
     exact congrArg _ (hw ⟨j, hj⟩)
   have hR : (∑ i' : Fin m, (g i' : ℕ) * ∏ j : Fin i', n (Fin.castLE i'.is_lt.le j)) =
       ∑ j ∈ Finset.range m, G j := by
     rw [Finset.sum_fin_eq_sum_range]
     refine Finset.sum_congr rfl fun j hj => ?_
     rw [Finset.mem_range] at hj
-    rw [dif_pos hj, hG_def]
+    rw [dite_eq_left hj, hG_def]
     show (g ⟨j, hj⟩ : ℕ) * ∏ j' : Fin j, n (Fin.castLE _ j') =
       if h : j < m then (g ⟨j, h⟩ : ℕ) * w j else 0
-    rw [dif_pos hj]
+    rw [dite_eq_left hj]
     exact congrArg _ (hw ⟨j, hj⟩)
   rw [hL, hR]
   -- The prefix of `f` below wire `i` is strictly bounded by the weight of `i`.
@@ -238,7 +238,7 @@ theorem finPiFinEquiv_lt_of_last_lt {m : ℕ} {n : Fin m → ℕ} {f g : ∀ i, 
       have hjm : j < m := (Finset.mem_range.mp hj).trans i.is_lt
       rw [hF_def]
       show (if h : j < m then (f ⟨j, h⟩ : ℕ) * w j else 0) ≤ (N j - 1) * w j
-      rw [dif_pos hjm]
+      rw [dite_eq_left hjm]
       refine Nat.mul_le_mul_right _ ?_
       rw [hN_eq j hjm]
       exact Nat.le_pred_of_lt (f ⟨j, hjm⟩).is_lt
@@ -250,11 +250,11 @@ theorem finPiFinEquiv_lt_of_last_lt {m : ℕ} {n : Fin m → ℕ} {f g : ∀ i, 
     have hfw : F i = (f i : ℕ) * w i := by
       rw [hF_def]
       show (if h : i.val < m then (f ⟨i.val, h⟩ : ℕ) * w i.val else 0) = _
-      rw [dif_pos i.is_lt]
+      rw [dite_eq_left i.is_lt]
     have hgw : G i = (g i : ℕ) * w i := by
       rw [hG_def]
       show (if h : i.val < m then (g ⟨i.val, h⟩ : ℕ) * w i.val else 0) = _
-      rw [dif_pos i.is_lt]
+      rw [dite_eq_left i.is_lt]
     rw [hfw, hgw]
     calc (f i : ℕ) * w i + w i = ((f i : ℕ) + 1) * w i := (Nat.succ_mul _ _).symm
       _ ≤ (g i : ℕ) * w i := Nat.mul_le_mul_right _ (Nat.succ_le_of_lt (Fin.lt_def.mp hLt))
@@ -268,7 +268,7 @@ theorem finPiFinEquiv_lt_of_last_lt {m : ℕ} {n : Fin m → ℕ} {f g : ∀ i, 
     rw [hF_def, hG_def]
     show (if h : i.val + 1 + j < m then (f ⟨i.val + 1 + j, h⟩ : ℕ) * w (i.val + 1 + j) else 0) =
       if h : i.val + 1 + j < m then (g ⟨i.val + 1 + j, h⟩ : ℕ) * w (i.val + 1 + j) else 0
-    rw [dif_pos h1, dif_pos h1]
+    rw [dite_eq_left h1, dite_eq_left h1]
     have hlt : i < ⟨i.val + 1 + j, h1⟩ := by
       rw [Fin.lt_def]
       show i.val < i.val + 1 + j

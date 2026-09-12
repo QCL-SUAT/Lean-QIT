@@ -138,10 +138,10 @@ noncomputable def cMatrixReindexStarAlgEquiv {alpha : Type u} {beta : Type v}
   __ := Matrix.reindexAlgEquiv ℂ ℂ e
   map_smul' r A := by
     ext i j
-    simp [Matrix.reindexAlgEquiv_apply, Matrix.reindex_apply, Matrix.submatrix_apply]
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply]
   map_star' A := by
     ext i j
-    simp [Matrix.reindexAlgEquiv_apply, Matrix.reindex_apply, Matrix.submatrix_apply]
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply]
 
 theorem cMatrix_rpow_reindex_posDef {alpha : Type u} {beta : Type v}
     [Fintype alpha] [DecidableEq alpha] [Fintype beta] [DecidableEq beta]
@@ -154,7 +154,7 @@ theorem cMatrix_rpow_reindex_posDef {alpha : Type u} {beta : Type v}
   have hA_nonneg : 0 ≤ A := Matrix.nonneg_iff_posSemidef.mpr hA.posSemidef
   rw [CFC.rpow_eq_cfc_real (a := Matrix.reindex e e A) (y := s) hmap_nonneg]
   rw [CFC.rpow_eq_cfc_real (a := A) (y := s) hA_nonneg]
-  simpa [cMatrixReindexStarAlgEquiv, Matrix.reindexAlgEquiv_apply] using
+  simpa [cMatrixReindexStarAlgEquiv, Matrix.coe_reindexAlgEquiv] using
     (StarAlgHomClass.map_cfc
       (cMatrixReindexStarAlgEquiv e)
       (fun x : ℝ => x ^ s) A
@@ -204,7 +204,7 @@ theorem petzRenyi_reindex {alpha : Type u} {beta : Type v}
     (1 / (alphaR - 1)) *
       log2 (((CFC.rpow rho.matrix alphaR *
         CFC.rpow sigma.matrix (1 - alphaR)).trace).re)
-  rw [← Matrix.reindexAlgEquiv_mul (R := ℂ) (A := ℂ) e
+  rw [← map_mul (Matrix.reindexAlgEquiv ℂ ℂ e)
     (CFC.rpow rho.matrix alphaR) (CFC.rpow sigma.matrix (1 - alphaR))]
   change (1 / (alphaR - 1)) *
       log2 ((((Matrix.reindex e e

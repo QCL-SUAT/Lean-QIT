@@ -1112,9 +1112,9 @@ theorem recordedOutcomeState_purifiedBall :
         (Real.sqrt
           (2 * Real.sqrt C.fidelityError - (Real.sqrt C.fidelityError) ^ 2))
       C.idealRecordedOutcomeState := by
-  letI : DecidableEq (TensorPower a n) := tensorPowerDecidableEq n
-  letI : DecidableEq (TensorPower b n) := tensorPowerDecidableEq n
-  letI : DecidableEq (TensorPower r n) := tensorPowerDecidableEq n
+  let : DecidableEq (TensorPower a n) := tensorPowerDecidableEq n
+  let : DecidableEq (TensorPower b n) := tensorPowerDecidableEq n
+  let : DecidableEq (TensorPower r n) := tensorPowerDecidableEq n
   rw [State.purifiedBall_eq]
   apply State.purifiedDistance_le_sqrt_two_mul_sub_sq_of_normalizedTraceDistance_le
   · apply Real.sqrt_le_one.mpr

@@ -1153,7 +1153,7 @@ noncomputable def sourceDeterministicPostprocessMap
     rcases yj with ⟨y', j⟩
     by_cases hyy : y = y'
     · subst y'
-      simp only [if_true, Matrix.add_apply]
+      simp only [ite_true, Matrix.add_apply]
       calc
         (∑ x : a, if g x = y then X (x, i) (x, j) + Y (x, i) (x, j) else 0)
             =
@@ -1174,7 +1174,7 @@ noncomputable def sourceDeterministicPostprocessMap
     rcases yj with ⟨y', j⟩
     by_cases hyy : y = y'
     · subst y'
-      simp only [if_true, Matrix.smul_apply]
+      simp only [ite_true, Matrix.smul_apply]
       calc
         (∑ x : a, if g x = y then z * X (x, i) (x, j) else 0)
             =
@@ -1203,7 +1203,7 @@ private theorem sourceDeterministicPostprocessMap_eq_ofKraus
   simp only [Prod.mk.injEq, ite_mul, zero_mul, one_mul]
   by_cases hyy : y = y'
   · subst y'
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     refine Finset.sum_congr rfl fun x _ => ?_
     by_cases hg : g x = y
     · rw [Finset.sum_eq_single ((x, j) : Prod a b)]
@@ -1235,7 +1235,7 @@ private theorem sourceDeterministicPostprocessMap_eq_ofKraus
             · simp [hright]
         _ = (if g x = y then X (x, i) (x, j) else 0) := by
             simp [hg]
-  · rw [if_neg hyy]
+  · rw [ite_eq_right hyy]
     apply Finset.sum_eq_zero
     intro x _
     apply Finset.sum_eq_zero
@@ -1319,7 +1319,7 @@ theorem sourceDeterministicPostprocessMap_tracePreserving
         rw [Finset.sum_eq_single (g x)]
         · simp
         · intro y _ hy
-          rw [if_neg (fun h => hy h.symm)]
+          rw [ite_eq_right (fun h => hy h.symm)]
           simp
         · simp
     _ = X.trace := Classical.sum_block_trace X
@@ -1375,7 +1375,7 @@ def sourceDeterministicPostprocess
                 rw [Finset.sum_eq_single (g x)]
                 · simp
                 · intro y _ hy
-                  rw [if_neg (fun h => hy h.symm)]
+                  rw [ite_eq_right (fun h => hy h.symm)]
                   simp
                 · simp
       rw [htrace, Classical.sum_block_trace]
@@ -1429,7 +1429,7 @@ theorem sourceDeterministicPostprocess_trace
         rw [Finset.sum_eq_single (g x)]
         · simp
         · intro y _ hy
-          rw [if_neg (fun h => hy h.symm)]
+          rw [ite_eq_right (fun h => hy h.symm)]
           simp
         · simp
     _ = ρ.matrix.trace := Classical.sum_block_trace ρ.matrix
@@ -1452,7 +1452,7 @@ theorem sourceBlock_le_sourceDeterministicPostprocess_block
   rw [sourceDeterministicPostprocess_block]
   have hxmem : x ∈ (Finset.univ : Finset a) := Finset.mem_univ x
   rw [Finset.sum_eq_add_sum_sdiff_singleton_of_mem hxmem]
-  simp only [if_true]
+  simp only [ite_true]
   exact le_add_of_nonneg_right (by
     have hrest_psd :
         (∑ x' ∈ (Finset.univ : Finset a).erase x,
@@ -1766,7 +1766,7 @@ private theorem coordinateMeasure_map_single (x : a) :
           Matrix.single x x (1 : ℂ) := by
       rw [POVM.coordinate_effects, Matrix.single_mul_single_same]
       simp
-    rw [hmul, trace_single_one, if_pos rfl]
+    rw [hmul, trace_single_one, ite_eq_left rfl]
     simp
   · intro y _ hy
     have hmul :
@@ -1793,7 +1793,7 @@ private theorem coordinateMeasure_map_apply (X : CMatrix a) (x x' : a) :
   simp only [Matrix.sum_apply, Matrix.smul_apply, POVM.coordinate_effects]
   by_cases hxx' : x = x'
   · subst x'
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     rw [Finset.sum_eq_single x]
     · rw [Matrix.trace_mul_single]
       simp
@@ -1802,7 +1802,7 @@ private theorem coordinateMeasure_map_apply (X : CMatrix a) (x x' : a) :
       simp [hyx]
     · intro hx
       simp at hx
-  · rw [if_neg hxx']
+  · rw [ite_eq_right hxx']
     refine Finset.sum_eq_zero fun y _ => ?_
     have hnot : ¬ (y = x ∧ y = x') := by
       intro hy
@@ -2067,7 +2067,7 @@ theorem conditionalMinEntropy_sourceDeterministicPostprocess_le_sourceCoordinate
     (hρ : 0 < ρ.matrix.trace.re) :
     (ρ.sourceDeterministicPostprocess g).conditionalMinEntropyRaw ≤
       ρ.sourceCoordinatePinch.conditionalMinEntropyRaw := by
-  letI : Nonempty c := ⟨g (Classical.choice (inferInstance : Nonempty a))⟩
+  let : Nonempty c := ⟨g (Classical.choice (inferInstance : Nonempty a))⟩
   have hpost : 0 < (ρ.sourceDeterministicPostprocess g).matrix.trace.re := by
     rw [sourceDeterministicPostprocess_trace_re]
     exact hρ

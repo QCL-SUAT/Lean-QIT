@@ -316,7 +316,7 @@ omit [DecidableEq ι] in
 /-- A normalized finite ensemble has at least one classical label. -/
 theorem index_nonempty (E : Ensemble ι b) : Nonempty ι := by
   by_contra hne
-  haveI : IsEmpty ι := not_nonempty_iff.mp hne
+  have : IsEmpty ι := not_nonempty_iff.mp hne
   have hsum : (∑ i, E.probs i) = 0 := by simp
   have hzero : (0 : ℝ≥0) = 1 := by
     simpa [hsum] using E.weights_sum
@@ -490,9 +490,9 @@ theorem CqSmoothConditionalMinEntropyCandidate_of_smoothConditionalMinEntropyNor
     E.CqSmoothConditionalMinEntropyCandidate ε
       (E.cqState.smoothConditionalMinEntropyNormalizedCandidates ε) := by
   classical
-  haveI : Nonempty ι := E.index_nonempty
+  have : Nonempty ι := E.index_nonempty
   have hprod : Nonempty (Prod ι b) := E.cqState.nonempty
-  haveI : Nonempty b := ⟨(Classical.choice hprod).2⟩
+  have : Nonempty b := ⟨(Classical.choice hprod).2⟩
   rcases E.cqState.smoothConditionalMinEntropyNormalizedCandidates_exists_optimizer
       (a := ι) (b := b) hε_nonneg with
     ⟨ρmin, hρmin_ball, hsmooth, _hopt⟩
@@ -761,7 +761,7 @@ private noncomputable def hermitianInclusionNormed : HermitianMatrix b →L[ℝ]
 private theorem isClosed_setOf_zero_le_complex' : IsClosed ({z : ℂ | 0 ≤ z} : Set ℂ) := by
   have h : ({z : ℂ | 0 ≤ z} : Set ℂ) = {z | 0 ≤ z.re} ∩ {z | z.im = 0} := by
     ext z
-    simp only [Set.mem_inter_iff, Set.mem_setOf_eq]
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq]
     constructor
     · intro hz
       simp [Complex.le_def] at hz ⊢
@@ -1209,7 +1209,7 @@ theorem cqPrimalProgram_dualFeasible_single_le
 theorem cqPrimalProgram_dualValueSet_subset_cqDualValueSet (E : Ensemble ι b) :
     (cqPrimalProgram E).dualValueSet ⊆ E.cqDualValueSet := by
   classical
-  letI : Nonempty ι := E.index_nonempty
+  let : Nonempty ι := E.index_nonempty
   rintro value ⟨y, hy, rfl⟩
   let yH : HermitianDual b :=
     y.comp (hermitianInclusionNormed (b := b))
@@ -1561,8 +1561,8 @@ theorem cqGuessingProbability_eq_conditionalMinEntropyScale (E : Ensemble ι b) 
 `2⁻ᴴᵐⁱⁿ⁽ˣ|ᴮ⁾ = p_guess(X|B)`. -/
 theorem rpow_neg_conditionalMinEntropy_eq_cqGuessingProbability (E : Ensemble ι b) :
     Real.rpow 2 (-E.cqState.conditionalMinEntropy) = E.cqGuessingProbability := by
-  letI : Nonempty ι := E.index_nonempty
-  letI : Nonempty b :=
+  let : Nonempty ι := E.index_nonempty
+  let : Nonempty b :=
     (E.states (Classical.choice (inferInstance : Nonempty ι))).nonempty
   have hscale : 0 < E.cqState.conditionalMinEntropyScale (a := ι) := by
     rw [E.cqState.conditionalMinEntropyScale_eq_normalizedScale (a := ι)]

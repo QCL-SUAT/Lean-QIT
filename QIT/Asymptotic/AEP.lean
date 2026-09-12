@@ -15,7 +15,7 @@ public import QIT.Asymptotic.Typicality
 public import QIT.Symmetry.DeFinetti
 public import Mathlib.Analysis.Complex.ExponentialBounds
 public import Mathlib.Analysis.SpecificLimits.Basic
-public import Mathlib.Data.Real.Sqrt
+public import Mathlib.Analysis.Real.Sqrt
 
 /-!
 # Quantum Asymptotic Equipartition Property
@@ -1068,10 +1068,10 @@ theorem SmoothMinRateUpperFromContinuity.afw_of_tensorPower_ordering
         τ.conditionalMinEntropy ≤ τ.conditionalEntropy) :
     ρ.SmoothMinRateUpperFromContinuity := by
   classical
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases ρ.nonempty with ⟨x⟩
     exact ⟨x.1⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases ρ.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   intro γ hγ

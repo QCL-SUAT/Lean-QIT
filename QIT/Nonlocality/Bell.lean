@@ -154,7 +154,7 @@ theorem mem_convexHull {X : Type uX} {Y : Type uY} {A : Type uA} {B : Type uB}
     {p : Behavior X Y A B} (hp : IsLocal p) :
     p.realTable ∈ convexHull ℝ (deterministicTables (X := X) (Y := Y) (A := A) (B := B)) := by
   rcases hp with ⟨ι, hι, weights, strategies, hnonneg, hsum, htable⟩
-  letI : Fintype ι := hι
+  let : Fintype ι := hι
   refine mem_convexHull_of_exists_fintype weights
     (fun i => (deterministicBehavior (strategies i)).realTable) hnonneg hsum ?_ htable.symm
   intro i
@@ -173,7 +173,7 @@ theorem isLocal_of_mem_convexHull
   classical
   rcases (mem_convexHull_iff_exists_fintype.mp hp) with
     ⟨ι, hι, weights, tables, hnonneg, hsum, htables, hcenter⟩
-  letI : Fintype ι := hι
+  let : Fintype ι := hι
   choose strategies hstrategies using htables
   refine ⟨ι, hι, weights, strategies, hnonneg, hsum, ?_⟩
   rw [← hcenter]
@@ -352,7 +352,7 @@ theorem value_le_two_of_isLocal (p : CHSHBehavior) (hp : IsLocal p) :
     value p ≤ 2 := by
   classical
   rcases hp with ⟨ι, hι, weights, strategies, hnonneg, hsum, htable⟩
-  letI : Fintype ι := hι
+  let : Fintype ι := hι
   rw [value, htable, tableValue_sum_smul]
   calc
     ∑ i, weights i * tableValue (deterministicBehavior (strategies i)).realTable

@@ -144,7 +144,7 @@ theorem finiteAEP_normalizedTraceDistance_continuous_left
 
 private theorem log2_card_left_nonneg (ρ : State (Prod a b)) :
     0 ≤ log2 (Fintype.card a : ℝ) := by
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
   have hcard_one : 1 ≤ (Fintype.card a : ℝ) := by
     exact_mod_cast (Nat.succ_le_of_lt (Fintype.card_pos_iff.mpr inferInstance))
   exact div_nonneg (Real.log_nonneg hcard_one)
@@ -154,7 +154,7 @@ theorem ConditionalMinEntropyFeasible_scale_lower_bound
     {ρ : State (Prod a b)} {σ : State b} {lam : ℝ}
     (h : ConditionalMinEntropyFeasible (a := a) ρ σ lam) :
     (Fintype.card a : ℝ)⁻¹ ≤ Real.rpow 2 (-lam) := by
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
   have htrace := fixedSmooth_trace_re_le_of_le h
   have hleft : ρ.matrix.trace.re = 1 := by
     rw [ρ.trace_eq_one]
@@ -174,7 +174,7 @@ theorem ConditionalMinEntropyFeasible_le_log2_card_left
     {ρ : State (Prod a b)} {σ : State b} {lam : ℝ}
     (h : ConditionalMinEntropyFeasible (a := a) ρ σ lam) :
     lam ≤ log2 (Fintype.card a : ℝ) := by
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
   have hscale := ConditionalMinEntropyFeasible_scale_lower_bound (a := a) h
   have hcard_pos : 0 < (Fintype.card a : ℝ) := by
     exact_mod_cast Fintype.card_pos_iff.mpr inferInstance
@@ -264,7 +264,7 @@ private theorem ConditionalMinEntropyFeasible.exists_posDef_reference_below
     ∃ σ' : State b, σ'.matrix.PosDef ∧
       ConditionalMinEntropyFeasible (a := a) ρ σ' μ := by
   classical
-  letI : Nonempty b := σ.nonempty
+  let : Nonempty b := σ.nonempty
   let q : ℝ := Real.rpow 2 (μ - lam)
   let p : ℝ := 1 - q
   have hq_pos : 0 < q := by
@@ -362,7 +362,7 @@ theorem conditionalMinEntropy_le_conditionalEntropy
     (ρ : State (Prod a b)) :
     ρ.conditionalMinEntropy ≤ ρ.conditionalEntropy := by
   classical
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases ρ.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   rw [conditionalMinEntropy_eq]
@@ -548,7 +548,7 @@ private theorem exists_pos_scalar_smul_one_le_matrix_of_posDef_forFixedSmooth
     (σ : State b) (hσ : σ.matrix.PosDef) :
     ∃ c : ℝ, 0 < c ∧ c • (1 : CMatrix b) ≤ σ.matrix := by
   classical
-  haveI : Nonempty b := σ.nonempty
+  have : Nonempty b := σ.nonempty
   let c : ℝ := Finset.univ.inf' Finset.univ_nonempty
     (fun i : b => hσ.1.eigenvalues i)
   have hc_pos : 0 < c := by
@@ -853,7 +853,7 @@ theorem SmoothConditionalMinEntropyFixedSubnormalizedCandidate_bddAbove
     (hε_nonneg : 0 ≤ ε) (hε_lt : ε < 1) :
     BddAbove {h : ℝ |
       SmoothConditionalMinEntropyFixedSubnormalizedCandidate (a := a) ρ σ ε h} := by
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
   let δ : ℝ := (1 - ε) ^ 2
   have hδ : 0 < δ := by
     dsimp [δ]
@@ -885,7 +885,7 @@ theorem SubnormalizedState.SmoothConditionalMinEntropyCandidateRaw_bddAbove_of_s
     BddAbove {h : ℝ |
       SubnormalizedState.SmoothConditionalMinEntropyCandidateRaw (a := a)
         ρ.toSubnormalized ε h} := by
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
   let δ : ℝ := (1 - ε) ^ 2
   have hδ : 0 < δ := by
     dsimp [δ]
@@ -1001,7 +1001,7 @@ theorem smoothConditionalMinEntropyFixedSubnormalized_le_subnormalizedSmoothCond
     ρ.smoothConditionalMinEntropyFixedSubnormalized σ ε ≤
       ρ.toSubnormalized.smoothConditionalMinEntropy ε hε_nonneg
         (by rw [State.toSubnormalized_trace]; simpa using hε_lt) := by
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
   rw [smoothConditionalMinEntropyFixedSubnormalized_eq_sSup_candidates,
     SubnormalizedState.smoothConditionalMinEntropy_eq_sSup_candidates]
   refine csSup_le ?_ ?_
@@ -1038,7 +1038,7 @@ theorem le_smoothConditionalMinEntropyFixedSubnormalized_of_feasible_witness
     (hfeas : SubnormalizedState.ConditionalMinEntropyFeasible (a := a) ρ' σ lam)
     (hlower : lower ≤ lam) :
     lower ≤ ρ.smoothConditionalMinEntropyFixedSubnormalized σ ε := by
-  haveI : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
+  have : Nonempty a := ⟨(Classical.choice ρ.nonempty).1⟩
   have hε_sqrt : ε < Real.sqrt ρ.toSubnormalized.matrix.trace.re := by
     rw [State.toSubnormalized_trace]
     norm_num

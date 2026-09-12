@@ -211,8 +211,8 @@ def hashSeedOutputState (H : HashFamily F Z S) (z : Z) : State (S × F) where
                     (Matrix.single (H.hash f z) (H.hash f z) (1 : ℂ)).trace *
                       (Matrix.single f f (1 : ℂ)).trace := by
               simpa [Matrix.kronecker] using htrace
-            rw [htrace', trace_single_one, if_pos rfl,
-              trace_single_one, if_pos rfl]
+            rw [htrace', trace_single_one, ite_eq_left rfl,
+              trace_single_one, ite_eq_left rfl]
             norm_num
       _ = ↑(∑ f : F, H.prob f) := by simp
       _ = 1 := by
@@ -448,7 +448,7 @@ private theorem extractorSeedOutputMatrix_trace (H : HashFamily F Z S)
             (Matrix.trace_kronecker
               (Matrix.single (H.hash f z) (H.hash f z) (1 : ℂ))
               (E.states z).matrix).trans
-              (by rw [trace_single_one, if_pos rfl, (E.states z).trace_eq_one]; norm_num)
+              (by rw [trace_single_one, ite_eq_left rfl, (E.states z).trace_eq_one]; norm_num)
         rw [htrace]
         exact (Algebra.algebraMap_eq_smul_one _).symm
     _ = ↑(∑ z : Z, E.probs z) := by simp

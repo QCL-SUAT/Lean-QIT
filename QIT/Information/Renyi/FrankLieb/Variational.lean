@@ -568,14 +568,12 @@ theorem epsteinDualObjective_traceTerm_concave
         (CFC.rpow X₁ (1 - c)).transpose := by
     have h := cMatrix_rpow_transpose_nonneg (A := X₁) hX₁ h1c_nonneg
     simp only [p] at h ⊢
-    push_cast at h ⊢
     exact h
   have hX₂powT :
       CFC.rpow X₂.transpose (1 - (p : ℝ)) =
         (CFC.rpow X₂ (1 - c)).transpose := by
     have h := cMatrix_rpow_transpose_nonneg (A := X₂) hX₂ h1c_nonneg
     simp only [p] at h ⊢
-    push_cast at h ⊢
     exact h
   have hXmix : (cMatrixConvexCombination t X₁ X₂).PosSemidef :=
     cMatrixConvexCombination_posSemidef hX₁ hX₂ ht0 ht1
@@ -591,7 +589,6 @@ theorem epsteinDualObjective_traceTerm_concave
     have h := cMatrix_rpow_transpose_nonneg
       (A := cMatrixConvexCombination t X₁ X₂) hXmix h1c_nonneg
     simp only [p] at h ⊢
-    push_cast at h ⊢
     exact h
   have hσmix :
       t • σ₁ + (1 - t) • σ₂ = cMatrixConvexCombination t σ₁ σ₂ :=

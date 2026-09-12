@@ -405,9 +405,9 @@ private theorem cMatrix_trace_sandwich_sq_le_weighted_sq
     {S A : CMatrix a} (hS : S.PosSemidef) (hA : A.IsHermitian) :
     ((A * S * A * S).trace).re ≤ ((S * S * (A * A)).trace).re := by
   classical
-  letI : NormedAddCommGroup (CMatrix a) :=
+  let : NormedAddCommGroup (CMatrix a) :=
     Matrix.toMatrixNormedAddCommGroup (1 : CMatrix a) Matrix.PosDef.one
-  letI : InnerProductSpace ℂ (CMatrix a) :=
+  let : InnerProductSpace ℂ (CMatrix a) :=
     Matrix.toMatrixInnerProductSpace (1 : CMatrix a) Matrix.PosSemidef.one
   let x : CMatrix a := A * S
   let y : CMatrix a := S * A
@@ -1088,7 +1088,7 @@ theorem sandwichedRenyiWeightedTraceFamily_differentiable
             cMatrixPosDefComplexPower τ.matrix hτ z *
           Bpath z).trace := by
     funext z
-    simp only [sandwichedRenyiWeightedTraceFamily, sandwichedRenyiWeightedMapComplex, Tfun, Sfun]
+    simp only [sandwichedRenyiWeightedTraceFamily, sandwichedRenyiWeightedMapComplex  ]
     rfl
   rw [hfun]
   exact htrace
@@ -2875,7 +2875,7 @@ theorem sandwichedRenyiRotatedKraus_tracePairingBound_of_posDef
         (sandwichedRenyiRotatedKraus σ (Φ.applyState σ) K α) A) *
         B).trace).re ≤
       psdSchattenPNorm A hA.posSemidef ⟨α, hpq.pos⟩ := by
-  haveI : Nonempty a := σ.nonempty
+  have : Nonempty a := σ.nonempty
   have hCpos : 0 < psdSchattenPNorm A hA.posSemidef ⟨α, hpq.pos⟩ :=
     psdSchattenPNorm_pos_of_posDef hA
   have hTP : MatrixMap.IsTracePreserving (MatrixMap.ofKraus K) := by
@@ -2910,7 +2910,7 @@ theorem regularizedStinespringLiftState_posDef
     (hεpos : 0 < ε) :
     (regularizedStinespringLiftState K hTP ρ ε hε0 hε1).matrix.PosDef := by
   unfold regularizedStinespringLiftState
-  letI : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
+  let : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
   exact regularizedWithState_posDef_of_noise
     (stinespringLiftState K hTP ρ) (maximallyMixed (Prod b κ))
     maximallyMixed_posDef hε0 hε1 hεpos
@@ -2930,7 +2930,7 @@ theorem regularizedStinespringLiftState_matrix_tendsto
            maximallyMixed (Prod b κ)) ε)
       (nhdsWithin (0 : ℝ) (Set.Ioo 0 1))
       (nhds (stinespringLiftState K hTP ρ).matrix) := by
-  letI : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
+  let : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
   exact regularizedStateMatrix_tendsto_zero
     (stinespringLiftState K hTP ρ) (maximallyMixed (Prod b κ))
 
@@ -2946,7 +2946,7 @@ theorem regularizedStinespringLiftState_marginalA_matrix
         ((letI : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
           maximallyMixed (Prod b κ)).marginalA) ε := by
   unfold regularizedStinespringLiftState
-  letI : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
+  let : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
   simpa [regularizedWithState_matrix] using
     regularizedStateMatrix_marginalA
       (stinespringLiftState K hTP ρ)
@@ -2965,7 +2965,7 @@ theorem regularizedStinespringLiftState_marginalA_eq_regularized_applyState
         ((letI : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
           maximallyMixed (Prod b κ)).marginalA) ε hε0 hε1 := by
   apply State.ext
-  letI : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
+  let : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
   rw [regularizedStinespringLiftState_marginalA_matrix]
   have hmargin := stinespringLiftState_marginalA_eq_applyState K Φ hK hTP ρ
   rw [hmargin]
@@ -2981,9 +2981,9 @@ theorem regularizedStinespringLiftState_marginalA_posDef
     (hεpos : 0 < ε) :
     ((regularizedStinespringLiftState K hTP ρ ε hε0 hε1).marginalA).matrix.PosDef := by
   let hprod : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
-  letI : Nonempty (Prod b κ) := hprod
-  letI : Nonempty b := ⟨(Classical.choice hprod).1⟩
-  letI : Nonempty κ := ⟨(Classical.choice hprod).2⟩
+  let : Nonempty (Prod b κ) := hprod
+  let : Nonempty b := ⟨(Classical.choice hprod).1⟩
+  let : Nonempty κ := ⟨(Classical.choice hprod).2⟩
   rw [regularizedStinespringLiftState_marginalA_matrix]
   have hnoise :
       ((maximallyMixed (Prod b κ)).marginalA).matrix.PosDef :=
@@ -3011,7 +3011,7 @@ theorem regularizedStinespringLiftState_marginalA_matrix_tendsto
              maximallyMixed (Prod b κ)) ε))
       (nhdsWithin (0 : ℝ) (Set.Ioo 0 1))
       (nhds (MatrixMap.ofKraus K ρ.matrix)) := by
-  letI : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
+  let : Nonempty (Prod b κ) := (stinespringLiftState K hTP ρ).nonempty
   have h :=
     regularizedStateMatrix_marginalA_tendsto_zero
       (stinespringLiftState K hTP ρ) (maximallyMixed (Prod b κ))
@@ -3106,7 +3106,7 @@ theorem sandwichedRenyiRotatedKraus_tracePairingBound_of_regularizedInputOutput
       psdSchattenPNorm (A + ε • (1 : CMatrix a))
         (cMatrix_posSemidef_add_pos_smul_one_posDef hA hε).posSemidef
         ⟨α, hpq.pos⟩ := by
-  haveI : Nonempty b := (Φ.applyState σ).nonempty
+  have : Nonempty b := (Φ.applyState σ).nonempty
   intro Bδ scale
   have hBδ : Bδ.PosDef := by
     simpa [Bδ] using cMatrix_posSemidef_add_pos_smul_one_posDef hB hδ
@@ -4389,7 +4389,6 @@ theorem sandwichedRenyi_dataProcessing_classicalStochasticChannel_statement_one_
     hpOut_pos hqOut_pos
     (fun i y => NNReal.coe_nonneg (T i y))
     (fun i => by
-      change ∑ y, ((T i y : ℝ≥0) : ℝ) = 1
       exact_mod_cast hT_sum i)
     (fun y => by simp [Classical.stochasticOutput, NNReal.coe_sum, NNReal.coe_mul])
     (fun y => by simp [Classical.stochasticOutput, NNReal.coe_sum, NNReal.coe_mul])
@@ -4432,7 +4431,6 @@ theorem sandwichedRenyi_dataProcessing_classicalStochasticChannel_statement_lt_o
     hpOut_pos hqOut_pos
     (fun i y => NNReal.coe_nonneg (T i y))
     (fun i => by
-      change ∑ y, ((T i y : ℝ≥0) : ℝ) = 1
       exact_mod_cast hT_sum i)
     (fun y => by simp [Classical.stochasticOutput, NNReal.coe_sum, NNReal.coe_mul])
     (fun y => by simp [Classical.stochasticOutput, NNReal.coe_sum, NNReal.coe_mul])

@@ -174,8 +174,8 @@ theorem converseInputARSource_smoothConditionalMinEntropyRaw_le_log2_card_add_te
       log2 (Fintype.card kA : Real) +
         SubnormalizedState.smoothConditionalMinEntropyRaw
           (psi.state.marginalAC.tensorPowerBipartite n).toSubnormalized epsilon := by
-  letI : Nonempty a := ⟨(Classical.choice psi.state.nonempty).1.1⟩
-  letI : Nonempty r := ⟨(Classical.choice psi.state.nonempty).2⟩
+  let : Nonempty a := ⟨(Classical.choice psi.state.nonempty).1.1⟩
+  let : Nonempty r := ⟨(Classical.choice psi.state.nonempty).2⟩
   have hepsilonTrace :
       epsilon < Real.sqrt C.converseInputARSource.matrix.trace.re := by
     rw [C.converseInputARSource_trace_re, Real.sqrt_one]

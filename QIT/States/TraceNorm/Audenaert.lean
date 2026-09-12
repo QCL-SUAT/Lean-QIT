@@ -167,7 +167,7 @@ private theorem spectralSignBlockMatrix_mul
       star U * (X * Y) * U = star U * X * (Y * U) := by noncomm_ring
       _ = star U * X * (U * star U) * Y * U := by rw [hU]; noncomm_ring
       _ = (star U * X * U) * (star U * Y * U) := by noncomm_ring]
-  exact Matrix.reindexAlgEquiv_mul (R := ℂ) (A := ℂ) e.symm
+  exact map_mul (Matrix.reindexAlgEquiv ℂ ℂ e.symm)
     (star U * X * U) (star U * Y * U)
 
 private theorem spectralSignBlockMatrix_sub

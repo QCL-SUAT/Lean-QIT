@@ -67,8 +67,8 @@ theorem conditionalSandwichedRenyiUp_candidateE_fullRankApprox_tendsto_of_highAl
         (identityTensorStateMatrix (a := A) σ)
         (identityTensorStateMatrix_posSemidef_of_state (a := A) σ) α)) := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
-  letI : Nonempty (B × Y) := inferInstance
+  let : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty (B × Y) := inferInstance
   let ρ := State.cqConditioningState E
   let τ := identityTensorStateMatrix (a := A) σ
   let hτ : τ.PosSemidef := identityTensorStateMatrix_posSemidef_of_state (a := A) σ
@@ -446,7 +446,7 @@ theorem sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_of_
       (sandwichedUpClassicalFormulaReal E α (by linarith)
         (ne_of_gt hα_gt_one) : EReal) := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty Y := Ensemble.index_nonempty E
   let σc := coordinateYPinchedState σ
   have hpinch := conditionalSandwichedRenyiUp_candidate_le_of_coordinateYPinching
     E σ α (by linarith) (ne_of_gt hα_gt_one)
@@ -498,7 +498,7 @@ theorem sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_of_
             (coordinateYPinchedState_regularized_maximallyMixed_fixed
               σc δ hδ.1.le hδ.2.le)
         simpa [hfixed] using hclass
-      haveI : Filter.NeBot (nhdsWithin (0 : ℝ) (Set.Ioo 0 1)) :=
+      have : Filter.NeBot (nhdsWithin (0 : ℝ) (Set.Ioo 0 1)) :=
         left_nhdsWithin_Ioo_neBot zero_lt_one
       exact le_of_tendsto htend hevent
     · rw [sandwichedRenyiPSDReferenceE_eq_highAlphaE_of_one_lt _ _ hα_gt_one,
@@ -596,7 +596,7 @@ theorem sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_of_
           simpa [path, σc, coordinateYPinchedState_fixed] using hF
         exact sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_of_half_lt_lt_one_of_coordinateYPinched_posDef
           E (path δ) hF' α hα_half hα_lt_one
-      haveI : Filter.NeBot (nhdsWithin (0 : ℝ) (Set.Ioo 0 1)) :=
+      have : Filter.NeBot (nhdsWithin (0 : ℝ) (Set.Ioo 0 1)) :=
         left_nhdsWithin_Ioo_neBot zero_lt_one
       have hc_le' := le_of_tendsto htend hevent
       exact hc_le'
@@ -614,8 +614,8 @@ theorem sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_hal
       (sandwichedUpClassicalFormulaReal E (1 / 2 : ℝ) (by norm_num)
         (by norm_num) : EReal) := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
-  letI : Nonempty (B × Y) := inferInstance
+  let : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty (B × Y) := inferInstance
   let σc := coordinateYPinchedState σ
   have hpinch := conditionalSandwichedRenyiUp_candidate_le_of_coordinateYPinching
     E σ (1 / 2 : ℝ) (by norm_num) (by norm_num)
@@ -663,7 +663,7 @@ theorem sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_hal
             (State.maximallyMixed (B × Y)) δ = _
         dsimp [path, fullRankApproxMaximallyMixedStatePath,
           fullRankApproxStatePath]
-        rw [dif_pos hδ]
+        rw [dite_eq_left hδ]
         rfl
       have hreference :
           Filter.Tendsto
@@ -777,7 +777,7 @@ theorem sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_hal
           have hpath_pd : (path δ).matrix.PosDef := by
             dsimp [path]
             rw [fullRankApproxMaximallyMixedStatePath,
-              fullRankApproxStatePath, dif_pos hδ]
+              fullRankApproxStatePath, dite_eq_left hδ]
             exact fullRankApproxState_posDef_of_noise σc
               (State.maximallyMixed (B × Y))
               State.maximallyMixed_posDef hδ.1.le hδ.2.le hδ.1
@@ -813,13 +813,13 @@ theorem sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_hal
         have hcoord : coordinateYPinchedState (path δ) = path δ := by
           dsimp [path]
           rw [fullRankApproxMaximallyMixedStatePath,
-            fullRankApproxStatePath, dif_pos hδ]
+            fullRankApproxStatePath, dite_eq_left hδ]
           exact coordinateYPinchedState_regularized_maximallyMixed_fixed
             σ δ hδ.1.le hδ.2.le
         simpa [hcoord] using
           (sandwichedRenyiPSDReferenceE_arbitrary_reference_le_classicalFormula_half_of_coordinateYPinched_posDef
             E (path δ) hF)
-      haveI : Filter.NeBot l := left_nhdsWithin_Ioo_neBot zero_lt_one
+      have : Filter.NeBot l := left_nhdsWithin_Ioo_neBot zero_lt_one
       have htarget :
           -sandwichedRenyiPSDReferenceE
               (State.cqConditioningState E)
@@ -867,12 +867,12 @@ theorem conditionalSandwichedRenyiUpE_le_classicalFormula
     conditionalSandwichedRenyiUpE E α hα hα_ne_one ≤
       (sandwichedUpClassicalFormulaReal E α hα hα_ne_one : EReal) := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
-  letI : Nonempty B := by
+  let : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty B := by
     rcases (E.states (Classical.choice (inferInstance : Nonempty Y))).nonempty with
       ⟨⟨a, b⟩⟩
     exact ⟨b⟩
-  letI : Nonempty A := by
+  let : Nonempty A := by
     rcases (E.states (Classical.choice (inferInstance : Nonempty Y))).nonempty with
       ⟨⟨a, b⟩⟩
     exact ⟨a⟩
@@ -922,7 +922,7 @@ theorem sandwichedUpSourceOptimizerFixedReference_le_conditionalSandwichedRenyiU
     (sandwichedUpClassicalFormulaReal E α hα_half hα_ne_one : EReal) ≤
       conditionalSandwichedRenyiUpE E α hα_half hα_ne_one := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty Y := Ensemble.index_nonempty E
   let p : Y → ℝ := fun y => (E.probs y : ℝ)
   let h : Y → ℝ := fun y =>
     sandwichedConditionalBranch E y α hα_half hα_ne_one
@@ -1017,7 +1017,7 @@ theorem sandwichedUpFixedReferenceFormulaReal_eq_candidateFormula
       (α / (1 - α)) * log2 (∑ y, (E.probs y : ℝ) *
         Real.rpow 2 (((1 - α) / α) * c y)) := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty Y := Ensemble.index_nonempty E
   let p : Y → ℝ := fun y => (E.probs y : ℝ)
   let r : Y → ℝ := fun y =>
     sandwichedScalarOptimizerWeight (p y) (c y) α
@@ -1083,7 +1083,7 @@ theorem sandwichedUpFixedReferenceFormulaReal_eq_candidateFormula_nonneg
       (α / (1 - α)) * log2 (∑ y, (E.probs y : ℝ) *
         Real.rpow 2 (((1 - α) / α) * c y)) := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty Y := Ensemble.index_nonempty E
   let p : Y → ℝ := fun y => (E.probs y : ℝ)
   let r : Y → ℝ := fun y =>
     sandwichedScalarOptimizerWeight (p y) (c y) α
@@ -1333,8 +1333,8 @@ theorem conditionalSandwichedRenyiUp_classicalConditioning_of_ne_half_of_positiv
     conditionalSandwichedRenyiUpE E α hα hα_ne_one =
       (sandwichedUpClassicalFormulaReal E α hα hα_ne_one : EReal) := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
-  letI : Nonempty B := by
+  let : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty B := by
     rcases (E.states (Classical.choice (inferInstance : Nonempty Y))).nonempty with
       ⟨⟨a, b⟩⟩
     exact ⟨b⟩
@@ -1496,12 +1496,12 @@ theorem conditionalSandwichedRenyiUp_classicalConditioning_exact
     conditionalSandwichedRenyiUpE E α hα hα_ne_one =
       (sandwichedUpClassicalFormulaReal E α hα hα_ne_one : EReal) := by
   classical
-  letI : Nonempty Y := Ensemble.index_nonempty E
-  letI : Nonempty B := by
+  let : Nonempty Y := Ensemble.index_nonempty E
+  let : Nonempty B := by
     rcases (E.states (Classical.choice (inferInstance : Nonempty Y))).nonempty with
       ⟨⟨a, b⟩⟩
     exact ⟨b⟩
-  letI : Nonempty A := by
+  let : Nonempty A := by
     rcases (E.states (Classical.choice (inferInstance : Nonempty Y))).nonempty with
       ⟨⟨a, b⟩⟩
     exact ⟨a⟩
@@ -1701,7 +1701,7 @@ theorem conditionalSandwichedRenyiUp_classicalConditioning_exact
     have hmemclosure : (0 : ℝ) ∈ closure (Set.Ioo 0 1) := by
       rw [closure_Ioo (by norm_num)]
       exact ⟨le_rfl, by norm_num⟩
-    letI : Filter.NeBot (nhdsWithin (0 : ℝ) (Set.Ioo 0 1)) := by
+    let : Filter.NeBot (nhdsWithin (0 : ℝ) (Set.Ioo 0 1)) := by
       exact mem_closure_iff_nhdsWithin_neBot.mp hmemclosure
     obtain ⟨δ, hδval, hδmem⟩ := (hmem.and self_mem_nhdsWithin).exists
     have hδpos : 0 < δ := hδmem.1

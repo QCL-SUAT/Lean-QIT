@@ -362,7 +362,7 @@ theorem posSemidef_single [Fintype a] [DecidableEq a] (x : a) :
     Matrix.PosSemidef (Matrix.single x x (1 : ℂ)) := by
   rw [← Matrix.diagonal_single x (1 : ℂ)]
   exact Matrix.PosSemidef.diagonal fun y => by
-    by_cases h : y = x <;> simp [Pi.single_apply, h]
+    by_cases h : y = x <;> simp [ h]
 
 /-- Taking `Tr_A` of a Kronecker product leaves the second factor scaled by
 the trace of the first factor [Wilde2011Qst, qit-notes.tex:7754-7762]. -/

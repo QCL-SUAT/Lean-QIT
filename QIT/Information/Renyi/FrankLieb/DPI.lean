@@ -206,8 +206,8 @@ theorem sandwichedRenyiQ_dataProcessing_channel_reference_of_half_lt_lt_one
     exact Φ.tracePreserving
   let ρL := stinespringLiftState K hTP ρ
   let σL : CMatrix (Prod b (a × b)) := stinespringLiftMatrix K hTP σ
-  letI : Nonempty a := ρ.nonempty
-  letI : Nonempty b := (Φ.applyState ρ).nonempty
+  let : Nonempty a := ρ.nonempty
+  let : Nonempty b := (Φ.applyState ρ).nonempty
   have hσL : σL.PosSemidef := by
     simpa [σL] using stinespringLiftMatrix_posSemidef K hTP hσ
   have hPT :
@@ -1366,8 +1366,8 @@ theorem sandwichedRenyi_dataProcessing_channel_statement_of_half_lt_lt_one_chann
     exact Φ.tracePreserving
   let ρL := stinespringLiftState K hTP ρ
   let σL := stinespringLiftState K hTP σ
-  letI : Nonempty a := ρ.nonempty
-  letI : Nonempty b := (Φ.applyState ρ).nonempty
+  let : Nonempty a := ρ.nonempty
+  let : Nonempty b := (Φ.applyState ρ).nonempty
   have hPT :
       sandwichedRenyiQ ρL.matrix σL.matrix ρL.pos σL.pos α ≤
         sandwichedRenyiQ (partialTraceB ρL.matrix) (partialTraceB σL.matrix)
@@ -2123,7 +2123,7 @@ theorem sandwichedRenyiQ_dataProcessing_channel_reference_half_of_trace_pos
       sandwichedRenyiQ (Φ.applyState ρ).matrix (Φ.map σ)
         (Φ.applyState ρ).pos (Φ.mapsPositive σ hσ) (1 / 2 : ℝ) := by
   classical
-  letI : Nonempty a := ρ.nonempty
+  let : Nonempty a := ρ.nonempty
   let lambda : ℝ := (σ.trace.re)⁻¹
   have hlambda_pos : 0 < lambda := inv_pos.mpr htr
   let σ₀ : State a := stateOfPSDReference σ hσ htr
@@ -3450,7 +3450,7 @@ theorem sandwichedRenyiPSDReferenceHighAlphaFinite_dataProcessing_channel_suppor
         (psdSupportCompress σ hσ σ)
         (psdSupportCompressedState_reference_posDef hσ).posSemidef α := by
   classical
-  letI : Nonempty (psdSupportIndex σ hσ) :=
+  let : Nonempty (psdSupportIndex σ hσ) :=
     psdSupportCompressedState_support_nonempty ρ hσ hSupport
   let ρc : State (psdSupportIndex σ hσ) :=
     psdSupportCompressedState ρ hσ hSupport
@@ -3483,7 +3483,7 @@ theorem sandwichedRenyiPSDReferenceHighAlphaFinite_supportCompress_eq
         (psdSupportCompress σ hσ σ)
         (psdSupportCompressedState_reference_posDef hσ).posSemidef α := by
   classical
-  letI : Nonempty (psdSupportIndex σ hσ) :=
+  let : Nonempty (psdSupportIndex σ hσ) :=
     psdSupportCompressedState_support_nonempty ρ hσ hSupport
   let V : Matrix a (psdSupportIndex σ hσ) ℂ := psdSupportIsometry σ hσ
   let ρc : State (psdSupportIndex σ hσ) :=

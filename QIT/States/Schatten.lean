@@ -616,9 +616,9 @@ theorem posSemidef_zero_diag_zero_row_col
   classical
   set e : a → ℂ := Pi.single i 1 with he
   have hei : e i = (1 : ℂ) := by
-    rw [he, Pi.single_apply, if_pos rfl]
+    rw [he, Pi.single_apply, ite_eq_left rfl]
   have hek : ∀ k, k ≠ i → e k = 0 := fun k hk => by
-    rw [he, Pi.single_apply, if_neg hk]
+    rw [he, Pi.single_apply, ite_eq_right hk]
   have hmulVec : Matrix.mulVec A e = fun k => A k i := by
     ext k
     rw [Matrix.mulVec, dotProduct, Finset.sum_eq_single i]
@@ -1735,9 +1735,9 @@ theorem PosSemidef.zero_diag_zero_row_col
   classical
   set e : a → ℂ := Pi.single i 1 with he
   have hei : e i = (1 : ℂ) := by
-    rw [he, Pi.single_apply, if_pos rfl]
+    rw [he, Pi.single_apply, ite_eq_left rfl]
   have hek : ∀ k, k ≠ i → e k = 0 := fun k hk => by
-    rw [he, Pi.single_apply, if_neg hk]
+    rw [he, Pi.single_apply, ite_eq_right hk]
   have hmulVec : Matrix.mulVec A e = fun k => A k i := by
     ext k
     rw [Matrix.mulVec, dotProduct, Finset.sum_eq_single i]
@@ -3455,7 +3455,7 @@ theorem psdSupportIndex_nonempty_of_trace_one_supports
     Nonempty (psdSupportIndex N hN) := by
   classical
   by_contra hnon
-  haveI : IsEmpty (psdSupportIndex N hN) := not_nonempty_iff.mp hnon
+  have : IsEmpty (psdSupportIndex N hN) := not_nonempty_iff.mp hnon
   have htrace :=
     psdSupportCompress_trace_of_supports
       (M := M) (N := N) hM hN hSupport
@@ -4656,7 +4656,6 @@ theorem psd_trace_rpow_holder_variational_upper
     exact one_div_mul_cancel hpq.symm.ne_zero
   have hpow : CFC.rpow B q = N := by
     dsimp [B]
-    change (N ^ r) ^ q = N
     rw [CFC.rpow_rpow_of_exponent_nonneg N r q hr_nonneg hq_nonneg
       (Matrix.nonneg_iff_posSemidef.mpr hN)]
     rw [hrq]
@@ -5364,8 +5363,8 @@ theorem psdTraceHolderUnitBall_isGreatest
       have hvalR0 :
           (∑ i ∈ (Finset.univ : Finset a), hM.isHermitian.eigenvalues i * d i) =
             (∑ i ∈ (Finset.univ : Finset a), hM.isHermitian.eigenvalues i ^ p) ^ (1 / p) := by
-        simp only [f, d, NNReal.coe_sum, NNReal.coe_mk, NNReal.coe_mul, NNReal.coe_rpow,
-          NNReal.coe_inv] at hval_coe ⊢
+        simp only [f, d, NNReal.coe_sum,  NNReal.coe_mul, NNReal.coe_rpow,
+          ] at hval_coe ⊢
         exact hval_coe
       calc
         (∑ i ∈ (Finset.univ : Finset a), hM.isHermitian.eigenvalues i * d i)

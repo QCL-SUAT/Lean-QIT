@@ -93,7 +93,7 @@ theorem unitaryHaar_exists_le_of_integral_le
 
 private instance unitaryGroupSecondCountableTopology {ι : Type u} [Fintype ι] [DecidableEq ι] :
     SecondCountableTopology (Matrix.unitaryGroup ι ℂ) := by
-  haveI : SecondCountableTopology (Matrix ι ι ℂ) := by
+  have : SecondCountableTopology (Matrix ι ι ℂ) := by
     change SecondCountableTopology (ι → ι → ℂ)
     infer_instance
   change SecondCountableTopology ({x // x ∈ (Matrix.unitaryGroup ι ℂ : Set (Matrix ι ι ℂ))})
@@ -1771,7 +1771,7 @@ private theorem unitaryTwirlIntegrand_oneCopyMatrixLift_apply [Fintype a] [Decid
       (starRingEnd ℂ) ((U : CMatrix a) j x) =
     (∑ j_1 : a, (U : CMatrix a) i j_1 * M j_1 x) * (starRingEnd ℂ) ((U : CMatrix a) j x)
   simp only [decouplingTensorPowerOneEquiv, Equiv.coe_fn_symm_mk, Matrix.one_apply,
-    mul_one]
+    ]
   congr 1
   apply Finset.sum_congr rfl
   intro x_1 _

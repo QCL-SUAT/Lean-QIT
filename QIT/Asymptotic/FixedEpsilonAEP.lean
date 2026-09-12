@@ -238,10 +238,10 @@ limit form stated by TCR 2008, `thm:qaep`. -/
 theorem fullyQuantumAsymptoticEquipartitionProperty
     (ρ : State (Prod a b)) :
     QIT.asymptoticAEP_statement ρ := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases ρ.nonempty with ⟨x⟩
     exact ⟨x.1⟩
-  letI : Nonempty b := by
+  let : Nonempty b := by
     rcases ρ.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   exact ρ.asymptoticAEP_statement_of_fixed_epsilon_limits

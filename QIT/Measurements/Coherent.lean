@@ -111,7 +111,7 @@ theorem coherentChannel_map (hP : P.IsRankOne) (X : CMatrix a) :
       · subst i₂
         by_cases hj : j₁ = j₂
         · subst j₂
-          simp only [true_and, if_true, Matrix.sum_apply]
+          simp only [true_and, ite_true, Matrix.sum_apply]
           rw [Finset.sum_eq_single i₁]
           · rw [Finset.sum_eq_single j₁]
             · simp
@@ -121,7 +121,7 @@ theorem coherentChannel_map (hP : P.IsRankOne) (X : CMatrix a) :
           · intro i _ hi
             simp [hi]
           · simp
-        · simp only [true_and, hj, if_false, Matrix.sum_apply]
+        · simp only [true_and, hj, ite_false, Matrix.sum_apply]
           symm
           apply Finset.sum_eq_zero
           intro i _
@@ -131,7 +131,7 @@ theorem coherentChannel_map (hP : P.IsRankOne) (X : CMatrix a) :
           · subst j
             simp [hj]
           · simp [hj₁]
-      · simp only [hi, false_and, if_false, Matrix.sum_apply]
+      · simp only [hi, false_and, ite_false, Matrix.sum_apply]
         symm
         apply Finset.sum_eq_zero
         intro i _
@@ -237,7 +237,7 @@ theorem coherentPureVector_amp (hP : P.IsRankOne)
     ReferenceIsometry.applyAmp, Matrix.mulVec, dotProduct,
     coherentSideIsometry_matrix, Fintype.sum_prod_type]
   by_cases hdiag : outcome = copy
-  · rw [if_pos hdiag]
+  · rw [ite_eq_left hdiag]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_eq_single k]
     · simp [hdiag]
@@ -302,7 +302,7 @@ theorem coherentYCMarginal_eq_measure (hP : P.IsRankOne)
   by_cases hij : j = i
   · subst j
     rw [Matrix.sum_apply, Finset.sum_eq_single i]
-    · simp only [Matrix.single_apply, and_self, if_true]
+    · simp only [Matrix.single_apply, and_self, ite_true]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun (p : a) _ => ?_
       rw [Finset.sum_comm]
@@ -315,7 +315,7 @@ theorem coherentYCMarginal_eq_measure (hP : P.IsRankOne)
     · intro outcome _ houtcome
       simp [houtcome]
     · simp
-  · simp only [hij, if_false, map_zero, mul_zero, Finset.sum_const_zero]
+  · simp only [hij, ite_false, map_zero, mul_zero, Finset.sum_const_zero]
     symm
     rw [Matrix.sum_apply]
     apply Finset.sum_eq_zero
@@ -445,7 +445,7 @@ theorem rankOneTraceOverlap_pos [Nonempty a]
   have hxcard : 0 < Fintype.card x := by
     by_contra h
     have hcard : Fintype.card x = 0 := Nat.eq_zero_of_not_pos h
-    letI : IsEmpty x := Fintype.card_eq_zero_iff.mp hcard
+    let : IsEmpty x := Fintype.card_eq_zero_iff.mp hcard
     have hzero_one : (0 : CMatrix a) = 1 := by
       simpa using R.sum_eq_one
     exact zero_ne_one hzero_one
@@ -510,7 +510,7 @@ theorem measureCoherentPullback_apply (hP : P.IsRankOne)
     · intro outcome _ houtcome
       simp [houtcome]
     · simp
-  · simp only [hij, if_false]
+  · simp only [hij, ite_false]
     apply Finset.sum_eq_zero
     intro outcome _
     by_cases hi : outcome = i
@@ -551,12 +551,12 @@ theorem measureCoherentPullback_rankOne (hP : P.IsRankOne)
     Matrix.kroneckerMap_apply]
   by_cases hij : i = j
   · subst j
-    rw [if_pos rfl, Finset.sum_eq_single i]
+    rw [ite_eq_left rfl, Finset.sum_eq_single i]
     · simp
     · intro measured _ hmeasured
       simp [hmeasured]
     · simp
-  · rw [if_neg hij]
+  · rw [ite_eq_right hij]
     symm
     apply Finset.sum_eq_zero
     intro measured _

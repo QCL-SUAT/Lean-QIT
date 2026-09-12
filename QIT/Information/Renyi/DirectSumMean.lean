@@ -207,11 +207,11 @@ private theorem cMatrix_cfc_reindex_posSemidef_directSumMean
       (Matrix.reindexAlgEquiv Complex Complex e)
           (Matrix.diagonal (fun i => (d i : Complex)) : CMatrix a) =
         Matrix.diagonal (fun i => (de i : Complex)) := by
-    simpa [Matrix.reindexAlgEquiv_apply] using hdiag
+    simpa [Matrix.coe_reindexAlgEquiv] using hdiag
   have hstarUAlg :
       (Matrix.reindexAlgEquiv Complex Complex e) (star (U : CMatrix a)) =
         star ((Matrix.reindexAlgEquiv Complex Complex e) (U : CMatrix a)) := by
-    simpa [Matrix.reindexAlgEquiv_apply] using hstarU
+    simpa [Matrix.coe_reindexAlgEquiv] using hstarU
   have hre_spec :
       Matrix.reindex e e A =
         Unitary.conjStarAlgAut Complex _ Ue
@@ -222,7 +222,7 @@ private theorem cMatrix_cfc_reindex_posSemidef_directSumMean
           star (U : CMatrix a)) =
       ((Ue : CMatrix b) * Matrix.diagonal (fun i => (de i : Complex))) *
         star (Ue : CMatrix b)
-    rw [Matrix.reindexAlgEquiv_mul, Matrix.reindexAlgEquiv_mul]
+    rw [map_mul, map_mul]
     rw [hdiagAlg, hstarUAlg]
     rfl
   have hA_cfc :
@@ -256,12 +256,12 @@ private theorem cMatrix_cfc_reindex_posSemidef_directSumMean
         (((U : CMatrix a) *
           Matrix.diagonal (fun i => ((f (d i) : Real) : Complex))) *
           star (U : CMatrix a))
-  rw [Matrix.reindexAlgEquiv_mul, Matrix.reindexAlgEquiv_mul]
+  rw [map_mul, map_mul]
   have hdiagFAlg :
       (Matrix.reindexAlgEquiv Complex Complex e)
           (Matrix.diagonal (fun i => ((f (d i) : Real) : Complex)) : CMatrix a) =
         Matrix.diagonal (fun i => ((f (de i) : Real) : Complex)) := by
-    simpa [Matrix.reindexAlgEquiv_apply] using hdiag_f
+    simpa [Matrix.coe_reindexAlgEquiv] using hdiag_f
   rw [hdiagFAlg, hstarUAlg]
   rfl
 
@@ -400,8 +400,8 @@ theorem sandwichedRenyiQ_reindex_posSemidef
           (Matrix.reindexAlgEquiv Complex Complex e) rho *
         (Matrix.reindexAlgEquiv Complex Complex e) C =
       (Matrix.reindexAlgEquiv Complex Complex e) inner
-    rw [<- Matrix.reindexAlgEquiv_mul (R := Complex) (A := Complex) e C rho]
-    rw [<- Matrix.reindexAlgEquiv_mul (R := Complex) (A := Complex) e
+    rw [<- map_mul (Matrix.reindexAlgEquiv ℂ ℂ e) C rho]
+    rw [<- map_mul (Matrix.reindexAlgEquiv ℂ ℂ e)
       (C * rho) C]
   have hPowInner :
       CFC.rpow (Matrix.reindex e e inner) alpha =
@@ -506,7 +506,7 @@ private theorem trace_mul_psdLog_reindex_posDef
   change
     (((Matrix.reindexAlgEquiv Complex Complex e) rho *
       (Matrix.reindexAlgEquiv Complex Complex e) (psdLog sigma hSigma)).trace).re = _
-  rw [<- Matrix.reindexAlgEquiv_mul (R := Complex) (A := Complex) e
+  rw [<- map_mul (Matrix.reindexAlgEquiv ℂ ℂ e)
     rho (psdLog sigma hSigma)]
   exact congrArg Complex.re
     (trace_submatrix_equiv e.symm (rho * psdLog sigma hSigma))

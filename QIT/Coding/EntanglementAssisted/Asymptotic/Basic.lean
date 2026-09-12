@@ -59,7 +59,7 @@ theorem leftToOne_neBot : Filter.NeBot PetzRenyiAlpha.leftToOne := by
     exact Filter.inter_mem
       (Filter.inter_mem ht self_mem_nhdsWithin)
       (mem_nhdsWithin_of_mem_nhds (Ioi_mem_nhds zero_lt_one))
-  haveI : Filter.NeBot (nhdsWithin (1 : ℝ) (Set.Iio 1)) :=
+  have : Filter.NeBot (nhdsWithin (1 : ℝ) (Set.Iio 1)) :=
     nhdsWithin_Iio_neBot (α := ℝ) (a := 1) (b := 1) le_rfl
   rcases Filter.nonempty_of_mem hflt with ⟨x, hx⟩
   refine ⟨⟨x, ?_⟩, ?_⟩
@@ -205,7 +205,7 @@ theorem prob_reindex_state (M : POVM m α) (ρ : State α) (e : α ≃ β) (y : 
       ((((Matrix.reindexAlgEquiv ℂ ℂ e) ρ.matrix) *
         ((Matrix.reindexAlgEquiv ℂ ℂ e) (M.effects y))).trace) =
     Complex.re ((ρ.matrix * M.effects y).trace)
-  rw [← Matrix.reindexAlgEquiv_mul (R := ℂ) (A := ℂ) e ρ.matrix (M.effects y)]
+  rw [← map_mul (Matrix.reindexAlgEquiv ℂ ℂ e) ρ.matrix (M.effects y)]
   change Complex.re ((Matrix.reindex e e (ρ.matrix * M.effects y)).trace) =
     Complex.re ((ρ.matrix * M.effects y).trace)
   rw [cMatrix_trace_reindex e]
@@ -240,7 +240,7 @@ theorem cMatrix_rpow_reindex_nonneg {α : Type u} {β : Type v}
   have hA_nonneg : 0 ≤ A := Matrix.nonneg_iff_posSemidef.mpr hA
   rw [CFC.rpow_eq_cfc_real (a := Matrix.reindex e e A) (y := s) hmap_nonneg]
   rw [CFC.rpow_eq_cfc_real (a := A) (y := s) hA_nonneg]
-  simpa [cMatrixReindexStarAlgEquiv, Matrix.reindexAlgEquiv_apply] using
+  simpa [cMatrixReindexStarAlgEquiv, Matrix.coe_reindexAlgEquiv] using
     (StarAlgHomClass.map_cfc
       (cMatrixReindexStarAlgEquiv e)
       (fun x : ℝ => x ^ s) A
@@ -458,7 +458,7 @@ theorem petzRenyiPSDFinite_reindex {α : Type u} {β : Type v}
     (1 / (alphaR - 1)) *
       log2 (((CFC.rpow ρ.matrix alphaR *
         CFC.rpow σ.matrix (1 - alphaR)).trace).re)
-  rw [← Matrix.reindexAlgEquiv_mul (R := ℂ) (A := ℂ) e
+  rw [← map_mul (Matrix.reindexAlgEquiv ℂ ℂ e)
     (CFC.rpow ρ.matrix alphaR) (CFC.rpow σ.matrix (1 - alphaR))]
   change (1 / (alphaR - 1)) *
       log2 (((Matrix.reindex e e

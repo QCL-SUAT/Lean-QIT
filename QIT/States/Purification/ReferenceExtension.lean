@@ -76,10 +76,10 @@ theorem exists_extension_of_finrank_le
         simp only [← LS.finrank_add_finrank_orthogonal, add_tsub_cancel_left]
   let E : Sᗮ →ₗᵢ[ℂ] LSᗮ := ofFinrankLE hperp
   let L3 : Sᗮ →ₗᵢ[ℂ] E₂ := LSᗮ.subtypeₗᵢ.comp E
-  haveI : CompleteSpace S := FiniteDimensional.complete ℂ S
-  haveI : CompleteSpace E₁ := FiniteDimensional.complete ℂ E₁
-  let p1 := S.orthogonalProjection.toLinearMap
-  let p2 := Sᗮ.orthogonalProjection.toLinearMap
+  have : CompleteSpace S := FiniteDimensional.complete ℂ S
+  have : CompleteSpace E₁ := FiniteDimensional.complete ℂ E₁
+  let p1 := S.orthogonalProjectionOnto.toLinearMap
+  let p2 := Sᗮ.orthogonalProjectionOnto.toLinearMap
   let M : E₁ →ₗ[ℂ] E₂ := U.toLinearMap.comp p1 + L3.toLinearMap.comp p2
   have M_norm_map : ∀ x : E₁, ‖M x‖ = ‖x‖ := by
     intro x
@@ -101,9 +101,9 @@ theorem exists_extension_of_finrank_le
   intro s
   change M (s : E₁) = U s
   have hp1 : p1 (s : E₁) = s :=
-    Submodule.orthogonalProjection_mem_subspace_eq_self s
+    Submodule.orthogonalProjectionOnto_mem_subspace_eq_self s
   have hp2 : p2 (s : E₁) = 0 := by
-    exact Submodule.orthogonalProjection_mem_subspace_orthogonalComplement_eq_zero
+    exact Submodule.orthogonalProjectionOnto_apply_of_mem_orthogonal
       (K := Sᗮ) (by simp [Submodule.orthogonal_orthogonal, Submodule.coe_mem s])
   simp [M, hp1, hp2]
 

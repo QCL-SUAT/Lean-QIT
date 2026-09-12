@@ -546,7 +546,7 @@ theorem fullRankDensityMatrixSet_sion_abcWeightedSidePowerTraceRe_EReal
             (fun tau hTau => hTau.1)
             (densityMatrixSet_convex (a := c))).antitone_comp
               antitone_ereal_neg_coe using 1 <;>
-          first | rfl | (simp [Function.comp_def, densityMatrixSet]) | (funext x; rfl))
+          first | rfl)
       (fullRankDensityMatrixSet_convex (a := b))
       (fun tau hTau => by
         have hcontReal : ContinuousOn
@@ -569,7 +569,7 @@ theorem fullRankDensityMatrixSet_sion_abcWeightedSidePowerTraceRe_EReal
             (fun sigma hSigma => hSigma.1)
             (fullRankDensityMatrixSet_convex (a := b))).antitone_comp
               antitone_ereal_neg_coe using 1 <;>
-          first | rfl | (simp [Function.comp_def, fullRankDensityMatrixSet]) | (funext x; rfl))
+          first | rfl)
   have hnegSub :
       (⨅ tau : {tau : CMatrix c // (densityMatrixSet c) tau},
         ⨆ sigma : {sigma : CMatrix b // (fullRankDensityMatrixSet b) sigma},

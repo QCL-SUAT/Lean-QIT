@@ -528,11 +528,11 @@ theorem cMatrix_rpow_reindex_posSemidef_support
       (Matrix.reindexAlgEquiv ℂ ℂ e)
           (Matrix.diagonal (fun i => (d i : ℂ)) : CMatrix a) =
         Matrix.diagonal (fun i => (de i : ℂ)) := by
-    simpa [Matrix.reindexAlgEquiv_apply] using hdiag
+    simpa [Matrix.coe_reindexAlgEquiv] using hdiag
   have hstarUAlg :
       (Matrix.reindexAlgEquiv ℂ ℂ e) (star (U : CMatrix a)) =
         star ((Matrix.reindexAlgEquiv ℂ ℂ e) (U : CMatrix a)) := by
-    simpa [Matrix.reindexAlgEquiv_apply] using hstarU
+    simpa [Matrix.coe_reindexAlgEquiv] using hstarU
   have hre_spec :
       Matrix.reindex e e A =
         Unitary.conjStarAlgAut ℂ _ Ue
@@ -541,7 +541,7 @@ theorem cMatrix_rpow_reindex_posSemidef_support
     change (Matrix.reindexAlgEquiv ℂ ℂ e)
         (((U : CMatrix a) * Matrix.diagonal (fun i => (d i : ℂ))) * star (U : CMatrix a)) =
       ((Ue : CMatrix b) * Matrix.diagonal (fun i => (de i : ℂ))) * star (Ue : CMatrix b)
-    rw [Matrix.reindexAlgEquiv_mul, Matrix.reindexAlgEquiv_mul]
+    rw [map_mul, map_mul]
     rw [hdiagAlg, hstarUAlg]
     rfl
   have hA_rpow :
@@ -573,12 +573,12 @@ theorem cMatrix_rpow_reindex_posSemidef_support
       (Matrix.reindexAlgEquiv ℂ ℂ e)
         (((U : CMatrix a) * Matrix.diagonal (fun i => ((d i ^ s : ℝ) : ℂ))) *
           star (U : CMatrix a))
-  rw [Matrix.reindexAlgEquiv_mul, Matrix.reindexAlgEquiv_mul]
+  rw [map_mul, map_mul]
   have hdiagPowAlg :
       (Matrix.reindexAlgEquiv ℂ ℂ e)
           (Matrix.diagonal (fun i => ((d i ^ s : ℝ) : ℂ)) : CMatrix a) =
         Matrix.diagonal (fun i => ((de i ^ s : ℝ) : ℂ)) := by
-    simpa [Matrix.reindexAlgEquiv_apply] using hdiag_pow
+    simpa [Matrix.coe_reindexAlgEquiv] using hdiag_pow
   rw [hdiagPowAlg, hstarUAlg]
   rfl
 
@@ -587,7 +587,7 @@ private theorem State.marginalB_posDef_of_posDef
     [Fintype b] [DecidableEq b]
     (rhoAB : State (Prod a b)) (hrho : rhoAB.matrix.PosDef) :
     rhoAB.marginalB.matrix.PosDef := by
-  letI : Nonempty a := by
+  let : Nonempty a := by
     rcases rhoAB.nonempty with ⟨x⟩
     exact ⟨x.1⟩
   simpa [State.marginalB_matrix] using

@@ -744,7 +744,7 @@ theorem iInf_posDef_candidates_le_sandwichedRenyiMutualInformationE_of_le_candid
     (⨅ tauB : {tauB : State b // tauB.matrix.PosDef},
       rhoAB.sandwichedRenyiMutualInformationCandidateE tauB.1 alpha) ≤
         rhoAB.sandwichedRenyiMutualInformationE alpha := by
-  haveI : Nonempty b := by
+  have : Nonempty b := by
     rcases rhoAB.nonempty with ⟨x⟩
     exact ⟨x.2⟩
   rw [State.sandwichedRenyiMutualInformationE_eq_sInf]
@@ -968,7 +968,7 @@ theorem fullRankApproxStatePath_eq_of_mem
     (sigma mu : State a) {delta : Real} (hdelta : delta ∈ Set.Ioo (0 : Real) 1) :
     fullRankApproxStatePath sigma mu delta =
       fullRankApproxState sigma mu delta hdelta.1.le hdelta.2.le := by
-  rw [fullRankApproxStatePath, dif_pos hdelta]
+  rw [fullRankApproxStatePath, dite_eq_left hdelta]
 
 /-- The in-interval full-rank approximation path dominates the scaled base
 state in Loewner order. -/
@@ -976,7 +976,7 @@ theorem smul_left_le_fullRankApproxStatePath_matrix_of_mem
     (sigma mu : State a) {delta : Real} (hdelta : delta ∈ Set.Ioo (0 : Real) 1) :
     (((1 - delta : Real) : ℂ) • sigma.matrix) ≤
       (fullRankApproxStatePath sigma mu delta).matrix := by
-  rw [fullRankApproxStatePath, dif_pos hdelta]
+  rw [fullRankApproxStatePath, dite_eq_left hdelta]
   simpa [fullRankApproxState_matrix] using
     smul_left_le_fullRankApproxMatrix sigma mu hdelta.1.le
 
@@ -992,7 +992,7 @@ theorem fullRankApproxStatePath_tendsto_zero (sigma mu : State a) :
   filter_upwards [self_mem_nhdsWithin] with delta hdelta
   change fullRankApproxMatrix sigma mu delta =
     (fullRankApproxStatePath sigma mu delta).matrix
-  rw [fullRankApproxStatePath, dif_pos hdelta]
+  rw [fullRankApproxStatePath, dite_eq_left hdelta]
   rfl
 
 /-- The side-state approximation is eventually full-rank when the noise is
@@ -1002,7 +1002,7 @@ theorem fullRankApproxStatePath_eventually_posDef_of_noise
     ∀ᶠ delta in nhdsWithin (0 : Real) (Set.Ioo 0 1),
       (fullRankApproxStatePath sigma mu delta).matrix.PosDef := by
   filter_upwards [self_mem_nhdsWithin] with delta hdelta
-  rw [fullRankApproxStatePath, dif_pos hdelta]
+  rw [fullRankApproxStatePath, dite_eq_left hdelta]
   exact fullRankApproxState_posDef_of_noise
     sigma mu hmu hdelta.1.le hdelta.2.le hdelta.1
 
@@ -1031,7 +1031,7 @@ theorem fullRankApproxMaximallyMixedStatePath_matrix_eq_smul_referenceRegulariza
       (((1 - delta : Real) : ℂ) •
         sandwichedRenyiReferenceRegularization sigma.matrix
           (delta / ((1 - delta) * (Fintype.card a : Real)))) := by
-  letI : Nonempty a := sigma.nonempty
+  let : Nonempty a := sigma.nonempty
   have hcard_ne : (Fintype.card a : Real) ≠ 0 := by
     exact_mod_cast (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
   have hdelta_ne : 1 - delta ≠ 0 := by
@@ -1105,7 +1105,7 @@ theorem fullRankApproxMaximallyMixedStatePath_tendsto_zero (sigma : State a) :
     Tendsto (fun delta : Real => fullRankApproxMaximallyMixedStatePath sigma delta)
       (nhdsWithin (0 : Real) (Set.Ioo 0 1)) (nhds sigma) := by
   classical
-  letI : Nonempty a := sigma.nonempty
+  let : Nonempty a := sigma.nonempty
   simpa [fullRankApproxMaximallyMixedStatePath] using
     fullRankApproxStatePath_tendsto_zero sigma (maximallyMixed a)
 
@@ -1114,7 +1114,7 @@ theorem fullRankApproxMaximallyMixedStatePath_eventually_posDef (sigma : State a
     ∀ᶠ delta in nhdsWithin (0 : Real) (Set.Ioo 0 1),
       (fullRankApproxMaximallyMixedStatePath sigma delta).matrix.PosDef := by
   classical
-  letI : Nonempty a := sigma.nonempty
+  let : Nonempty a := sigma.nonempty
   simpa [fullRankApproxMaximallyMixedStatePath] using
     fullRankApproxStatePath_eventually_posDef_of_noise
       sigma (maximallyMixed a) (maximallyMixed_posDef (a := a))
@@ -1126,7 +1126,7 @@ theorem fullRankApproxMaximallyMixedStatePath_eventually_supports
     ∀ᶠ delta in nhdsWithin (0 : Real) (Set.Ioo 0 1),
       Matrix.Supports rho.matrix (fullRankApproxMaximallyMixedStatePath sigma delta).matrix := by
   classical
-  letI : Nonempty a := sigma.nonempty
+  let : Nonempty a := sigma.nonempty
   simpa [fullRankApproxMaximallyMixedStatePath] using
     fullRankApproxStatePath_eventually_supports_of_noise
       rho sigma (maximallyMixed a) (maximallyMixed_posDef (a := a))
@@ -1145,7 +1145,7 @@ theorem iInf_posDef_candidates_le_sandwichedRenyiMutualInformationCandidateE_of_
     (⨅ tauB : {tauB : State b // tauB.matrix.PosDef},
       rhoAB.sandwichedRenyiMutualInformationCandidateE tauB.1 alpha) ≤
         rhoAB.sandwichedRenyiMutualInformationCandidateE sigmaB alpha := by
-  haveI : NeBot (nhdsWithin (0 : Real) (Set.Ioo 0 1)) :=
+  have : NeBot (nhdsWithin (0 : Real) (Set.Ioo 0 1)) :=
     left_nhdsWithin_Ioo_neBot zero_lt_one
   exact
     iInf_posDef_candidates_le_sandwichedRenyiMutualInformationCandidateE_of_tendsto
@@ -2152,7 +2152,7 @@ theorem fixedLeftReferenceRegularization_tendsto_zero
       exact (continuous_const.mul (continuous_id.matrix_elem x.2 y.2))
   simpa [fixedLeftReferenceRegularization, State.prod_matrix_kronecker] using
     (hkr.tendsto sigma.matrix |>.comp hside).congr
-      (fun x => by simp [Function.comp_def, Matrix.kronecker])
+      (fun x => by simp [ Matrix.kronecker])
 
 /-- Support is preserved when a supported product reference is regularized only
 on the right tensor factor. -/
@@ -2196,7 +2196,7 @@ theorem fixedLeftReferenceRegularization_fullRankParameter_tendsto_zero
         fixedLeftReferenceRegularization rhoA sigma
           (delta / ((1 - delta) * (Fintype.card b : Real))))
       (nhdsWithin (0 : Real) (Set.Ioo 0 1)) (nhds (rhoA.prod sigma).matrix) := by
-  letI : Nonempty b := sigma.nonempty
+  let : Nonempty b := sigma.nonempty
   exact
     (fixedLeftReferenceRegularization_tendsto_zero rhoA sigma).comp
       (fullRankApproxMaximallyMixedRegularizationParameter_tendsto_zero (a := b))
@@ -2269,7 +2269,7 @@ theorem smul_left_le_fullRankApproxMaximallyMixedCandidateReference_matrix_of_me
     (hdelta : delta ∈ Set.Ioo (0 : Real) 1) :
     (((1 - delta : Real) : ℂ) • (rhoA.prod sigma).matrix) ≤
       (rhoA.prod (fullRankApproxMaximallyMixedStatePath sigma delta)).matrix := by
-  letI : Nonempty b := sigma.nonempty
+  let : Nonempty b := sigma.nonempty
   simpa [fullRankApproxProductReferencePath, fullRankApproxMaximallyMixedStatePath] using
     smul_left_le_fullRankApproxProductReferencePath_matrix_of_mem
       rhoA sigma (maximallyMixed b) hdelta
@@ -2283,7 +2283,7 @@ theorem supports_fullRankApproxMaximallyMixedProductReference_of_supports
     Matrix.Supports rhoAB.matrix
       (rhoA.prod (fullRankApproxMaximallyMixedStatePath sigma delta)).matrix := by
   classical
-  letI : Nonempty b := sigma.nonempty
+  let : Nonempty b := sigma.nonempty
   let M : CMatrix (Prod a b) := (rhoA.prod sigma).matrix
   let N : CMatrix (Prod a b) :=
     Matrix.kronecker rhoA.matrix (((delta : Real) : ℂ) • (maximallyMixed b).matrix)
@@ -2332,7 +2332,7 @@ theorem sandwichedRenyiPSDReferenceHighAlphaFinite_fullRankApproxMaximallyMixedP
           (rhoAB.marginalA.prod sigmaB).matrix
           (rhoAB.marginalA.prod sigmaB).pos alpha)) := by
   classical
-  letI : Nonempty b := sigmaB.nonempty
+  let : Nonempty b := sigmaB.nonempty
   let eps : Real → Real := fun delta =>
     delta / ((1 - delta) * (Fintype.card b : Real))
   let fixedCurve : Real → Real := fun delta =>
@@ -2627,7 +2627,7 @@ theorem fullRankApproxProductReferencePath_matrix_tendsto_zero
       exact (continuous_const.mul (continuous_id.matrix_elem x.2 y.2))
   simpa [fullRankApproxProductReferencePath, State.prod] using
     (hkr.tendsto sigma.matrix |>.comp hside).congr
-      (fun x => by simp [Function.comp_def, Matrix.kronecker])
+      (fun x => by simp [ Matrix.kronecker])
 
 /-- State-level convergence of the product reference path with a fixed left
 state. -/
@@ -2765,8 +2765,8 @@ theorem fullRankApproxMaximallyMixedProductReferenceBothPath_tendsto_zero
         fullRankApproxMaximallyMixedProductReferenceBothPath rhoA sigma delta)
       (nhdsWithin (0 : Real) (Set.Ioo 0 1)) (nhds (rhoA.prod sigma)) := by
   classical
-  letI : Nonempty a := rhoA.nonempty
-  letI : Nonempty b := sigma.nonempty
+  let : Nonempty a := rhoA.nonempty
+  let : Nonempty b := sigma.nonempty
   simpa [fullRankApproxMaximallyMixedProductReferenceBothPath] using
     fullRankApproxProductReferenceBothPath_tendsto_zero
       rhoA (maximallyMixed a) sigma (maximallyMixed b)
@@ -2777,8 +2777,8 @@ theorem fullRankApproxMaximallyMixedProductReferenceBothPath_eventually_posDef
     ∀ᶠ delta in nhdsWithin (0 : Real) (Set.Ioo 0 1),
       (fullRankApproxMaximallyMixedProductReferenceBothPath rhoA sigma delta).matrix.PosDef := by
   classical
-  letI : Nonempty a := rhoA.nonempty
-  letI : Nonempty b := sigma.nonempty
+  let : Nonempty a := rhoA.nonempty
+  let : Nonempty b := sigma.nonempty
   simpa [fullRankApproxMaximallyMixedProductReferenceBothPath] using
     fullRankApproxProductReferenceBothPath_eventually_posDef_of_noise
       rhoA (maximallyMixed a) sigma (maximallyMixed b)
@@ -2792,8 +2792,8 @@ theorem fullRankApproxMaximallyMixedProductReferenceBothPath_eventually_supports
       Matrix.Supports rhoAB.matrix
         (fullRankApproxMaximallyMixedProductReferenceBothPath rhoA sigma delta).matrix := by
   classical
-  letI : Nonempty a := rhoA.nonempty
-  letI : Nonempty b := sigma.nonempty
+  let : Nonempty a := rhoA.nonempty
+  let : Nonempty b := sigma.nonempty
   simpa [fullRankApproxMaximallyMixedProductReferenceBothPath] using
     fullRankApproxProductReferenceBothPath_eventually_supports_of_noise
       rhoAB rhoA (maximallyMixed a) sigma (maximallyMixed b)
@@ -2836,15 +2836,15 @@ theorem rpowCutoff_continuousOn_Icc {γ : ℝ≥0} (hγ : 0 < γ) (s : ℝ) (M :
   have hramp_eq : ∀ t ∈ Set.Icc 0 (γ / 2), rpowCutoff γ s t = (γ / 2) ^ (s - 1) * t := by
     intro t ⟨ht0, ht2⟩
     by_cases h2 : t < γ / 2
-    · simp only [rpowCutoff, if_pos h2]
-    · simp only [rpowCutoff, if_neg h2]
+    · simp only [rpowCutoff, ite_eq_left h2]
+    · simp only [rpowCutoff, ite_eq_right h2]
       have hteq : t = γ / 2 := le_antisymm ht2 (le_of_not_gt h2)
       rw [hteq]
       conv_lhs => rw [show s = (s - 1) + 1 from by linarith]
       rw [NNReal.rpow_add hγ2_pos.ne' (s - 1) 1, NNReal.rpow_one]
   have hrpow_eq : ∀ t ∈ Set.Icc (γ / 2) M, rpowCutoff γ s t = t ^ (s : ℝ) := by
     intro t ⟨ht2, _⟩
-    simp only [rpowCutoff, if_neg (not_lt.mpr ht2)]
+    simp only [rpowCutoff, ite_eq_right (not_lt.mpr ht2)]
   have hRamp : ContinuousOn (fun t : ℝ≥0 => (γ / 2) ^ (s - 1) * t) (Set.Icc 0 (γ / 2)) :=
     (continuous_const.mul continuous_id).continuousOn
   have h0_notin : (0 : ℝ≥0) ∉ Set.Icc (γ / 2) M :=
@@ -2902,8 +2902,8 @@ theorem rpowCutoffErr_continuousOn_Icc {γ : ℝ≥0} (hγ : 0 < γ)
       rpowCutoff γ s t = (γ/2)^(s-1) * t := by
     intro t ⟨ht0, ht2⟩
     by_cases h2 : t < γ/2
-    · simp only [rpowCutoff, if_pos h2]
-    · simp only [rpowCutoff, if_neg h2]
+    · simp only [rpowCutoff, ite_eq_left h2]
+    · simp only [rpowCutoff, ite_eq_right h2]
       have hteq : t = γ/2 := le_antisymm ht2 (le_of_not_gt h2)
       rw [hteq]
       conv_lhs => rw [show s = (s - 1) + 1 from by linarith]
@@ -2928,7 +2928,7 @@ theorem rpowCutoffErr_continuousOn_Icc {γ : ℝ≥0} (hγ : 0 < γ)
   have hErr_zero : ∀ t ∈ Set.Icc (γ/2) M, rpowCutoffErr γ s t = 0 := by
     rintro t ⟨ht2, -⟩
     have hcut : rpowCutoff γ s t = t^s := by
-      simp only [rpowCutoff, if_neg (not_lt.mpr ht2)]
+      simp only [rpowCutoff, ite_eq_right (not_lt.mpr ht2)]
     simp only [rpowCutoffErr, hcut, tsub_self, pow_two, mul_zero]
   -- (4) Closed form on [0, γ/2]: the cast of the err to ℝ equals a sum of
   -- positive-power rpow terms (continuous at `0`).
@@ -3191,7 +3191,7 @@ lemma rpowCutoff_le_rpow {γ : ℝ≥0} (hγ : 0 < γ) (s : ℝ) (hs_le : s ≤ 
   have hγ2_pos : 0 < γ / 2 := div_pos hγ h2_pos
   have hs_neg_le : s - 1 ≤ 0 := by linarith
   by_cases ht2 : t < γ / 2
-  · simp only [rpowCutoff, if_pos ht2]
+  · simp only [rpowCutoff, ite_eq_left ht2]
     by_cases ht0 : t = 0
     · subst ht0
       simp only [mul_zero]
@@ -3207,7 +3207,7 @@ lemma rpowCutoff_le_rpow {γ : ℝ≥0} (hγ : 0 < γ) (s : ℝ) (hs_le : s ≤ 
       refine mul_le_mul_of_nonneg_right ?_ ht_pos.le
       exact NNReal.rpow_le_rpow_of_nonpos ht_pos (le_of_lt ht2) hs_neg_le
   · have heq : rpowCutoff γ s t = t ^ s := by
-      simp only [rpowCutoff, if_neg ht2]
+      simp only [rpowCutoff, ite_eq_right ht2]
     rw [heq]
 
 /-- `ℝ`-extension of `rpowCutoff γ s` via `Real.toNNReal`: agrees with `rpowCutoff γ s`
@@ -3281,12 +3281,12 @@ lemma cfc_rpowCutoff_eq_rpow_of_spectralGap
   refine cfc_congr (fun μ hμ => ?_)
   by_cases hμ0 : μ = 0
   · subst hμ0
-    simp only [rpowCutoff, if_pos hγ2_pos, mul_zero, NNReal.zero_rpow hs]
+    simp only [rpowCutoff, ite_eq_left hγ2_pos, mul_zero, NNReal.zero_rpow hs]
   · have hγle : γ ≤ μ := hgap μ hμ hμ0
     by_cases hmg : μ < γ / 2
     · exfalso
       exact lt_irrefl γ ((hγle.trans_lt hmg).trans hγ2_lt_γ)
-    · simp only [rpowCutoff, if_neg hmg]
+    · simp only [rpowCutoff, ite_eq_right hmg]
 
 /-- Off-support vanishing: under the same spectral-gap hypothesis, `rpowCutoffErr γ s`
 vanishes on `spectrum ℝ≥0 A` (at `0`: `0 * (...)² = 0`; on `[γ, ∞)`: `rpowCutoff = t^s`
@@ -3305,12 +3305,12 @@ lemma cfc_rpowCutoffErr_eq_zero_of_spectralGap
     intro μ hμ
     by_cases hμ0 : μ = 0
     · subst hμ0
-      simp only [rpowCutoffErr, rpowCutoff, if_pos hγ2_pos, mul_zero, zero_mul]
+      simp only [rpowCutoffErr, rpowCutoff, ite_eq_left hγ2_pos, mul_zero, zero_mul]
     · have hγle : γ ≤ μ := hgap μ hμ hμ0
       by_cases hmg : μ < γ / 2
       · exfalso
         exact lt_irrefl γ ((hγle.trans_lt hmg).trans hγ2_lt_γ)
-      · simp only [rpowCutoffErr, rpowCutoff, if_neg hmg, tsub_self, pow_two, mul_zero]
+      · simp only [rpowCutoffErr, rpowCutoff, ite_eq_right hmg, tsub_self, pow_two, mul_zero]
   rw [cfc_congr hcongr]
   show cfc (0 : ℝ≥0 → ℝ≥0) A = 0
   simp only [cfc_zero]

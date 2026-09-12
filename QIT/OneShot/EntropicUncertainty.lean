@@ -142,10 +142,10 @@ theorem tripartiteEntropicUncertainty
         State.conditionalSandwichedRenyiUpExtendedOrder
           (measureSubsystemState Y.toPOVM psi.state.marginalAC) beta := by
   let omega := hY.coherentGroupedPureVector psi
-  letI : Nonempty c := by
+  let : Nonempty c := by
     rcases omega.state.nonempty with ⟨⟨_, side⟩⟩
     exact ⟨side⟩
-  letI : Nonempty (Prod y b) := by
+  let : Nonempty (Prod y b) := by
     rcases omega.state.nonempty with ⟨⟨⟨_, side⟩, _⟩⟩
     exact ⟨side⟩
   have hcomparison :=
@@ -282,9 +282,9 @@ private theorem measureSubsystemState_discardRight
     simp only [Matrix.trace, Matrix.sum_apply]
     rw [Finset.sum_comm]
     rw [Finset.sum_eq_single_of_mem iy (Finset.mem_univ iy)]
-    · simp only [Matrix.single_apply, and_self, if_true]
+    · simp only [Matrix.single_apply, and_self, ite_true]
       rw [Finset.sum_eq_single_of_mem iy (Finset.mem_univ iy)]
-      · simp only [if_true]
+      · simp only [ite_true]
         simp only [Matrix.diag_apply, Matrix.mul_apply]
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun inputRow _ => ?_
@@ -299,7 +299,7 @@ private theorem measureSubsystemState_discardRight
     · intro outcome _ houtcome
       apply Finset.sum_eq_zero
       intro reference _
-      rw [Matrix.single_apply, if_neg]
+      rw [Matrix.single_apply, ite_eq_right]
       intro hdiag
       exact houtcome hdiag.1
   · have hnone : ∀ outcome : y, ¬ (outcome = iy ∧ outcome = jy) := by
