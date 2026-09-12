@@ -1,0 +1,38 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"rs": "d0080b5fd9a0126c.ir.sig",
+  "r": "c4238d5319a5cca7.ir",
+  "o":
+  ["a36029c266df37ea.olean",
+   "3993228592bb1f2b.olean.server",
+   "228ac9b8364b9412.olean.private"],
+  "m": true,
+  "i": "6bd2f0b72348cb2f.ilean",
+  "c": "d746c4d623948779.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=C:\\lean\\mathlib4\\.lake\\packages\\Cli\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\batteries\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\Qq\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\aesop\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\proofwidgets\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\importGraph\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\LeanSearchClient\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\plausible\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\build\\lib\\lean;C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean c:\\Users\\Administrator\\.elan\\toolchains\\leanprover--lean4---v4.34.0-rc1\\bin\\lean.exe -DautoImplicit=false -Dbackward.isDefEq.respectTransparency=false C:\\lean\\libs\\Lean-QIT\\QIT\\Init.lean -o C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean\\QIT\\Init.olean -i C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean\\QIT\\Init.ilean -c C:\\lean\\libs\\Lean-QIT\\.lake\\build\\ir\\QIT\\Init.c --setup C:\\lean\\libs\\Lean-QIT\\.lake\\build\\ir\\QIT\\Init.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["deps",
+   [["QIT/QIT:extraDep", [["@QIT:extraDep", "00000000000006bb"]]],
+    ["imports",
+     [["Mathlib.Data.Fintype.Basic transitive imports (public)",
+       "da6e76a9d1a4d289"],
+      ["Mathlib.Data.Fintype.Basic:importArts", "d5885e5d358398fb"]]]]],
+  ["libs",
+   [["import dynlibs", "00000000000006bb"],
+    ["package external libraries", "00000000000006bb"],
+    ["module dynlibs", "00000000000006bb"],
+    ["module plugins", "00000000000006bb"]]],
+  ["Lean 4.34.0, commit 3447a668783dbce1a8fdb97101dd067687b2b418",
+   "421484e3e0c70198"],
+  ["C:\\lean\\libs\\Lean-QIT\\QIT\\Init.lean", "7eb988e8e62755c5"],
+  ["options", "00000000000006bb"],
+  ["isModule: true", "760fcc16989f4b9b"],
+  ["Module.name: QIT.Init", "b34b71f2c9461460"],
+  ["Package.id?: (some QIT)", "07d8d7419f989369"],
+  ["Module.leanArgs: #[-DautoImplicit=false, -Dbackward.isDefEq.respectTransparency=false]",
+   "1e046d1e40f8a855"]],
+ "depHash": "00b76f9f514c0547"}

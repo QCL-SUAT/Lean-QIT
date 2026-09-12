@@ -1,0 +1,1 @@
+{"decls":{},"directImports":[["QIT.Protocols.FQSW.Core",false,false,false],["QIT.Protocols.FQSW.OneShot",false,false,false],["QIT.Protocols.FQSW.IIDTypical",false,false,false],["QIT.Protocols.FQSW.IIDRates",false,false,false],["QIT.Protocols.FQSW.IIDDirect",false,false,false]],"module":"QIT.Protocols.FQSW","references":{},"version":5}

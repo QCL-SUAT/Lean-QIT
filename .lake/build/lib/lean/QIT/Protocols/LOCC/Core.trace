@@ -1,0 +1,38 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"rs": "6fc8108f864dc72d.ir.sig",
+  "r": "a619a17e78a30ed1.ir",
+  "o":
+  ["993784782a52239a.olean",
+   "c646d4aa75f1158d.olean.server",
+   "95dca99c3b93000d.olean.private"],
+  "m": true,
+  "i": "7aba201bd00754ce.ilean",
+  "c": "837e35dcf2160888.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=C:\\lean\\mathlib4\\.lake\\packages\\Cli\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\batteries\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\Qq\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\aesop\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\proofwidgets\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\importGraph\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\LeanSearchClient\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\plausible\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\build\\lib\\lean;C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean c:\\Users\\Administrator\\.elan\\toolchains\\leanprover--lean4---v4.34.0-rc1\\bin\\lean.exe -DautoImplicit=false -Dbackward.isDefEq.respectTransparency=false C:\\lean\\libs\\Lean-QIT\\QIT\\Protocols\\LOCC\\Core.lean -o C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean\\QIT\\Protocols\\LOCC\\Core.olean -i C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean\\QIT\\Protocols\\LOCC\\Core.ilean -c C:\\lean\\libs\\Lean-QIT\\.lake\\build\\ir\\QIT\\Protocols\\LOCC\\Core.c --setup C:\\lean\\libs\\Lean-QIT\\.lake\\build\\ir\\QIT\\Protocols\\LOCC\\Core.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["deps",
+   [["QIT/QIT:extraDep", [["@QIT:extraDep", "00000000000006bb"]]],
+    ["imports",
+     [["QIT.Channels.Diamond transitive imports (public)", "61417a77302563ca"],
+      ["QIT.Channels.Diamond:importArts", "ab49bd34d7569eff"]]]]],
+  ["libs",
+   [["import dynlibs", "00000000000006bb"],
+    ["package external libraries", "00000000000006bb"],
+    ["module dynlibs", "00000000000006bb"],
+    ["module plugins", "00000000000006bb"]]],
+  ["Lean 4.34.0, commit 3447a668783dbce1a8fdb97101dd067687b2b418",
+   "421484e3e0c70198"],
+  ["C:\\lean\\libs\\Lean-QIT\\QIT\\Protocols\\LOCC\\Core.lean",
+   "a7274b9cbaf8e426"],
+  ["options", "00000000000006bb"],
+  ["isModule: true", "760fcc16989f4b9b"],
+  ["Module.name: QIT.Protocols.LOCC.Core", "c42030c8d8357c6f"],
+  ["Package.id?: (some QIT)", "07d8d7419f989369"],
+  ["Module.leanArgs: #[-DautoImplicit=false, -Dbackward.isDefEq.respectTransparency=false]",
+   "1e046d1e40f8a855"]],
+ "depHash": "8bb9bdc70d668007"}

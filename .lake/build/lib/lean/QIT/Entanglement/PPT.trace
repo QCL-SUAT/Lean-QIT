@@ -1,0 +1,38 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"rs": "f9ee76303a3ce4e4.ir.sig",
+  "r": "b2782a30b7fbe8e1.ir",
+  "o":
+  ["6b657815121de69c.olean",
+   "c047b738378c1aab.olean.server",
+   "212c563036f7c4b7.olean.private"],
+  "m": true,
+  "i": "e2eb2103788624ca.ilean",
+  "c": "f9307dd84cc42223.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=C:\\lean\\mathlib4\\.lake\\packages\\Cli\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\batteries\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\Qq\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\aesop\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\proofwidgets\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\importGraph\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\LeanSearchClient\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\plausible\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\build\\lib\\lean;C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean c:\\Users\\Administrator\\.elan\\toolchains\\leanprover--lean4---v4.34.0-rc1\\bin\\lean.exe -DautoImplicit=false -Dbackward.isDefEq.respectTransparency=false C:\\lean\\libs\\Lean-QIT\\QIT\\Entanglement\\PPT.lean -o C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean\\QIT\\Entanglement\\PPT.olean -i C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean\\QIT\\Entanglement\\PPT.ilean -c C:\\lean\\libs\\Lean-QIT\\.lake\\build\\ir\\QIT\\Entanglement\\PPT.c --setup C:\\lean\\libs\\Lean-QIT\\.lake\\build\\ir\\QIT\\Entanglement\\PPT.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["deps",
+   [["QIT/QIT:extraDep", [["@QIT:extraDep", "00000000000006bb"]]],
+    ["imports",
+     [["QIT.Entanglement.Separable transitive imports (public)",
+       "3088cb63a77c4f7b"],
+      ["QIT.Entanglement.Separable:importArts", "5c8b382c74a9f528"]]]]],
+  ["libs",
+   [["import dynlibs", "00000000000006bb"],
+    ["package external libraries", "00000000000006bb"],
+    ["module dynlibs", "00000000000006bb"],
+    ["module plugins", "00000000000006bb"]]],
+  ["Lean 4.34.0, commit 3447a668783dbce1a8fdb97101dd067687b2b418",
+   "421484e3e0c70198"],
+  ["C:\\lean\\libs\\Lean-QIT\\QIT\\Entanglement\\PPT.lean", "c3f3008db972b856"],
+  ["options", "00000000000006bb"],
+  ["isModule: true", "760fcc16989f4b9b"],
+  ["Module.name: QIT.Entanglement.PPT", "e1db9dc21a25ce6c"],
+  ["Package.id?: (some QIT)", "07d8d7419f989369"],
+  ["Module.leanArgs: #[-DautoImplicit=false, -Dbackward.isDefEq.respectTransparency=false]",
+   "1e046d1e40f8a855"]],
+ "depHash": "1932087c362a947f"}

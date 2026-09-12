@@ -1,0 +1,38 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"rs": "41f784f98219ead8.ir.sig",
+  "r": "6de2d5cfe8207085.ir",
+  "o":
+  ["2fab69fe4d4fda82.olean",
+   "b4c8efe9d150da5f.olean.server",
+   "3e1e883d4e71f02c.olean.private"],
+  "m": true,
+  "i": "9e4f7845b6060b0c.ilean",
+  "c": "df9c5ef7a0a5bd02.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=C:\\lean\\mathlib4\\.lake\\packages\\Cli\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\batteries\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\Qq\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\aesop\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\proofwidgets\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\importGraph\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\LeanSearchClient\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\packages\\plausible\\.lake\\build\\lib\\lean;C:\\lean\\mathlib4\\.lake\\build\\lib\\lean;C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean c:\\Users\\Administrator\\.elan\\toolchains\\leanprover--lean4---v4.34.0-rc1\\bin\\lean.exe -DautoImplicit=false -Dbackward.isDefEq.respectTransparency=false C:\\lean\\libs\\Lean-QIT\\QIT\\States\\MaximallyMixed.lean -o C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean\\QIT\\States\\MaximallyMixed.olean -i C:\\lean\\libs\\Lean-QIT\\.lake\\build\\lib\\lean\\QIT\\States\\MaximallyMixed.ilean -c C:\\lean\\libs\\Lean-QIT\\.lake\\build\\ir\\QIT\\States\\MaximallyMixed.c --setup C:\\lean\\libs\\Lean-QIT\\.lake\\build\\ir\\QIT\\States\\MaximallyMixed.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["deps",
+   [["QIT/QIT:extraDep", [["@QIT:extraDep", "00000000000006bb"]]],
+    ["imports",
+     [["QIT.States.Schatten transitive imports (public)", "abfa80813de4efdc"],
+      ["QIT.States.Schatten:importArts", "d2d82d46ceca5ae8"]]]]],
+  ["libs",
+   [["import dynlibs", "00000000000006bb"],
+    ["package external libraries", "00000000000006bb"],
+    ["module dynlibs", "00000000000006bb"],
+    ["module plugins", "00000000000006bb"]]],
+  ["Lean 4.34.0, commit 3447a668783dbce1a8fdb97101dd067687b2b418",
+   "421484e3e0c70198"],
+  ["C:\\lean\\libs\\Lean-QIT\\QIT\\States\\MaximallyMixed.lean",
+   "fd9e7c3f8eb0998d"],
+  ["options", "00000000000006bb"],
+  ["isModule: true", "760fcc16989f4b9b"],
+  ["Module.name: QIT.States.MaximallyMixed", "9b39940d88a76073"],
+  ["Package.id?: (some QIT)", "07d8d7419f989369"],
+  ["Module.leanArgs: #[-DautoImplicit=false, -Dbackward.isDefEq.respectTransparency=false]",
+   "1e046d1e40f8a855"]],
+ "depHash": "2222212ef9f1e33a"}
